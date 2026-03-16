@@ -1,0 +1,379 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>John MacArthur — Preacher Analysis · Shepherd's Guild</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500&family=DM+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+  :root {
+    --ink:#1a1714;--parchment:#f7f3ee;--cream:#ede8e0;--warm-gray:#9e9688;
+    --gold:#c4a265;--gold-dim:#a8894f;--gold-bright:#dbb978;
+    --burgundy:#6b2d3e;--forest:#2d4a3e;--slate:#4a4640;
+    --green-dark:#1a3020;--green-mid:#274d30;--green-light:#3a6840;
+    --shadow-soft:0 2px 20px rgba(26,23,20,0.06);--shadow-card:0 4px 30px rgba(26,23,20,0.10);
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}html{scroll-behavior:smooth;}
+  body{font-family:'DM Sans',sans-serif;background:var(--parchment);color:var(--ink);line-height:1.7;-webkit-font-smoothing:antialiased;overflow-x:hidden;}
+  .nav{position:sticky;top:0;z-index:100;background:rgba(247,243,238,0.94);backdrop-filter:blur(16px);border-bottom:1px solid rgba(196,162,101,0.15);padding:0 30px;}
+  .nav-inner{max-width:1160px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:56px;}
+  .nav-brand{display:flex;align-items:center;gap:10px;text-decoration:none;}
+  .nav-brand-icon{width:28px;height:28px;border:1px solid var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;}
+  .nav-brand-icon svg{width:12px;height:12px;}
+  .nav-brand-text{font-size:0.72rem;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:var(--ink);}
+  .nav-brand-text span{color:var(--gold);}
+  .nav-links{display:flex;align-items:center;gap:4px;}
+  .nav-links a{font-size:0.7rem;font-weight:500;letter-spacing:0.06em;text-transform:uppercase;color:var(--slate);text-decoration:none;padding:6px 12px;border-radius:4px;transition:all 0.2s;}
+  .nav-links a:hover{color:var(--green-mid);background:rgba(196,162,101,0.08);}
+  .nav-cta{font-size:0.68rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink);text-decoration:none;padding:8px 18px;background:var(--gold);border-radius:4px;transition:all 0.2s;}
+  .nav-cta:hover{background:var(--gold-bright);}
+  .hero{background:var(--green-dark);color:var(--parchment);padding:100px 30px 80px;position:relative;overflow:hidden;}
+  .hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 70% 50% at 30% 50%,rgba(196,162,101,0.06) 0%,transparent 70%),radial-gradient(ellipse 50% 70% at 80% 20%,rgba(39,77,48,0.6) 0%,transparent 60%);pointer-events:none;}
+  .hero::after{content:'';position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23c4a265' fill-opacity='0.025'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");pointer-events:none;}
+  .hero-inner{max-width:1160px;margin:0 auto;position:relative;z-index:2;display:grid;grid-template-columns:1fr 320px;gap:80px;align-items:start;}
+  .hero-eyebrow{display:flex;align-items:center;gap:12px;margin-bottom:28px;}
+  .hero-eyebrow a{font-size:0.65rem;font-weight:500;letter-spacing:0.2em;text-transform:uppercase;color:rgba(196,162,101,0.6);text-decoration:none;}
+  .hero-eyebrow a:hover{color:var(--gold);}
+  .hero-eyebrow-sep{width:1px;height:14px;background:rgba(196,162,101,0.3);}
+  .hero-eyebrow span{font-size:0.65rem;font-weight:500;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);}
+  .hero-name{font-family:'Cormorant Garamond',serif;font-size:clamp(3rem,5vw,4.5rem);font-weight:300;line-height:1.05;letter-spacing:-0.02em;margin-bottom:16px;}
+  .hero-name em{font-style:italic;color:var(--gold-bright);}
+  .hero-role{font-size:0.9rem;color:rgba(247,243,238,0.5);margin-bottom:32px;}
+  .hero-role strong{color:rgba(247,243,238,0.75);font-weight:500;}
+  .hero-divider{width:48px;height:1px;background:var(--gold-dim);margin-bottom:28px;}
+  .hero-summary{font-size:1rem;color:rgba(247,243,238,0.6);max-width:560px;line-height:1.9;}
+  .hero-stats{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:rgba(196,162,101,0.1);border:1px solid rgba(196,162,101,0.1);border-radius:12px;overflow:hidden;align-self:start;margin-top:8px;}
+  .hero-stat{background:rgba(26,48,32,0.8);padding:28px 24px;}
+  .hero-stat-value{font-family:'Cormorant Garamond',serif;font-size:2.4rem;font-weight:600;color:var(--gold-bright);line-height:1;margin-bottom:6px;}
+  .hero-stat-label{font-size:0.63rem;font-weight:500;letter-spacing:0.18em;text-transform:uppercase;color:rgba(247,243,238,0.35);}
+  .hero-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:28px;}
+  .hero-tag{font-size:0.63rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;padding:5px 12px;border:1px solid rgba(196,162,101,0.2);border-radius:20px;color:rgba(196,162,101,0.7);}
+  .hero-tag.active{background:rgba(196,162,101,0.1);border-color:rgba(196,162,101,0.35);color:var(--gold);}
+  .page-body{max-width:1160px;margin:0 auto;padding:0 30px 120px;}
+  .section{padding:80px 0 0;opacity:0;transform:translateY(24px);transition:all 0.7s cubic-bezier(0.25,0.46,0.45,0.94);}
+  .section.visible{opacity:1;transform:translateY(0);}
+  .section-label{font-size:0.63rem;font-weight:600;letter-spacing:0.3em;text-transform:uppercase;color:var(--gold);margin-bottom:10px;}
+  .section-title{font-family:'Cormorant Garamond',serif;font-size:clamp(1.8rem,3vw,2.4rem);font-weight:400;line-height:1.2;margin-bottom:14px;}
+  .section-intro{font-size:0.93rem;color:var(--slate);max-width:600px;line-height:1.85;margin-bottom:48px;}
+  .section-rule{width:100%;height:1px;background:rgba(196,162,101,0.15);margin-top:56px;}
+  .green-callout{background:linear-gradient(135deg,var(--green-dark) 0%,#0e1f14 100%);border:1px solid rgba(58,104,64,0.3);border-radius:16px;padding:44px 48px;margin-bottom:48px;position:relative;overflow:hidden;}
+  .green-callout::before{content:'GTY';position:absolute;right:-10px;bottom:-30px;font-family:'Cormorant Garamond',serif;font-size:10rem;font-weight:700;color:rgba(196,162,101,0.04);line-height:1;pointer-events:none;}
+  .green-callout-label{font-size:0.6rem;font-weight:600;letter-spacing:0.25em;text-transform:uppercase;color:rgba(196,162,101,0.6);margin-bottom:12px;}
+  .green-callout-title{font-family:'Cormorant Garamond',serif;font-size:1.9rem;font-weight:400;line-height:1.25;color:var(--parchment);margin-bottom:10px;}
+  .green-callout-title em{font-style:italic;color:var(--gold-bright);}
+  .green-callout-body{font-size:0.88rem;color:rgba(247,243,238,0.52);line-height:1.8;max-width:620px;}
+  .loci-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px 48px;}
+  .loci-row{display:flex;flex-direction:column;gap:6px;}
+  .loci-meta{display:flex;align-items:baseline;justify-content:space-between;}
+  .loci-name{font-size:0.82rem;font-weight:500;color:var(--ink);}
+  .loci-count{font-family:'JetBrains Mono',monospace;font-size:0.72rem;color:var(--warm-gray);}
+  .loci-bar{height:4px;background:var(--cream);border-radius:2px;overflow:hidden;}
+  .loci-fill{height:100%;border-radius:2px;background:linear-gradient(90deg,var(--green-mid),var(--gold));transition:width 1.2s cubic-bezier(0.25,0.46,0.45,0.94);width:0;}
+  .charts-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:24px;}
+  .chart-card{background:white;border:1px solid rgba(196,162,101,0.12);border-radius:16px;padding:32px 28px;box-shadow:var(--shadow-soft);}
+  .chart-card-title{font-size:0.68rem;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:var(--warm-gray);margin-bottom:24px;}
+  .chart-canvas-wrap{position:relative;height:180px;display:flex;align-items:center;justify-content:center;}
+  .illus-list{display:flex;flex-direction:column;gap:16px;max-width:640px;}
+  .illus-row{display:grid;grid-template-columns:180px 1fr 48px;align-items:center;gap:16px;}
+  .illus-name{font-size:0.84rem;font-weight:500;color:var(--ink);}
+  .illus-track{height:6px;background:var(--cream);border-radius:3px;overflow:hidden;}
+  .illus-fill{height:100%;border-radius:3px;transition:width 1.2s cubic-bezier(0.25,0.46,0.45,0.94);width:0;}
+  .illus-fill.gold{background:var(--gold);}
+  .illus-fill.green{background:var(--green-mid);}
+  .illus-fill.burgundy{background:var(--burgundy);}
+  .illus-fill.forest{background:var(--forest);}
+  .illus-fill.slate{background:var(--slate);}
+  .illus-val{font-family:'JetBrains Mono',monospace;font-size:0.72rem;color:var(--warm-gray);text-align:right;}
+  .illus-density-note{background:var(--cream);border:1px solid rgba(196,162,101,0.2);border-radius:12px;padding:24px 28px;margin-top:32px;max-width:640px;}
+  .illus-density-note-label{font-size:0.6rem;font-weight:600;letter-spacing:0.22em;text-transform:uppercase;color:var(--gold-dim);margin-bottom:8px;}
+  .illus-density-note p{font-size:0.85rem;color:var(--slate);line-height:1.75;}
+  .illus-density-note strong{color:var(--ink);}
+  .quote-hero-card{background:var(--green-dark);color:var(--parchment);border-radius:16px;padding:40px 36px;position:relative;overflow:hidden;margin-bottom:20px;}
+  .quote-hero-card::before{content:'\201C';position:absolute;top:-20px;right:20px;font-family:'Cormorant Garamond',serif;font-size:14rem;color:rgba(196,162,101,0.05);line-height:1;pointer-events:none;}
+  .quote-hero-count{font-family:'Cormorant Garamond',serif;font-size:4rem;font-weight:600;color:var(--gold-bright);line-height:1;margin-bottom:4px;}
+  .quote-hero-count-label{font-size:0.62rem;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold-dim);margin-bottom:20px;}
+  .quote-hero-author{font-family:'Cormorant Garamond',serif;font-size:1.8rem;color:var(--parchment);margin-bottom:6px;}
+  .quote-hero-tradition{font-size:0.72rem;color:rgba(247,243,238,0.4);margin-bottom:20px;}
+  .quote-hero-text{font-family:'Cormorant Garamond',serif;font-size:1.05rem;font-style:italic;color:rgba(247,243,238,0.65);line-height:1.75;}
+  .quotes-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:24px;}
+  .quote-card{background:white;border:1px solid rgba(196,162,101,0.12);border-radius:12px;padding:24px 20px;box-shadow:var(--shadow-soft);transition:all 0.25s;}
+  .quote-card:hover{transform:translateY(-3px);box-shadow:var(--shadow-card);border-color:rgba(196,162,101,0.3);}
+  .quote-card-count{font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:600;color:var(--gold);line-height:1;margin-bottom:8px;}
+  .quote-card-author{font-family:'Cormorant Garamond',serif;font-size:1.05rem;font-weight:500;color:var(--ink);margin-bottom:4px;line-height:1.3;}
+  .quote-card-tradition{font-size:0.65rem;color:var(--warm-gray);}
+  .quote-card-bar{height:2px;background:var(--cream);border-radius:1px;overflow:hidden;margin-top:14px;}
+  .quote-card-fill{height:100%;background:linear-gradient(90deg,var(--green-mid),var(--gold));transition:width 1.2s;width:0;}
+  .scripture-saturation-card{background:var(--cream);border:1px solid rgba(196,162,101,0.2);border-radius:16px;padding:36px 40px;margin-bottom:24px;}
+  .scripture-saturation-card-label{font-size:0.6rem;font-weight:600;letter-spacing:0.22em;text-transform:uppercase;color:var(--gold-dim);margin-bottom:12px;}
+  .scripture-saturation-card-title{font-family:'Cormorant Garamond',serif;font-size:1.5rem;margin-bottom:16px;}
+  .scripture-saturation-card p{font-size:0.85rem;color:var(--slate);line-height:1.75;max-width:620px;}
+  .top-refs-list{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px;}
+  .ref-chip{display:flex;align-items:center;gap:8px;background:white;border:1px solid rgba(196,162,101,0.2);border-radius:40px;padding:7px 14px;box-shadow:var(--shadow-soft);}
+  .ref-chip-ref{font-size:0.78rem;font-weight:500;color:var(--ink);}
+  .ref-chip-count{font-family:'JetBrains Mono',monospace;font-size:0.65rem;color:var(--warm-gray);}
+  .quotes-minor{display:flex;flex-wrap:wrap;gap:8px;}
+  .quote-chip{display:flex;align-items:center;gap:8px;background:var(--cream);border-radius:40px;padding:7px 14px;}
+  .quote-chip-name{font-size:0.78rem;font-weight:500;color:var(--slate);}
+  .quote-chip-count{font-family:'JetBrains Mono',monospace;font-size:0.65rem;color:var(--warm-gray);}
+  .insight-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
+  .insight-card{background:var(--green-dark);color:var(--parchment);border-radius:16px;padding:36px 32px;}
+  .insight-card-label{font-size:0.63rem;font-weight:600;letter-spacing:0.22em;text-transform:uppercase;color:var(--gold-dim);margin-bottom:16px;}
+  .insight-card-text{font-family:'Cormorant Garamond',serif;font-size:1.15rem;line-height:1.75;color:rgba(247,243,238,0.82);}
+  .insight-card-text em{font-style:italic;color:var(--gold-bright);}
+  .corpus-header{display:grid;grid-template-columns:48px 1fr 120px 100px;gap:16px;padding:0 8px 12px;border-bottom:1px solid rgba(196,162,101,0.2);}
+  .corpus-col-head{font-size:0.62rem;font-weight:600;letter-spacing:0.18em;text-transform:uppercase;color:var(--warm-gray);}
+  .corpus-row{display:grid;grid-template-columns:48px 1fr 120px 100px;gap:16px;padding:13px 8px;border-bottom:1px solid rgba(196,162,101,0.07);align-items:center;border-radius:8px;transition:background 0.15s;}
+  .corpus-row:hover{background:rgba(196,162,101,0.05);}
+  .corpus-num{font-family:'JetBrains Mono',monospace;font-size:0.68rem;color:var(--warm-gray);}
+  .corpus-title{font-size:0.86rem;font-weight:500;color:var(--ink);line-height:1.4;}
+  .corpus-text{font-size:0.72rem;color:var(--warm-gray);margin-top:2px;}
+  .corpus-type-badge{display:inline-block;font-size:0.6rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;padding:3px 9px;border-radius:20px;background:rgba(26,48,32,0.1);color:var(--green-mid);}
+  .corpus-type-badge.topical{background:rgba(107,45,62,0.1);color:var(--burgundy);}
+  .modal-overlay{position:fixed;inset:0;background:rgba(26,23,20,0.7);backdrop-filter:blur(6px);z-index:1000;display:flex;align-items:center;justify-content:center;padding:24px;opacity:0;pointer-events:none;transition:opacity 0.3s;}
+  .modal-overlay.open{opacity:1;pointer-events:all;}
+  .modal{background:var(--parchment);border-radius:16px;padding:52px 48px;max-width:480px;width:100%;position:relative;transform:translateY(20px);transition:transform 0.3s;box-shadow:0 24px 80px rgba(26,23,20,0.25);}
+  .modal-overlay.open .modal{transform:translateY(0);}
+  .modal-close{position:absolute;top:20px;right:20px;background:none;border:none;cursor:pointer;color:var(--warm-gray);font-size:1.4rem;line-height:1;padding:4px;}
+  .modal-close:hover{color:var(--ink);}
+  .modal-eyebrow{font-size:0.62rem;font-weight:600;letter-spacing:0.28em;text-transform:uppercase;color:var(--gold);margin-bottom:12px;}
+  .modal-title{font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:500;line-height:1.2;margin-bottom:10px;}
+  .modal-body{font-size:0.88rem;color:var(--slate);line-height:1.75;margin-bottom:28px;}
+  .modal-form{display:flex;flex-direction:column;gap:14px;}
+  .form-field{display:flex;flex-direction:column;gap:6px;}
+  .form-field label{font-size:0.68rem;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:var(--slate);}
+  .form-field input{background:#fff;border:1.5px solid rgba(196,162,101,0.25);border-radius:6px;padding:12px 16px;font-size:0.9rem;font-family:'DM Sans',sans-serif;color:var(--ink);transition:border-color 0.2s;outline:none;}
+  .form-field input:focus{border-color:var(--gold);}
+  .form-field input::placeholder{color:var(--warm-gray);}
+  .form-submit{display:inline-flex;align-items:center;justify-content:center;gap:10px;background:var(--gold);color:var(--ink);font-size:0.8rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;border:none;padding:15px 32px;border-radius:6px;cursor:pointer;transition:all 0.25s;margin-top:6px;}
+  .form-submit:hover{background:var(--gold-bright);transform:translateY(-2px);}
+  .form-note{font-size:0.7rem;color:var(--warm-gray);text-align:center;margin-top:4px;}
+  .form-success{text-align:center;padding:20px 0;}
+  .form-success h3{font-family:'Cormorant Garamond',serif;font-size:1.6rem;margin-bottom:10px;}
+  .form-success p{font-size:0.88rem;color:var(--slate);}
+  @media(max-width:900px){.hero-inner,.charts-row,.insight-grid{grid-template-columns:1fr;}.hero-stats{grid-template-columns:repeat(4,1fr);}.loci-grid{grid-template-columns:1fr;}.quotes-grid{grid-template-columns:1fr 1fr;}.corpus-header,.corpus-row{grid-template-columns:40px 1fr 90px;}}
+</style>
+</head>
+<body>
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-brand"><div class="nav-brand-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#c4a265" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg></div><span class="nav-brand-text">Shepherd's <span>Guild</span></span></a>
+    <div class="nav-links"><a href="index.html">The Hall</a></div>
+    <a href="/checkout" class="nav-cta">Request Your Build</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-inner">
+    <div>
+      <div class="hero-eyebrow"><a href="index.html">The Guild Hall</a><div class="hero-eyebrow-sep"></div><span>Hall Member Profile</span></div>
+      <h1 class="hero-name">John <em>MacArthur</em></h1>
+      <p class="hero-role">Pastor-Teacher, <strong>Grace Community Church</strong> · Sun Valley, CA · 1969–present</p>
+      <div class="hero-divider"></div>
+      <p class="hero-summary">This is a 50-sermon sample of a 3,500+ sermon corpus spanning 55 years — the largest expository preaching archive in Christian history. Logos accounts for 65% of all rhetorical registers. Illustrations average fewer than 2.5 per sermon. The text is everything.</p>
+      <div class="hero-tags">
+        <span class="hero-tag active">Reformed Baptist</span>
+        <span class="hero-tag active">Cessationist</span>
+        <span class="hero-tag active">Verse-by-Verse</span>
+        <span class="hero-tag active">Grace to You</span>
+        <span class="hero-tag">Grace Community Church</span>
+        <span class="hero-tag">2022–2024 Sample</span>
+      </div>
+    </div>
+    <div class="hero-stats">
+      <div class="hero-stat"><div class="hero-stat-value">272</div><div class="hero-stat-label">BT Moves</div></div>
+      <div class="hero-stat"><div class="hero-stat-value">60%</div><div class="hero-stat-label">Expository Rate</div></div>
+      <div class="hero-stat"><div class="hero-stat-value">2.4</div><div class="hero-stat-label">Illus. per Sermon</div></div>
+      <div class="hero-stat"><div class="hero-stat-value">3,500+</div><div class="hero-stat-label">Total Corpus</div></div>
+    </div>
+  </div>
+</section>
+
+<div class="page-body">
+  <div class="section" id="sec-fingerprint">
+    <div class="section-label">01 — Theological Fingerprint</div>
+    <h2 class="section-title">What He Preaches About</h2>
+    <p class="section-intro">Sanctification leads this corpus at 341 units — a direct function of the "Keys to Spiritual Growth" series dominating the sample. But what's notable is the breadth: Eschatology (285), Ecclesiology (251), and Soteriology (241) are each within striking distance. This is a preacher whose theology is fully integrated — no single locus receives massive disproportionate coverage. Bibliology at 209 units reflects the signature MacArthur commitment: the text governs everything.</p>
+    <div class="loci-grid">
+      <div class="loci-row"><div class="loci-meta"><span class="loci-name">Sanctification</span><span class="loci-count">341 units</span></div><div class="loci-bar"><div class="loci-fill" data-pct="100"></div></div></div>
+      <div class="loci-row"><div class="loci-meta"><span class="loci-name">Eschatology</span><span class="loci-count">285 units</span></div><div class="loci-bar"><div class="loci-fill" data-pct="84"></div></div></div>
+      <div class="loci-row"><div class="loci-meta"><span class="loci-name">Ecclesiology</span><span class="loci-count">251 units</span></div><div class="loci-bar"><div class="loci-fill" data-pct="74"></div></div></div>
+      <div class="loci-row"><div class="loci-meta"><span class="loci-name">Soteriology</span><span class="loci-count">241 units</span></div><div class="loci-bar"><div class="loci-fill" data-pct="71"></div></div></div>
+      <div class="loci-row"><div class="loci-meta"><span class="loci-name">Christology</span><span class="loci-count">231 units</span></div><div class="loci-bar"><div class="loci-fill" data-pct="68"></div></div></div>
+      <div class="loci-row"><div class="loci-meta"><span class="loci-name">Theology Proper</span><span class="loci-count">226 units</span></div><div class="loci-bar"><div class="loci-fill" data-pct="66"></div></div></div>
+      <div class="loci-row"><div class="loci-meta"><span class="loci-name">Bibliology</span><span class="loci-count">209 units</span></div><div class="loci-bar"><div class="loci-fill" data-pct="61"></div></div></div>
+      <div class="loci-row"><div class="loci-meta"><span class="loci-name">Hamartiology</span><span class="loci-count">159 units</span></div><div class="loci-bar"><div class="loci-fill" data-pct="47"></div></div></div>
+      <div class="loci-row"><div class="loci-meta"><span class="loci-name">Pastoral Theology</span><span class="loci-count">127 units</span></div><div class="loci-bar"><div class="loci-fill" data-pct="37"></div></div></div>
+      <div class="loci-row"><div class="loci-meta"><span class="loci-name">Doxology / Worship</span><span class="loci-count">116 units</span></div><div class="loci-bar"><div class="loci-fill" data-pct="34"></div></div></div>
+      <div class="loci-row"><div class="loci-meta"><span class="loci-name">Providence / Sovereignty</span><span class="loci-count">104 units</span></div><div class="loci-bar"><div class="loci-fill" data-pct="30"></div></div></div>
+      <div class="loci-row"><div class="loci-meta"><span class="loci-name">Ethics / Moral Theology</span><span class="loci-count">98 units</span></div><div class="loci-bar"><div class="loci-fill" data-pct="29"></div></div></div>
+      <div class="loci-row"><div class="loci-meta"><span class="loci-name">Pneumatology</span><span class="loci-count">67 units</span></div><div class="loci-bar"><div class="loci-fill" data-pct="20"></div></div></div>
+      <div class="loci-row"><div class="loci-meta"><span class="loci-name">Covenant Theology</span><span class="loci-count">25 units</span></div><div class="loci-bar"><div class="loci-fill" data-pct="7"></div></div></div>
+    </div>
+  </div>
+  <div class="section-rule"></div>
+
+  <div class="section" id="sec-homiletical">
+    <div class="section-label">02 — Homiletical Profile</div>
+    <h2 class="section-title">How He Preaches</h2>
+    <div class="green-callout">
+      <div class="green-callout-label">Hall Distinction — The Logos Machine</div>
+      <div class="green-callout-title"><em>1,278 of 1,974 register units</em> are Logos — the highest logos-ratio in the Hall</div>
+      <div class="green-callout-body">65% of all rhetorical units register as purely logos — argument, explanation, exegesis, theological exposition. Pathos appears 306 times (15%), narrative 174 (9%). The numbers tell the preaching philosophy: MacArthur does not perform, he explains. His sermon is a sustained act of grammatical-historical reasoning, text driven to the ground, with emotional appeal appearing only when the text itself demands it. In a Hall where preachers range widely in register balance, MacArthur is the clearest outlier toward pure intellectual exposition.</div>
+    </div>
+    <div class="charts-row">
+      <div class="chart-card"><div class="chart-card-title">Hermeneutical Methods</div><div class="chart-canvas-wrap"><canvas id="chartMethod"></canvas></div></div>
+      <div class="chart-card"><div class="chart-card-title">Rhetorical Register</div><div class="chart-canvas-wrap"><canvas id="chartTone"></canvas></div></div>
+      <div class="chart-card"><div class="chart-card-title">BT Move Types</div><div class="chart-canvas-wrap"><canvas id="chartBT"></canvas></div></div>
+    </div>
+  </div>
+  <div class="section-rule"></div>
+
+  <div class="section" id="sec-illustrations">
+    <div class="section-label">03 — Illustration Arsenal</div>
+    <h2 class="section-title">How He Makes It Concrete</h2>
+    <p class="section-intro">Historical example leads (52) over personal story (28) — the inverse of most narrative preachers. This is a data signal: MacArthur reaches for missionaries, martyrs, and historical figures before personal anecdote. Total illustration count (115) across 47 sermons averages just 2.4 per sermon — one of the lowest densities in the Hall. He does not illustrate. He illuminates with more text.</p>
+    <div class="illus-list">
+      <div class="illus-row"><span class="illus-name">Historical Example</span><div class="illus-track"><div class="illus-fill gold" data-pct="100"></div></div><span class="illus-val">52</span></div>
+      <div class="illus-row"><span class="illus-name">Personal Story</span><div class="illus-track"><div class="illus-fill green" data-pct="54"></div></div><span class="illus-val">28</span></div>
+      <div class="illus-row"><span class="illus-name">Hypothetical</span><div class="illus-track"><div class="illus-fill burgundy" data-pct="37"></div></div><span class="illus-val">19</span></div>
+      <div class="illus-row"><span class="illus-name">Cultural Reference</span><div class="illus-track"><div class="illus-fill forest" data-pct="23"></div></div><span class="illus-val">12</span></div>
+      <div class="illus-row"><span class="illus-name">Analogy</span><div class="illus-track"><div class="illus-fill slate" data-pct="8"></div></div><span class="illus-val">4</span></div>
+    </div>
+    <div class="illus-density-note">
+      <div class="illus-density-note-label">The No-Personal-Stories Discipline</div>
+      <p>MacArthur has said publicly that he does not use personal illustrations because <strong>the sermon is not about him</strong>. The data confirms the practice: 28 personal stories in 47 sermons, many of which involve others (missionary Henry Martin, coaching staff anecdotes, the Lordship salvation debates). Where Sproul had 50 personal stories in 45 sermons — and recurring illustration characters like "Ken the Handyman" — MacArthur's personal archive is deliberately thin. <strong>The text and its characters are the illustration.</strong></p>
+    </div>
+  </div>
+  <div class="section-rule"></div>
+
+  <div class="section" id="sec-quotes">
+    <div class="section-label">04 — Intellectual Lineage</div>
+    <h2 class="section-title">Who MacArthur Quotes</h2>
+    <p class="section-intro">The top "quotation authors" in this corpus are Paul (20×), Jesus Christ (13×), and the Apostle Paul (12×) — which is to say, MacArthur's intellectual lineage is the Bible itself. External non-Scripture citation is sparse: Westminster Shorter Catechism (3×), E.M. Bounds (2×), missionary Henry Martin (2×). No secular foils. No philosophical sparring partners. This is pure sola scriptura in practice: when MacArthur needs an authority, he returns to the text.</p>
+
+    <div class="quote-hero-card">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center;">
+        <div>
+          <div class="quote-hero-count">20×</div>
+          <div class="quote-hero-count-label">Most cited voice</div>
+          <div class="quote-hero-author">The Apostle Paul</div>
+          <div class="quote-hero-tradition">New Testament author · Romans, Corinthians, Ephesians</div>
+          <p class="quote-hero-text">"Not as though I had already attained, either were already perfect: but I follow after."</p>
+        </div>
+        <div>
+          <div class="quote-hero-count" style="font-size:2.8rem;">13×</div>
+          <div class="quote-hero-count-label">Second voice</div>
+          <div class="quote-hero-author">Jesus Christ</div>
+          <div class="quote-hero-tradition">The Logos · Matthew, Mark, Luke, John</div>
+          <p class="quote-hero-text">"If any man will come after me, let him deny himself, and take up his cross, and follow me."</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="scripture-saturation-card">
+      <div class="scripture-saturation-card-label">Top Scripture Cross-References</div>
+      <div class="scripture-saturation-card-title">The Cross-Reference Saturation</div>
+      <p>MacArthur's signature is the density of intra-canonical reference. Every text is illuminated by other texts. No commentator is needed when you have the whole Bible. 2 Cor 3:18 (16×) leads — his anchor verse for sanctification. 1 Cor 10:31 (11×), 2 Pet 3:18 (12×), Romans 1 (11×) round out the top. He re-preaches the whole Bible from every text.</p>
+      <div class="top-refs-list">
+        <div class="ref-chip"><span class="ref-chip-ref">2 Cor 3:18</span><span class="ref-chip-count">16×</span></div>
+        <div class="ref-chip"><span class="ref-chip-ref">2 Pet 3:18</span><span class="ref-chip-count">12×</span></div>
+        <div class="ref-chip"><span class="ref-chip-ref">1 Cor 10:31</span><span class="ref-chip-count">11×</span></div>
+        <div class="ref-chip"><span class="ref-chip-ref">Rev 4:8</span><span class="ref-chip-count">11×</span></div>
+        <div class="ref-chip"><span class="ref-chip-ref">Romans 1</span><span class="ref-chip-count">11×</span></div>
+        <div class="ref-chip"><span class="ref-chip-ref">Matthew 24</span><span class="ref-chip-count">8×</span></div>
+        <div class="ref-chip"><span class="ref-chip-ref">Revelation 4–5</span><span class="ref-chip-count">7×</span></div>
+        <div class="ref-chip"><span class="ref-chip-ref">Joshua 7:19</span><span class="ref-chip-count">7×</span></div>
+        <div class="ref-chip"><span class="ref-chip-ref">1 Pet 2:2</span><span class="ref-chip-count">7×</span></div>
+        <div class="ref-chip"><span class="ref-chip-ref">John 15:8</span><span class="ref-chip-count">7×</span></div>
+        <div class="ref-chip"><span class="ref-chip-ref">Psalm 50:23</span><span class="ref-chip-count">7×</span></div>
+        <div class="ref-chip"><span class="ref-chip-ref">Eph 3:19-21</span><span class="ref-chip-count">6×</span></div>
+        <div class="ref-chip"><span class="ref-chip-ref">Psalm 19:7</span><span class="ref-chip-count">5×</span></div>
+        <div class="ref-chip"><span class="ref-chip-ref">2 Tim 3:16-17</span><span class="ref-chip-count">5×</span></div>
+      </div>
+    </div>
+
+    <div style="font-size:0.63rem;font-weight:600;letter-spacing:0.22em;text-transform:uppercase;color:var(--warm-gray);margin-bottom:16px;">The Rare External Citations</div>
+    <div class="quotes-grid">
+      <div class="quote-card"><div class="quote-card-count">3×</div><div class="quote-card-author">Westminster Shorter Catechism</div><div class="quote-card-tradition">17th century Puritan · "chief end of man"</div><div class="quote-card-bar"><div class="quote-card-fill" data-pct="100"></div></div></div>
+      <div class="quote-card"><div class="quote-card-count">2×</div><div class="quote-card-author">E.M. Bounds</div><div class="quote-card-tradition">Prayer author · Power Through Prayer</div><div class="quote-card-bar"><div class="quote-card-fill" data-pct="67"></div></div></div>
+      <div class="quote-card"><div class="quote-card-count">2×</div><div class="quote-card-author">Henry Martyn</div><div class="quote-card-tradition">Missionary martyr · India & Persia</div><div class="quote-card-bar"><div class="quote-card-fill" data-pct="67"></div></div></div>
+      <div class="quote-card"><div class="quote-card-count">2×</div><div class="quote-card-author">Kazakhstani Pastors</div><div class="quote-card-tradition">Persecution testimony · personal witness</div><div class="quote-card-bar"><div class="quote-card-fill" data-pct="67"></div></div></div>
+    </div>
+
+    <div class="quotes-minor">
+      <div class="quote-chip"><span class="quote-chip-name">Trumbull</span><span class="quote-chip-count">1×</span></div>
+      <div class="quote-chip"><span class="quote-chip-name">MacArthur's father</span><span class="quote-chip-count">2×</span></div>
+      <div class="quote-chip"><span class="quote-chip-name">Hymnody (anon.)</span><span class="quote-chip-count">2×</span></div>
+      <div class="quote-chip"><span class="quote-chip-name">Scripture (composite)</span><span class="quote-chip-count">4×</span></div>
+    </div>
+  </div>
+  <div class="section-rule"></div>
+
+  <div class="section" id="sec-insights">
+    <div class="section-label">05 — Analytical Insights</div>
+    <h2 class="section-title">What the Data Reveals</h2>
+    <div class="insight-grid">
+      <div class="insight-card">
+        <div class="insight-card-label">The No-Personal-Stories Discipline</div>
+        <p class="insight-card-text">Historical example (52) leads personal story (28) — and even those 28 are often stories about other people, not MacArthur. He has explicitly stated the principle: <em>the sermon is not about the preacher.</em> In an era when "vulnerability" and "storytelling" have become the dominant homiletical currency, MacArthur's near-total suppression of personal narrative is not an oversight — it is a conviction. The congregation at Grace Community has been shaped by it for 55 years.</p>
+      </div>
+      <div class="insight-card">
+        <div class="insight-card-label">Verse-by-Verse Density</div>
+        <p class="insight-card-text">756 exposition units across 47 sermons — averaging 16 per sermon. This is the mechanical expression of verse-by-verse preaching: <em>every syntactical unit of the text must be addressed, explained, and accounted for.</em> The Matthew series took 11 years — not because MacArthur is slow, but because the text requires that much. The grammatical-historical method applied with this density produces a different kind of sermon: not an essay that uses a text, but a text that unfolds into its own theology.</p>
+      </div>
+      <div class="insight-card">
+        <div class="insight-card-label">Polemical Posture</div>
+        <p class="insight-card-text">Contrast (28) and thematic_thread (46) BT moves signal a preacher who consistently sets the biblical position against alternatives. The Lordship Salvation controversy, cessationism, complementarianism — these are not merely positions MacArthur holds, <em>they are the structure of many sermons.</em> "Christian Deconstruction, Part 2" (John 6:60-71) exemplifies this: a text becomes an occasion to address a contemporary theological error with the full weight of the canon. Polemics is pastoral care at Grace.</p>
+      </div>
+      <div class="insight-card">
+        <div class="insight-card-label">Cross-Reference Saturation</div>
+        <p class="insight-card-text">2 Cor 3:18 cited 16 times across 47 sermons — appearing in nearly one-third of the corpus. This is not laziness but theological coherence: <em>every sermon, whatever the text, finds its way back to the whole biblical story.</em> MacArthur does not preach isolated pericopes. He preaches the Bible through every text. The cross-reference density (fulfillment moves: 63, typology: 49, thematic_thread: 46) reflects a preacher who has memorized the canon and deploys it with precision.</p>
+      </div>
+    </div>
+  </div>
+  <div class="section-rule"></div>
+
+  
+</div>
+
+<script>
+const C={green:'#274d30',greenMid:'#3a6840',gold:'#c4a265',goldBright:'#dbb978',burgundy:'#6b2d3e',forest:'#2d4a3e',slate:'#4a4640',warm:'#9e9688'};
+
+new Chart(document.getElementById('chartMethod'),{type:'bar',data:{labels:['Gram-Hist','Redemp-Hist','Canonical','Applicatory'],datasets:[{data:[47,26,23,14],backgroundColor:[C.green,C.gold,C.burgundy,C.warm],borderRadius:4,borderWidth:0}]},options:{indexAxis:'y',scales:{x:{display:false,grid:{display:false}},y:{grid:{display:false},ticks:{font:{family:'DM Sans',size:11},color:C.slate}}},plugins:{legend:{display:false}},animation:{duration:1200}}});
+
+new Chart(document.getElementById('chartTone'),{type:'bar',data:{labels:['Logos','Pathos','Narrative','Ethos','Doxological'],datasets:[{data:[1278,306,174,110,106],backgroundColor:[C.green,C.gold,C.burgundy,C.forest,C.slate],borderRadius:4,borderWidth:0}]},options:{indexAxis:'y',scales:{x:{display:false,grid:{display:false}},y:{grid:{display:false},ticks:{font:{family:'DM Sans',size:11},color:C.slate}}},plugins:{legend:{display:false}},animation:{duration:1200}}});
+
+new Chart(document.getElementById('chartBT'),{type:'doughnut',data:{labels:['Fulfillment','Typology','Thematic','Narr. Arc','Prog. Rev','Contrast','Intertextual'],datasets:[{data:[63,49,46,34,32,28,20],backgroundColor:[C.green,C.gold,C.burgundy,C.forest,C.slate,C.warm,C.greenMid],borderWidth:0,hoverOffset:6}]},options:{cutout:'62%',plugins:{legend:{display:true,position:'right',labels:{font:{family:'DM Sans',size:9},color:C.green,padding:8,boxWidth:8}}},animation:{duration:1200}}});
+
+const observer=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting){x.target.classList.add('visible');observer.unobserve(x.target);}}),{threshold:0.06});
+document.querySelectorAll('.section').forEach(s=>observer.observe(s));
+document.querySelectorAll('[data-pct]').forEach(el=>{const o=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting){setTimeout(()=>{el.style.width=el.dataset.pct+'%';},120);o.unobserve(el);}}),{threshold:0.1});o.observe(el);});
+
+function openModal(e){if(e)e.preventDefault();document.getElementById('joinModal').classList.add('open');document.body.style.overflow='hidden';}
+function closeModal(){document.getElementById('joinModal').classList.remove('open');document.body.style.overflow='';}
+document.getElementById('joinModal').addEventListener('click',function(e){if(e.target===this)closeModal();});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal();});
+async function handleSubmit(e){e.preventDefault();const form=e.target,data=new FormData(form);try{const res=await fetch(form.action,{method:'POST',body:data,headers:{'Accept':'application/json'}});if(res.ok){document.getElementById('modalForm').style.display='none';document.getElementById('modalSuccess').style.display='block';}else{alert('Something went wrong.');}}catch{alert('Something went wrong.');}}
+</script>
+
+<div class="modal-overlay" id="joinModal">
+  <div class="modal" role="dialog" aria-modal="true">
+    <button class="modal-close" onclick="closeModal()">×</button>
+    <div id="modalForm">
+      <div class="modal-eyebrow">Shepherd's Guild</div>
+      <h2 class="modal-title">Join the Hall</h2>
+      <p class="modal-body">Tell us who you are and we'll be in touch about getting your archive into the pipeline — and what we find inside it.</p>
+      <form class="modal-form" action="https://formspree.io/f/mlgpbzak" method="POST" onsubmit="handleSubmit(event)">
+        <div class="form-field"><label for="n">Your Name</label><input type="text" id="n" name="name" placeholder="Pastor John Smith" required></div>
+        <div class="form-field"><label for="e">Email Address</label><input type="email" id="e" name="email" placeholder="john@yourchurch.com" required></div>
+        <input type="hidden" name="_subject" value="New Guild Hall application — Shepherd's Guild">
+        <button type="submit" class="form-submit">Request My Corpus Build →</button>
+        <p class="form-note">No spam. We'll reach out personally within 48 hours.</p>
+      </form>
+    </div>
+    <div class="form-success" id="modalSuccess" style="display:none;"><div style="font-size:2rem;margin-bottom:16px;">✦</div><h3>You're in the queue.</h3><p>We'll be in touch within 48 hours.</p></div>
+  </div>
+</div>
+</body>
+</html>

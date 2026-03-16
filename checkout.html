@@ -1,0 +1,1309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Archive Index & Analysis · Shepherd's Guild</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=DM+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ── SPURGEON DESIGN SYSTEM — PARCHMENT LIGHT THEME ─── */
+    :root {
+      --ink:         #1a1714;
+      --parchment:   #f7f3ee;
+      --cream:       #ede8e0;
+      --warm-gray:   #9e9688;
+      --gold:        #c4a265;
+      --gold-dim:    #a8894f;
+      --gold-bright: #dbb978;
+      --burgundy:    #6b2d3e;
+      --forest:      #2d4a3e;
+      --slate:       #4a4640;
+      --accent:      #0f2d3d;
+      --accent-mid:  #1a4d68;
+      --shadow-soft: 0 2px 20px rgba(26,23,20,0.06);
+      --shadow-card: 0 4px 30px rgba(26,23,20,0.10);
+      /* Legacy aliases so inline styles keep working */
+      --gold-light:  #dbb978;
+      --muted:       #9e9688;
+      --rule:        rgba(196,162,101,0.18);
+      --serif:       'Cormorant Garamond', Georgia, serif;
+      --sans:        'DM Sans', system-ui, sans-serif;
+      --mono:        'JetBrains Mono', monospace;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--parchment);
+      color: var(--ink);
+      font-family: var(--sans);
+      font-size: 16px;
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ─────────────────────────────────────────────── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 48px;
+      height: 58px;
+      background: rgba(247,243,238,0.94);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(196,162,101,0.15);
+    }
+
+    .nav-brand {
+      font-family: var(--sans);
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--ink);
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--slate);
+      text-decoration: none;
+      padding: 6px 12px;
+      border-radius: 4px;
+      transition: all 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--ink); background: rgba(196,162,101,0.1); }
+
+    .nav-cta {
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--ink) !important;
+      text-decoration: none;
+      padding: 8px 18px;
+      background: var(--gold);
+      border-radius: 4px;
+      transition: all 0.2s;
+    }
+
+    .nav-cta:hover { background: var(--gold-bright) !important; }
+
+    /* ── HERO — dark accent band, like Spurgeon ──────────── */
+    .hero {
+      background: var(--accent);
+      color: var(--parchment);
+      position: relative;
+      min-height: 75vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 80px 48px 80px;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 70% 60% at 30% 50%, rgba(196,162,101,0.07) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23c4a265' fill-opacity='0.025'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+      pointer-events: none;
+    }
+
+    .hero-eyebrow {
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      color: var(--gold);
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      margin-bottom: 32px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .hero-eyebrow::before {
+      content: '';
+      display: block;
+      width: 32px;
+      height: 1px;
+      background: var(--gold);
+    }
+
+    h1 {
+      font-family: var(--serif);
+      font-size: clamp(2.8rem, 6vw, 4.5rem);
+      font-weight: 300;
+      line-height: 1.1;
+      color: var(--parchment);
+      margin-bottom: 32px;
+      letter-spacing: -0.02em;
+      position: relative;
+      z-index: 2;
+    }
+
+    h1 em { font-style: italic; color: var(--gold-bright); }
+
+    .hero-sub {
+      font-size: 1rem;
+      font-weight: 300;
+      color: rgba(247,243,238,0.6);
+      max-width: 560px;
+      line-height: 1.9;
+      margin-bottom: 48px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      align-items: center;
+      position: relative;
+      z-index: 2;
+    }
+
+    .btn-primary {
+      font-family: var(--sans);
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--ink);
+      background: var(--gold);
+      padding: 14px 32px;
+      border-radius: 6px;
+      text-decoration: none;
+      transition: all 0.25s;
+      display: inline-block;
+    }
+
+    .btn-primary:hover { background: var(--gold-bright); transform: translateY(-2px); }
+
+    .btn-secondary {
+      font-size: 0.82rem;
+      font-weight: 400;
+      color: rgba(247,243,238,0.5);
+      text-decoration: none;
+      letter-spacing: 0.06em;
+      border-bottom: 1px solid rgba(196,162,101,0.3);
+      padding-bottom: 2px;
+      transition: color 0.2s, border-color 0.2s;
+    }
+
+    .btn-secondary:hover { color: var(--gold-bright); border-color: var(--gold-bright); }
+
+    /* ── SECTION SCAFFOLDING ─────────────────────────────── */
+    section {
+      position: relative;
+      z-index: 1;
+      padding: 80px 48px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .section-rule {
+      width: 100%;
+      height: 1px;
+      background: rgba(196,162,101,0.15);
+      margin-bottom: 80px;
+    }
+
+    .section-eyebrow {
+      font-size: 0.63rem;
+      font-weight: 600;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 12px;
+    }
+
+    h2 {
+      font-family: var(--serif);
+      font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+      font-weight: 400;
+      line-height: 1.2;
+      color: var(--ink);
+      margin-bottom: 48px;
+      letter-spacing: -0.01em;
+    }
+
+    h2 em { font-style: italic; color: var(--gold-dim); }
+
+    h3 {
+      font-family: var(--serif);
+      font-size: 1.3rem;
+      font-weight: 500;
+      color: var(--ink);
+      margin-bottom: 12px;
+    }
+
+    p {
+      font-family: var(--sans);
+      font-size: 0.93rem;
+      color: var(--slate);
+      line-height: 1.85;
+    }
+
+    .full-width-rule {
+      border: none;
+      border-top: 1px solid rgba(196,162,101,0.15);
+      margin: 0;
+    }
+
+    /* ── OPENING STATEMENT ───────────────────────────────── */
+    .opening { padding-top: 0; }
+
+    .opening-text {
+      font-family: var(--serif);
+      font-size: clamp(1.1rem, 2vw, 1.45rem);
+      font-weight: 300;
+      line-height: 1.8;
+      color: var(--ink);
+      max-width: 720px;
+      border-left: 2px solid var(--gold);
+      padding-left: 32px;
+    }
+
+    /* ── DELIVERABLES ────────────────────────────────────── */
+    .deliverables-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    .deliverable {
+      background: white;
+      border: 1px solid rgba(196,162,101,0.12);
+      border-radius: 16px;
+      padding: 40px 36px;
+      position: relative;
+      transition: all 0.25s;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .deliverable:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-card);
+      border-color: rgba(196,162,101,0.3);
+    }
+
+    .deliverable-number {
+      font-size: 0.63rem;
+      font-weight: 600;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 16px;
+    }
+
+    .deliverable h3 { font-size: 1.2rem; margin-bottom: 14px; }
+    .deliverable p { font-size: 0.88rem; line-height: 1.8; }
+
+    .deliverable-icon {
+      position: absolute;
+      top: 36px;
+      right: 32px;
+      width: 28px;
+      height: 28px;
+      opacity: 0.1;
+    }
+
+    /* ── SAMPLE PANEL ────────────────────────────────────── */
+    .sample-panel {
+      background: white;
+      border: 1px solid rgba(196,162,101,0.15);
+      border-radius: 16px;
+      padding: 40px;
+      margin-top: 48px;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .sample-label {
+      font-size: 0.63rem;
+      font-weight: 600;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 20px;
+    }
+
+    .sample-header {
+      font-family: var(--serif);
+      font-size: 1rem;
+      color: var(--slate);
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid rgba(196,162,101,0.15);
+    }
+
+    .sample-stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .sample-stat-label {
+      font-size: 0.62rem;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--warm-gray);
+      margin-bottom: 4px;
+    }
+
+    .sample-stat-value {
+      font-family: var(--serif);
+      font-size: 1.4rem;
+      font-weight: 600;
+      color: var(--ink);
+    }
+
+    .sample-stat-value.gold { color: var(--gold-dim); }
+
+    /* ── PRICING ─────────────────────────────────────────── */
+    .pricing-section { background: none; }
+
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-bottom: 48px;
+    }
+
+    .pricing-card {
+      background: white;
+      border: 1px solid rgba(196,162,101,0.15);
+      border-radius: 16px;
+      padding: 40px;
+      position: relative;
+      transition: all 0.25s;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .pricing-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-card); }
+
+    .pricing-card.featured {
+      border-color: var(--gold);
+      background: rgba(196,162,101,0.03);
+    }
+
+    .pricing-badge {
+      position: absolute;
+      top: -1px; right: 24px;
+      font-size: 0.6rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      background: var(--gold);
+      color: var(--ink);
+      padding: 4px 12px;
+      border-radius: 0 0 6px 6px;
+    }
+
+    .pricing-tier {
+      font-size: 0.63rem;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--warm-gray);
+      margin-bottom: 12px;
+    }
+
+    .pricing-name {
+      font-family: var(--serif);
+      font-size: 1.6rem;
+      font-weight: 500;
+      color: var(--ink);
+      margin-bottom: 8px;
+    }
+
+    .pricing-amount {
+      font-family: var(--serif);
+      font-size: 2.8rem;
+      font-weight: 300;
+      color: var(--gold-dim);
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+
+    .pricing-amount span {
+      font-size: 1rem;
+      color: var(--warm-gray);
+      font-family: var(--sans);
+    }
+
+    .pricing-desc {
+      font-size: 0.82rem;
+      color: var(--warm-gray);
+      margin-bottom: 28px;
+      line-height: 1.6;
+    }
+
+    .pricing-includes {
+      list-style: none;
+      margin-bottom: 32px;
+    }
+
+    .pricing-includes li {
+      font-size: 0.85rem;
+      color: var(--slate);
+      padding: 7px 0;
+      border-bottom: 1px solid rgba(196,162,101,0.1);
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      line-height: 1.5;
+    }
+
+    .pricing-includes li::before {
+      content: '→';
+      color: var(--gold);
+      font-size: 0.8rem;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    .pricing-cta {
+      display: block;
+      text-align: center;
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 13px 24px;
+      border-radius: 6px;
+      text-decoration: none;
+      transition: all 0.25s;
+      cursor: pointer;
+      border: none;
+    }
+
+    .pricing-cta.primary { background: var(--gold); color: var(--ink); }
+    .pricing-cta.primary:hover { background: var(--gold-bright); transform: translateY(-2px); }
+
+    .pricing-cta.secondary {
+      border: 1px solid rgba(196,162,101,0.25);
+      color: var(--warm-gray);
+      background: transparent;
+    }
+
+    .pricing-cta.secondary:hover {
+      border-color: var(--gold);
+      color: var(--ink);
+      background: rgba(196,162,101,0.06);
+    }
+
+    /* ── ARCHIVE SIZE TABLE ──────────────────────────────── */
+    .archive-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 16px;
+      background: white;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .archive-table th {
+      font-size: 0.62rem;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--warm-gray);
+      text-align: left;
+      padding: 16px 24px;
+      border-bottom: 1px solid rgba(196,162,101,0.15);
+      background: var(--cream);
+    }
+
+    .archive-table td {
+      font-size: 0.88rem;
+      color: var(--slate);
+      padding: 14px 24px;
+      border-bottom: 1px solid rgba(196,162,101,0.08);
+    }
+
+    .archive-table tr:hover td { background: rgba(196,162,101,0.04); }
+
+    .archive-table td.price {
+      font-family: var(--serif);
+      font-size: 1.15rem;
+      color: var(--gold-dim);
+      font-weight: 600;
+    }
+
+    .archive-table td.note { font-size: 0.78rem; color: var(--warm-gray); }
+
+    /* ── RENEWAL SECTION ─────────────────────────────────── */
+    .renewal-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-top: 48px;
+    }
+
+    .renewal-option {
+      background: white;
+      border: 1px solid rgba(196,162,101,0.12);
+      border-radius: 12px;
+      padding: 32px 28px;
+      transition: all 0.25s;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .renewal-option:hover { transform: translateY(-2px); box-shadow: var(--shadow-card); }
+
+    .renewal-option h3 { font-size: 1.1rem; margin-bottom: 8px; }
+
+    .renewal-price {
+      font-family: var(--serif);
+      font-size: 1.6rem;
+      color: var(--gold-dim);
+      font-weight: 300;
+      margin-bottom: 12px;
+    }
+
+    .renewal-option p { font-size: 0.84rem; line-height: 1.7; }
+
+    /* ── INTEGRITY NOTE ──────────────────────────────────── */
+    .integrity-block {
+      border-left: 2px solid var(--burgundy);
+      padding: 28px 32px;
+      background: rgba(107,45,62,0.04);
+      border-radius: 0 8px 8px 0;
+      margin-top: 48px;
+    }
+
+    .integrity-block p { font-size: 0.9rem; line-height: 1.85; }
+    .integrity-block strong { color: var(--ink); font-weight: 600; }
+
+    /* ── FINAL CTA ───────────────────────────────────────── */
+    .final-cta {
+      text-align: center;
+      padding: 100px 48px;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    .final-cta h2 { margin-bottom: 20px; text-align: center; }
+    .final-cta p { text-align: center; margin-bottom: 48px; font-size: 1rem; }
+
+    .final-cta-actions {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+    }
+
+    /* ── MODAL — Spurgeon parchment style ────────────────── */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(26,23,20,0.7);
+      backdrop-filter: blur(6px);
+      z-index: 200;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+
+    .modal-overlay.open { display: flex; }
+
+    .modal {
+      background: var(--parchment);
+      border-radius: 16px;
+      padding: 52px 48px;
+      max-width: 520px;
+      width: 100%;
+      position: relative;
+      box-shadow: 0 24px 80px rgba(26,23,20,0.25);
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 20px; right: 24px;
+      background: none;
+      border: none;
+      color: var(--warm-gray);
+      font-size: 1.4rem;
+      cursor: pointer;
+      line-height: 1;
+      transition: color 0.2s;
+      padding: 4px;
+    }
+
+    .modal-close:hover { color: var(--ink); }
+
+    .modal-eyebrow {
+      font-size: 0.62rem;
+      font-weight: 600;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 12px;
+    }
+
+    .modal h3 {
+      font-family: var(--serif);
+      font-size: 2rem;
+      font-weight: 500;
+      line-height: 1.2;
+      color: var(--ink);
+      margin-bottom: 10px;
+    }
+
+    .modal > p {
+      font-size: 0.88rem;
+      color: var(--slate);
+      margin-bottom: 32px;
+      line-height: 1.75;
+    }
+
+    .modal-form { display: flex; flex-direction: column; gap: 14px; }
+
+    .form-row { margin-bottom: 14px; }
+
+    .form-row label {
+      display: block;
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--slate);
+      margin-bottom: 6px;
+    }
+
+    .form-row input,
+    .form-row select,
+    .form-row textarea {
+      width: 100%;
+      background: white;
+      border: 1.5px solid rgba(196,162,101,0.25);
+      border-radius: 6px;
+      padding: 12px 16px;
+      color: var(--ink);
+      font-family: var(--sans);
+      font-size: 0.9rem;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .form-row input:focus,
+    .form-row select:focus,
+    .form-row textarea:focus { border-color: var(--gold); }
+
+    .form-row select option { background: white; color: var(--ink); }
+
+    .form-addon {
+      background: rgba(196,162,101,0.06);
+      border: 1px solid rgba(196,162,101,0.2);
+      border-radius: 8px;
+      padding: 16px;
+      margin: 16px 0;
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+    }
+
+    .form-addon input[type="checkbox"] {
+      width: auto;
+      margin-top: 3px;
+      accent-color: var(--gold);
+      flex-shrink: 0;
+    }
+
+    .form-addon-text {
+      font-size: 0.85rem;
+      color: var(--slate);
+      line-height: 1.6;
+    }
+
+    .form-addon-text strong {
+      color: var(--gold-dim);
+      font-weight: 600;
+      display: block;
+      margin-bottom: 2px;
+    }
+
+    .form-submit {
+      width: 100%;
+      background: var(--gold);
+      color: var(--ink);
+      border: none;
+      border-radius: 6px;
+      padding: 15px 24px;
+      font-family: var(--sans);
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.25s;
+      margin-top: 6px;
+    }
+
+    .form-submit:hover { background: var(--gold-bright); transform: translateY(-2px); }
+
+    .form-note {
+      text-align: center;
+      font-size: 0.72rem;
+      color: var(--warm-gray);
+      margin-top: 10px;
+    }
+
+    .modal-success {
+      display: none;
+      text-align: center;
+      padding: 20px 0;
+    }
+
+    .modal-success .success-mark {
+      font-size: 2rem;
+      color: var(--gold);
+      margin-bottom: 16px;
+    }
+
+    .modal-success h3 { font-size: 1.6rem; margin-bottom: 12px; }
+    .modal-success p { font-size: 0.88rem; color: var(--slate); }
+
+    /* ── FOOTER ──────────────────────────────────────────── */
+    footer {
+      border-top: 1px solid rgba(196,162,101,0.15);
+      padding: 48px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 32px;
+      background: var(--cream);
+    }
+
+    .footer-brand {
+      font-family: var(--serif);
+      font-size: 1.1rem;
+      font-weight: 500;
+      color: var(--ink);
+      margin-bottom: 6px;
+    }
+
+    .footer-tagline {
+      font-size: 0.78rem;
+      color: var(--warm-gray);
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 32px;
+      list-style: none;
+    }
+
+    .footer-links a {
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--warm-gray);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .footer-links a:hover { color: var(--ink); }
+
+    .footer-copy {
+      font-size: 0.72rem;
+      color: var(--warm-gray);
+      align-self: flex-end;
+    }
+
+    /* ── UTILITIES ───────────────────────────────────────── */
+    .gold { color: var(--gold-dim); }
+    .muted { color: var(--warm-gray); }
+
+    /* ── RESPONSIVE ──────────────────────────────────────── */
+    @media (max-width: 768px) {
+      nav { padding: 0 24px; }
+      .nav-links { display: none; }
+      section, .hero { padding-left: 24px; padding-right: 24px; }
+      .deliverables-grid { grid-template-columns: 1fr; }
+      .pricing-grid { grid-template-columns: 1fr; }
+      .renewal-grid { grid-template-columns: 1fr; }
+      .sample-stats { grid-template-columns: repeat(2, 1fr); }
+      footer { flex-direction: column; }
+      .footer-links { flex-wrap: wrap; gap: 16px; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a class="nav-brand" href="index.html">Shepherd's Guild</a>
+    <ul class="nav-links">
+      <li><a href="index.html">The Hall</a></li>
+      <li><a href="index.html#methodology">Methodology</a></li>
+      <li><a href="glossary.html">Glossary</a></li>
+    </ul>
+    <a class="nav-cta" href="#" onclick="openModal('buy'); return false;">Request Your Build →</a>
+  </nav>
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-eyebrow">Shepherd's Guild · Archive Index &amp; Analysis</div>
+    <h1>Your sermon archive has<br><em>a lot left to accomplish.</em></h1>
+    <p class="hero-sub">
+      You've been preaching for years. Maybe decades. Those sermons didn't disappear when Sunday ended — they're sitting in folders, hard drives, and church websites, waiting to be useful again.
+    </p>
+    <div class="hero-actions">
+      <a class="btn-primary" href="#" onclick="openModal('buy'); return false;">Request Your Build →</a>
+      <a class="btn-secondary" href="#" onclick="openModal('info'); return false;">Request more information</a>
+    </div>
+  </div>
+
+  <hr class="full-width-rule" />
+
+  <!-- OPENING STATEMENT -->
+  <section class="opening">
+    <p class="opening-text">
+      We build you a private, searchable website from your sermon archive. Every passage you've ever preached. Every doctrinal theme you've returned to across your ministry. Hundreds of illustrations, organized and findable. The latent book no one has told you about yet — organized, searchable, and yours.<br><br>
+      That's the Archive Index &amp; Analysis.
+    </p>
+  </section>
+
+  <hr class="full-width-rule" />
+
+  <!-- DELIVERABLES -->
+  <section>
+    <div class="section-eyebrow">What We Deliver</div>
+    <h2>Four outputs.<br><em>One corpus build.</em></h2>
+
+    <div class="deliverables-grid">
+
+      <div class="deliverable">
+        <div class="deliverable-number">01 ——</div>
+        <h3>Your Searchable Archive</h3>
+        <p>
+          A private website built from your sermons. Search by passage, topic, illustration type, or doctrine. Find the story you told about forgiveness in 2019. Pull every time you've preached from Romans. Retrieve the illustration you need for Sunday — in seconds. Your life's work, finally findable.
+        </p>
+      </div>
+
+      <div class="deliverable">
+        <div class="deliverable-number">02 ——</div>
+        <h3>Your Voice Report</h3>
+        <p>
+          A data-driven analysis of how you preach. What doctrines dominate your corpus. Where your illustration repertoire is rich and where it's thin. How your rhetorical register compares to the preachers in our Guild Hall. Not a critique — a mirror. Most pastors have never seen their preaching from the outside. This is that view.
+        </p>
+      </div>
+
+      <div class="deliverable">
+        <div class="deliverable-number">03 ——</div>
+        <h3>Your Illustration Almanac</h3>
+        <p>
+          Hundreds of illustrations from your archive, extracted and organized by type and topic. Personal stories. Historical examples. Analogies. Metaphors. More of your material than you knew you had — and now organized so you can actually find and use it.
+        </p>
+      </div>
+
+      <div class="deliverable">
+        <div class="deliverable-number">04 ——</div>
+        <h3>Your Book Recommendation</h3>
+        <p>
+          Most pastors have already written a book — they just can't see it yet. We identify the latent book inside your archive: the topic you've treated most deeply, most consistently, and with the most compelling material. We tell you what it is and show you what's already in there.
+        </p>
+      </div>
+
+    </div>
+
+    <!-- SAMPLE PANEL -->
+    <div class="sample-panel">
+      <div class="sample-label">Sample Report Preview · Anonymous Pastor</div>
+      <div class="sample-header">Evangelical Church · 14 years preaching · 187 sermons indexed</div>
+      <div class="sample-stats">
+        <div>
+          <div class="sample-stat-label">Top Doctrinal Locus</div>
+          <div class="sample-stat-value gold">Christology</div>
+        </div>
+        <div>
+          <div class="sample-stat-label">Expository Rate</div>
+          <div class="sample-stat-value">81%</div>
+        </div>
+        <div>
+          <div class="sample-stat-label">Illus. per Sermon</div>
+          <div class="sample-stat-value">3.4</div>
+        </div>
+        <div>
+          <div class="sample-stat-label">Most Cited Author</div>
+          <div class="sample-stat-value gold">C.S. Lewis</div>
+        </div>
+        <div>
+          <div class="sample-stat-label">Illustrations Found</div>
+          <div class="sample-stat-value">634</div>
+        </div>
+        <div>
+          <div class="sample-stat-label">Book Candidate</div>
+          <div class="sample-stat-value gold">Suffering &amp; Providence</div>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <hr class="full-width-rule" />
+
+  <!-- PRICING -->
+  <section class="pricing-section">
+    <div class="section-eyebrow">Pricing</div>
+    <h2>One build.<br><em>Everything downstream.</em></h2>
+
+    <!-- ARCHIVE SIZE TABLE -->
+    <table class="archive-table">
+      <thead>
+        <tr>
+          <th>Archive Size</th>
+          <th>Build Price</th>
+          <th>Notes</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Up to 200 sermons</td>
+          <td class="price">$500</td>
+          <td class="note">Most pastors with 5–12 years of preaching</td>
+        </tr>
+        <tr>
+          <td>201–400 sermons</td>
+          <td class="price">$800</td>
+          <td class="note">12–20 years of ministry</td>
+        </tr>
+        <tr>
+          <td>401–600 sermons</td>
+          <td class="price">$1,100</td>
+          <td class="note">20+ years — a substantial archive</td>
+        </tr>
+        <tr>
+          <td>600+ sermons</td>
+          <td class="price">Contact us</td>
+          <td class="note">We'll talk through your archive before quoting</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p style="font-size:0.82rem; color:var(--muted); margin-bottom: 48px;">
+      All builds include one year of hosted private site access. Sermons may be submitted as audio files, video URLs, manuscripts, or transcripts.
+    </p>
+
+    <!-- ONGOING PROCESSING ADD-ON -->
+    <div class="pricing-grid">
+
+      <div class="pricing-card">
+        <div class="pricing-tier">Included with every build</div>
+        <div class="pricing-name">Archive Build</div>
+        <div class="pricing-amount">$500<span>–$1,100</span></div>
+        <p class="pricing-desc">Based on archive size. Includes one year of hosted private site access.</p>
+        <ul class="pricing-includes">
+          <li>Searchable private website</li>
+          <li>Voice report — full homiletical analysis</li>
+          <li>Illustration almanac</li>
+          <li>Book recommendation</li>
+          <li>One year of hosted access</li>
+          <li>Comparison against Guild Hall preachers</li>
+        </ul>
+        <a href="#" class="pricing-cta secondary" onclick="openModal('buy'); return false;">Request Your Build</a>
+      </div>
+
+      <div class="pricing-card featured">
+        <div class="pricing-badge">Recommended</div>
+        <div class="pricing-tier">Optional add-on · at point of purchase</div>
+        <div class="pricing-name">Ongoing Processing</div>
+        <div class="pricing-amount">$39<span>/month</span></div>
+        <p class="pricing-desc">New sermons processed and added to your archive each week. Your site grows as your ministry does.</p>
+        <ul class="pricing-includes">
+          <li>Weekly sermon processing</li>
+          <li>Archive grows continuously</li>
+          <li>Hosting included</li>
+          <li>Voice report updated annually</li>
+          <li>Cancel anytime</li>
+        </ul>
+        <a href="#" class="pricing-cta primary" onclick="openModal('buy'); return false;">Add at Checkout →</a>
+      </div>
+
+    </div>
+
+    <!-- YEAR ONE RENEWAL -->
+    <div class="section-eyebrow" style="margin-top: 64px;">After Year One</div>
+    <h2 style="margin-bottom: 24px;">At renewal, you <em>choose.</em></h2>
+    <p style="max-width: 580px; margin-bottom: 0;">Pastors who added ongoing processing at purchase simply continue — no renewal decision needed. For everyone else, three options at the one-year mark.</p>
+
+    <div class="renewal-grid">
+      <div class="renewal-option">
+        <h3>Keep It Live</h3>
+        <div class="renewal-price">$99 <span style="font-size:0.9rem; color:var(--muted);">/year</span></div>
+        <p>Your archive stays hosted and searchable, exactly as built. No new processing. Good for pastors whose corpus feels complete.</p>
+      </div>
+      <div class="renewal-option">
+        <h3>Keep It Live &amp; Growing</h3>
+        <div class="renewal-price">$39 <span style="font-size:0.9rem; color:var(--muted);">/month</span></div>
+        <p>Every new sermon gets processed and added. Your private site grows with your ministry. Hosting included.</p>
+      </div>
+      <div class="renewal-option">
+        <h3>Pause for Now</h3>
+        <div class="renewal-price" style="color: var(--muted);">No charge</div>
+        <p>Your site goes offline but your data is preserved. Come back whenever you're ready. Nothing is lost.</p>
+      </div>
+    </div>
+
+    <!-- INTEGRITY NOTE -->
+    <div class="integrity-block">
+      <p>
+        <strong>This is a handcrafted service, not a software subscription.</strong> We process your archive personally. Every sermon runs through our decomposition pipeline, is reviewed for quality, and is built into your private site by our team. We take on a limited number of new archives each month — which means you'll hear from us within 48 hours of requesting a build, and we'll talk through your archive before we begin.
+      </p>
+    </div>
+
+  </section>
+
+  <hr class="full-width-rule" />
+
+  <!-- FINAL CTA -->
+  <div class="final-cta">
+    <div class="section-eyebrow" style="text-align:center; margin-bottom: 20px;">Ready to begin</div>
+    <h2>Your archive has<br>a lot left to <em>accomplish.</em></h2>
+    <p>Corpus builds starting at $500. Delivered within 3–4 weeks. We'll be in touch within 48 hours of your request.</p>
+    <div class="final-cta-actions">
+      <a class="btn-primary" href="#" onclick="openModal('buy'); return false;">Request Your Build →</a>
+      <a class="btn-secondary" href="#" onclick="openModal('info'); return false;">Not ready yet — request more information</a>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div>
+      <div class="footer-brand">Shepherd's Guild</div>
+      <div class="footer-tagline">An ecosystem of encouragement and equipping for the local church pastor.</div>
+    </div>
+    <ul class="footer-links">
+      <li><a href="index.html">The Guild Hall</a></li>
+      <li><a href="glossary.html">Methodology</a></li>
+      <li><a href="index.html#join">Join the Hall</a></li>
+    </ul>
+    <div class="footer-copy">© 2026 Shepherd's Guild. All rights reserved.</div>
+  </footer>
+
+  <!-- MODAL: BUY -->
+  <div class="modal-overlay" id="modal-buy">
+    <div class="modal">
+      <button class="modal-close" onclick="closeModal('buy')">✕</button>
+
+      <div id="buy-form-wrap">
+        <div class="modal-eyebrow">Archive Index &amp; Analysis</div>
+        <h3>Request Your<br>Corpus Build</h3>
+        <p>Select your archive size to proceed to checkout. Your build begins once payment is confirmed.</p>
+
+        <div class="form-row">
+          <label>Your Name</label>
+          <input type="text" id="buy-name" placeholder="Pastor John Smith" />
+        </div>
+        <div class="form-row">
+          <label>Email Address</label>
+          <input type="email" id="buy-email" placeholder="john@gracechurch.org" />
+        </div>
+        <div class="form-row">
+          <label>Church &amp; Role</label>
+          <input type="text" id="buy-church" placeholder="Senior Pastor, Grace Community Church" />
+        </div>
+        <div class="form-row">
+          <label>Archive Size</label>
+          <select id="buy-tier">
+            <option value="">Select your archive size</option>
+            <option value="https://buy.stripe.com/test_3cI3cw8xzfNlgfz0yW0oM01">Up to 200 sermons — $500</option>
+            <option value="https://buy.stripe.com/test_bJeeVeeVX1Wvfbv6Xk0oM02">201–400 sermons — $800</option>
+            <option value="https://buy.stripe.com/test_6oUaEY3dffNl4wR2H40oM03">401–600 sermons — $1,100</option>
+            <option value="contact">600+ sermons — let's talk</option>
+          </select>
+        </div>
+        <div class="form-row">
+          <label>Format of your archive</label>
+          <select id="buy-format">
+            <option value="">Primary format</option>
+            <option>Audio files</option>
+            <option>Video / YouTube</option>
+            <option>Manuscripts / Word docs</option>
+            <option>Transcripts</option>
+            <option>Mixed formats</option>
+          </select>
+        </div>
+
+        <div class="form-addon">
+          <input type="checkbox" id="addon-monthly" />
+          <div class="form-addon-text">
+            <strong>Add ongoing processing — $39/month</strong>
+            New sermons processed and added to your archive weekly. Your site grows as your ministry does. Cancel anytime.
+          </div>
+        </div>
+
+        <button class="form-submit" onclick="submitBuy()">Proceed to Checkout →</button>
+        <p class="form-note">Secure checkout via Stripe. You'll be redirected to complete payment.</p>
+      </div>
+
+      <div class="modal-success" id="buy-success" style="display:none;">
+        <div class="success-mark">✦</div>
+        <h3>You're in the queue.</h3>
+        <p>Payment confirmed. We'll be in touch within 48 hours to talk through your archive and get started.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: INFO -->
+  <div class="modal-overlay" id="modal-info">
+    <div class="modal">
+      <button class="modal-close" onclick="closeModal('info')">✕</button>
+
+      <div id="info-form-wrap">
+        <div class="modal-eyebrow">Archive Index &amp; Analysis</div>
+        <h3>Request More<br>Information</h3>
+        <p>Leave your details and we'll send you a full overview of the process, timeline, and what to expect from your build.</p>
+
+        <form class="modal-form" action="https://formspree.io/f/mlgpbzak" method="POST" onsubmit="handleInfoSubmit(event)">
+          <div class="form-row">
+            <label>Your Name</label>
+            <input type="text" name="name" placeholder="Pastor John Smith" required />
+          </div>
+          <div class="form-row">
+            <label>Email Address</label>
+            <input type="email" name="email" placeholder="john@gracechurch.org" required />
+          </div>
+          <div class="form-row">
+            <label>What's your biggest question?</label>
+            <textarea name="question" rows="3" placeholder="What would you most like to know about the process?"></textarea>
+          </div>
+          <input type="hidden" name="_subject" value="Archive Build — Information Request" />
+          <button type="submit" class="form-submit">Send My Question →</button>
+          <p class="form-note">No spam. We'll respond personally within 48 hours.</p>
+        </form>
+      </div>
+
+      <div class="modal-success" id="info-success" style="display:none;">
+        <div class="success-mark">✦</div>
+        <h3>Got it.</h3>
+        <p>We'll be in touch within 48 hours with a personal reply.</p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Stripe payment links by tier
+    const STRIPE_LINKS = {
+      'https://buy.stripe.com/test_3cI3cw8xzfNlgfz0yW0oM01': true,
+      'https://buy.stripe.com/test_bJeeVeeVX1Wvfbv6Xk0oM02': true,
+      'https://buy.stripe.com/test_6oUaEY3dffNl4wR2H40oM03': true
+    };
+
+    function openModal(type) {
+      document.getElementById('modal-' + type).classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal(type) {
+      document.getElementById('modal-' + type).classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    document.querySelectorAll('.modal-overlay').forEach(overlay => {
+      overlay.addEventListener('click', function(e) {
+        if (e.target === this) {
+          this.classList.remove('open');
+          document.body.style.overflow = '';
+        }
+      });
+    });
+
+    function submitBuy() {
+      const tier = document.getElementById('buy-tier').value;
+      const name = document.getElementById('buy-name').value.trim();
+      const email = document.getElementById('buy-email').value.trim();
+
+      if (!name || !email) {
+        alert('Please enter your name and email before proceeding.');
+        return;
+      }
+      if (!tier) {
+        alert('Please select your archive size.');
+        return;
+      }
+      if (tier === 'contact') {
+        window.location.href = 'mailto:chris@theshepherdsguild.com?subject=Archive Build Inquiry — 600%2B Sermons&body=Name: ' + encodeURIComponent(name) + '%0AEmail: ' + encodeURIComponent(email);
+        return;
+      }
+
+      const addOnChecked = document.getElementById('addon-monthly').checked;
+      // Redirect to Stripe — add ongoing processing link after checkout if selected
+      const stripeUrl = tier + '?prefilled_email=' + encodeURIComponent(email);
+      window.location.href = stripeUrl;
+    }
+
+    async function handleInfoSubmit(e) {
+      e.preventDefault();
+      const form = e.target;
+      try {
+        const res = await fetch(form.action, {
+          method: 'POST',
+          body: new FormData(form),
+          headers: { 'Accept': 'application/json' }
+        });
+        if (res.ok) {
+          document.getElementById('info-form-wrap').style.display = 'none';
+          document.getElementById('info-success').style.display = 'block';
+        } else {
+          alert('Something went wrong. Please email chris@theshepherdsguild.com directly.');
+        }
+      } catch {
+        alert('Something went wrong. Please email chris@theshepherdsguild.com directly.');
+      }
+    }
+
+    // Show success state if returning from Stripe
+    if (window.location.search.includes('success=1')) {
+      document.getElementById('buy-form-wrap').style.display = 'none';
+      document.getElementById('buy-success').style.display = 'block';
+      openModal('buy');
+    }
+
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') {
+        document.querySelectorAll('.modal-overlay.open').forEach(m => {
+          m.classList.remove('open');
+          document.body.style.overflow = '';
+        });
+      }
+    });
+  </script>
+
+</body>
+</html>
