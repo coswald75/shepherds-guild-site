@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Refined Like Gold — 2026–2027 Sermon Series</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=EB+Garamond:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --parchment: #f5edd6;
+      --parchment-dark: #e8dcc0;
+      --gold: #b8943e;
+      --gold-light: #d4b054;
+      --gold-dark: #8a6d2b;
+      --brown: #4a3728;
+      --brown-dark: #2e2118;
+      --brown-light: #6b5241;
+      --ink: #1a1209;
+      --border-color: #3d2e1f;
+    }
+
+    body {
+      font-family: 'EB Garamond', 'Cormorant Garamond', Georgia, serif;
+      background-color: #2e2118;
+      color: var(--ink);
+      line-height: 1.6;
+    }
+
+    /* Outer crosshatch border */
+    .page-border {
+      max-width: 960px;
+      margin: 24px auto;
+      padding: 12px;
+      background:
+        repeating-linear-gradient(
+          45deg,
+          transparent,
+          transparent 4px,
+          rgba(62, 46, 31, 0.15) 4px,
+          rgba(62, 46, 31, 0.15) 5px
+        ),
+        repeating-linear-gradient(
+          -45deg,
+          transparent,
+          transparent 4px,
+          rgba(62, 46, 31, 0.15) 4px,
+          rgba(62, 46, 31, 0.15) 5px
+        ),
+        var(--parchment-dark);
+    }
+
+    /* Inner page */
+    .page {
+      background: var(--parchment);
+      border: 2px solid var(--gold-dark);
+      padding: 48px 40px 60px;
+      position: relative;
+    }
+
+    .page::before {
+      content: '';
+      position: absolute;
+      inset: 6px;
+      border: 1px solid var(--gold);
+      pointer-events: none;
+      opacity: 0.4;
+    }
+
+    /* ---- Header / Logo ---- */
+    .header {
+      text-align: center;
+      margin-bottom: 16px;
+    }
+
+    .logo {
+      max-width: 320px;
+      width: 100%;
+      height: auto;
+      margin-bottom: 8px;
+      filter: drop-shadow(0 2px 6px rgba(0,0,0,0.15));
+    }
+
+    .tagline {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-style: italic;
+      font-size: 1.25rem;
+      color: var(--brown);
+      letter-spacing: 0.02em;
+    }
+
+    /* ---- Dividers ---- */
+    .divider {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      margin: 36px 0;
+    }
+
+    .divider::before,
+    .divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--gold);
+    }
+
+    .divider .diamond {
+      width: 10px;
+      height: 10px;
+      background: var(--gold);
+      transform: rotate(45deg);
+      flex-shrink: 0;
+    }
+
+    .divider-sm {
+      margin: 24px 0;
+    }
+
+    /* ---- Section headers ---- */
+    .series-header {
+      text-align: center;
+      margin-bottom: 28px;
+    }
+
+    .series-book {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-weight: 900;
+      font-size: 1.7rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--brown-dark);
+      margin-bottom: 4px;
+    }
+
+    .series-subtitle {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-style: italic;
+      font-size: 1.1rem;
+      color: var(--brown-light);
+      letter-spacing: 0.02em;
+    }
+
+    /* ---- Table ---- */
+    .schedule-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 8px;
+    }
+
+    .schedule-table thead th {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-weight: 700;
+      font-size: 0.72rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--gold-dark);
+      text-align: left;
+      padding: 0 0 8px 0;
+      border-bottom: 2px solid var(--gold);
+    }
+
+    .schedule-table thead th:nth-child(1) { width: 22%; }
+    .schedule-table thead th:nth-child(2) { width: 30%; }
+    .schedule-table thead th:nth-child(3) { width: 48%; }
+
+    .schedule-table tbody td {
+      padding: 9px 0;
+      border-bottom: 1px solid rgba(184, 148, 62, 0.2);
+      vertical-align: top;
+    }
+
+    .schedule-table tbody tr:last-child td {
+      border-bottom: none;
+    }
+
+    .date-cell {
+      font-size: 1rem;
+      color: var(--brown);
+    }
+
+    .passage-cell a {
+      font-size: 1rem;
+      color: var(--gold-dark);
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.2s, color 0.2s;
+    }
+
+    .passage-cell a:hover {
+      color: var(--brown-dark);
+      border-bottom-color: var(--gold);
+    }
+
+    .title-cell {
+      font-size: 1rem;
+      color: var(--ink);
+      font-weight: 400;
+    }
+
+    /* TBD rows */
+    .tbd-row {
+      opacity: 0.45;
+    }
+
+    .tbd-separator td {
+      border-bottom: 1px dashed rgba(184, 148, 62, 0.4) !important;
+      padding: 0;
+      height: 0;
+      line-height: 0;
+    }
+
+    /* ---- Isaiah teaser ---- */
+    .isaiah-teaser {
+      text-align: center;
+      margin-top: 8px;
+    }
+
+    .isaiah-teaser .begins {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--brown);
+      margin-bottom: 2px;
+    }
+
+    .isaiah-teaser .continues {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-style: italic;
+      font-size: 1rem;
+      color: var(--brown-light);
+      margin-bottom: 0;
+    }
+
+    /* ---- Blockquote ---- */
+    .closing-quote {
+      text-align: center;
+      margin-top: 36px;
+      padding: 0 32px;
+    }
+
+    .closing-quote p {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-style: italic;
+      font-size: 1.08rem;
+      color: var(--brown);
+      line-height: 1.7;
+    }
+
+    .closing-quote .ref {
+      display: block;
+      margin-top: 6px;
+      font-style: normal;
+      font-size: 0.9rem;
+      color: var(--gold-dark);
+    }
+
+    .closing-quote .ref a {
+      color: var(--gold-dark);
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.2s;
+    }
+
+    .closing-quote .ref a:hover {
+      border-bottom-color: var(--gold);
+    }
+
+    /* ---- Responsive ---- */
+    @media (max-width: 640px) {
+      .page-border { margin: 12px 8px; padding: 8px; }
+      .page { padding: 28px 18px 40px; }
+      .logo { max-width: 240px; }
+      .series-book { font-size: 1.3rem; }
+
+      .schedule-table thead { display: none; }
+      .schedule-table tbody tr {
+        display: block;
+        padding: 14px 0;
+        border-bottom: 1px solid rgba(184, 148, 62, 0.25);
+      }
+      .schedule-table tbody td {
+        display: block;
+        padding: 1px 0;
+        border-bottom: none;
+      }
+      .date-cell {
+        font-weight: 600;
+        font-size: 0.88rem;
+        color: var(--gold-dark);
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+      }
+      .title-cell {
+        font-size: 1.05rem;
+        font-weight: 600;
+        color: var(--brown-dark);
+      }
+      .tbd-separator { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="page-border">
+<div class="page">
+
+  <!-- Header -->
+  <header class="header">
+    <img class="logo" src="logo_0.png" alt="Refined Like Gold 2026–2027 — A crucible with flames">
+    <p class="tagline">The True You Comes Out of the Crucible.</p>
+  </header>
+
+  <!-- ═══════ 1 PETER ═══════ -->
+  <div class="divider"><span class="diamond"></span></div>
+
+  <div class="series-header">
+    <h2 class="series-book">1 Peter</h2>
+    <p class="series-subtitle">When the Fire Proves Who You Are</p>
+  </div>
+
+  <table class="schedule-table">
+    <thead>
+      <tr>
+        <th>Date</th>
+        <th>Passage</th>
+        <th>Sermon Title</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="date-cell">April 5 (Easter)</td>
+        <td class="passage-cell"><a href="https://www.esv.org/1+Peter+1:1-12/" target="_blank" rel="noopener">1 Peter 1:1–12</a></td>
+        <td class="title-cell">Born Again Through Fire</td>
+      </tr>
+      <tr>
+        <td class="date-cell">April 12</td>
+        <td class="passage-cell"><a href="https://www.esv.org/1+Peter+1:13-21/" target="_blank" rel="noopener">1 Peter 1:13–21</a></td>
+        <td class="title-cell">Ransomed from the False Self</td>
+      </tr>
+      <tr>
+        <td class="date-cell">April 19</td>
+        <td class="passage-cell"><a href="https://www.esv.org/1+Peter+1:22-2:3/" target="_blank" rel="noopener">1 Peter 1:22–2:3</a></td>
+        <td class="title-cell">Purified for Love</td>
+      </tr>
+      <tr>
+        <td class="date-cell">April 26</td>
+        <td class="passage-cell"><a href="https://www.esv.org/1+Peter+2:4-10/" target="_blank" rel="noopener">1 Peter 2:4–10</a></td>
+        <td class="title-cell">From Not-a-People to God's People</td>
+      </tr>
+      <tr>
+        <td class="date-cell">May 3</td>
+        <td class="passage-cell"><a href="https://www.esv.org/1+Peter+2:11-17/" target="_blank" rel="noopener">1 Peter 2:11–17</a></td>
+        <td class="title-cell">The Free Self in a World of Power</td>
+      </tr>
+      <tr>
+        <td class="date-cell">May 10</td>
+        <td class="passage-cell"><a href="https://www.esv.org/1+Peter+2:18-25/" target="_blank" rel="noopener">1 Peter 2:18–25</a></td>
+        <td class="title-cell">Returning to the Shepherd of Your Soul</td>
+      </tr>
+      <tr>
+        <td class="date-cell">May 17</td>
+        <td class="passage-cell"><a href="https://www.esv.org/1+Peter+3:1-7/" target="_blank" rel="noopener">1 Peter 3:1–7</a></td>
+        <td class="title-cell">The Imperishable Beauty</td>
+      </tr>
+      <tr>
+        <td class="date-cell">May 24</td>
+        <td class="passage-cell"><a href="https://www.esv.org/1+Peter+3:8-22/" target="_blank" rel="noopener">1 Peter 3:8–22</a></td>
+        <td class="title-cell">What the Fire Can't Burn</td>
+      </tr>
+      <tr>
+        <td class="date-cell">May 31</td>
+        <td class="passage-cell"><a href="https://www.esv.org/1+Peter+5/" target="_blank" rel="noopener">1 Peter 5</a></td>
+        <td class="title-cell">Restored, Confirmed, Strengthened, Established</td>
+      </tr>
+      <!-- TBD separator -->
+      <tr class="tbd-separator"><td colspan="3"></td></tr>
+      <tr class="tbd-row">
+        <td class="date-cell">June 7</td>
+        <td class="passage-cell">TBD</td>
+        <td class="title-cell">TBD</td>
+      </tr>
+      <tr class="tbd-row">
+        <td class="date-cell">June 14</td>
+        <td class="passage-cell">TBD</td>
+        <td class="title-cell">TBD</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- ═══════ ECCLESIASTES ═══════ -->
+  <div class="divider"><span class="diamond"></span></div>
+
+  <div class="series-header">
+    <h2 class="series-book">Ecclesiastes</h2>
+    <p class="series-subtitle">When the Fire Burns Away Every Illusion</p>
+  </div>
+
+  <table class="schedule-table">
+    <thead>
+      <tr>
+        <th>Date</th>
+        <th>Passage</th>
+        <th>Sermon Title</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="date-cell">June 21</td>
+        <td class="passage-cell"><a href="https://www.esv.org/Ecclesiastes+1-2/" target="_blank" rel="noopener">Ecclesiastes 1–2</a></td>
+        <td class="title-cell">The Dross Rises</td>
+      </tr>
+      <tr>
+        <td class="date-cell">June 28</td>
+        <td class="passage-cell"><a href="https://www.esv.org/Ecclesiastes+3/" target="_blank" rel="noopener">Ecclesiastes 3</a></td>
+        <td class="title-cell">Eternity in the Heart</td>
+      </tr>
+      <tr>
+        <td class="date-cell">July 5</td>
+        <td class="passage-cell"><a href="https://www.esv.org/Ecclesiastes+3-4/" target="_blank" rel="noopener">Ecclesiastes 3–4</a></td>
+        <td class="title-cell">The Cord That Doesn't Break</td>
+      </tr>
+      <tr>
+        <td class="date-cell">July 12</td>
+        <td class="passage-cell"><a href="https://www.esv.org/Ecclesiastes+5-6/" target="_blank" rel="noopener">Ecclesiastes 5–6</a></td>
+        <td class="title-cell">Naked You Came</td>
+      </tr>
+      <tr>
+        <td class="date-cell">July 19</td>
+        <td class="passage-cell"><a href="https://www.esv.org/Ecclesiastes+7-8/" target="_blank" rel="noopener">Ecclesiastes 7–8</a></td>
+        <td class="title-cell">The Humility the Fire Forges</td>
+      </tr>
+      <tr>
+        <td class="date-cell">July 26</td>
+        <td class="passage-cell"><a href="https://www.esv.org/Ecclesiastes+9-12/" target="_blank" rel="noopener">Ecclesiastes 9–12</a></td>
+        <td class="title-cell">The Self That Remains</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- ═══════ 1 SAMUEL ═══════ -->
+  <div class="divider"><span class="diamond"></span></div>
+
+  <div class="series-header">
+    <h2 class="series-book">1 Samuel</h2>
+    <p class="series-subtitle">Forging a King</p>
+  </div>
+
+  <table class="schedule-table">
+    <thead>
+      <tr>
+        <th>Date</th>
+        <th>Passage</th>
+        <th>Sermon Title</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="date-cell">August 2</td>
+        <td class="passage-cell"><a href="https://www.esv.org/Ruth+1-2/" target="_blank" rel="noopener">Ruth 1–2</a></td>
+        <td class="title-cell">Providence in the Fire</td>
+      </tr>
+      <tr>
+        <td class="date-cell">August 9</td>
+        <td class="passage-cell"><a href="https://www.esv.org/Ruth+3-4/" target="_blank" rel="noopener">Ruth 3–4</a></td>
+        <td class="title-cell">The Redeemer Who Restores Your Name</td>
+      </tr>
+      <tr>
+        <td class="date-cell">August 16</td>
+        <td class="passage-cell"><a href="https://www.esv.org/1+Samuel+1-2/" target="_blank" rel="noopener">1 Samuel 1–2</a></td>
+        <td class="title-cell">The Prayer Forged in the Fire</td>
+      </tr>
+      <tr>
+        <td class="date-cell">August 23</td>
+        <td class="passage-cell"><a href="https://www.esv.org/1+Samuel+2-4/" target="_blank" rel="noopener">1 Samuel 2–4</a></td>
+        <td class="title-cell">What Happens When You Refuse the Fire</td>
+      </tr>
+      <tr>
+        <td class="date-cell">August 30</td>
+        <td class="passage-cell"><a href="https://www.esv.org/1+Samuel+3/" target="_blank" rel="noopener">1 Samuel 3</a></td>
+        <td class="title-cell">Learning to Hear in the Dark</td>
+      </tr>
+      <tr>
+        <td class="date-cell">September 6</td>
+        <td class="passage-cell"><a href="https://www.esv.org/1+Samuel+7/" target="_blank" rel="noopener">1 Samuel 7–8, 10, 16</a></td>
+        <td class="title-cell">The Fire of Letting Go</td>
+      </tr>
+      <tr>
+        <td class="date-cell">September 13</td>
+        <td class="passage-cell"><a href="https://www.esv.org/1+Samuel+9-15/" target="_blank" rel="noopener">1 Samuel 9–15</a></td>
+        <td class="title-cell">A Crown Without Gold</td>
+      </tr>
+      <tr>
+        <td class="date-cell">September 20</td>
+        <td class="passage-cell"><a href="https://www.esv.org/1+Samuel+18-20/" target="_blank" rel="noopener">1 Samuel 18–20</a></td>
+        <td class="title-cell">The Prince Who Gave Away His Crown</td>
+      </tr>
+      <tr>
+        <td class="date-cell">September 27</td>
+        <td class="passage-cell"><a href="https://www.esv.org/1+Samuel+16/" target="_blank" rel="noopener">1 Samuel 16</a></td>
+        <td class="title-cell">The Heart the Fire Sees</td>
+      </tr>
+      <tr>
+        <td class="date-cell">October 4</td>
+        <td class="passage-cell"><a href="https://www.esv.org/Psalms/" target="_blank" rel="noopener">Selected Psalms</a></td>
+        <td class="title-cell">Songs Written in the Fire</td>
+      </tr>
+      <tr>
+        <td class="date-cell">October 11</td>
+        <td class="passage-cell"><a href="https://www.esv.org/2+Samuel+11-12/" target="_blank" rel="noopener">2 Samuel 11–12</a></td>
+        <td class="title-cell">The Fire Within</td>
+      </tr>
+      <tr>
+        <td class="date-cell">October 18</td>
+        <td class="passage-cell"><a href="https://www.esv.org/2+Samuel+7:12-16/" target="_blank" rel="noopener">2 Samuel 7:12–16</a></td>
+        <td class="title-cell">The Promise of Purer Gold</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- ═══════ ISAIAH ═══════ -->
+  <div class="divider"><span class="diamond"></span></div>
+
+  <div class="series-header">
+    <h2 class="series-book">Isaiah</h2>
+    <p class="series-subtitle">The Fire and the New Name</p>
+  </div>
+
+  <div class="isaiah-teaser">
+    <p class="begins">Series begins October 25, 2026</p>
+    <p class="continues">Continuing through the winter of 2027</p>
+  </div>
+
+  <div class="divider divider-sm"><span class="diamond"></span></div>
+
+  <blockquote class="closing-quote">
+    <p>"Behold, I have refined you, but not as silver;<br>
+    I have tested you in the furnace of affliction."</p>
+    <p><span class="ref">— <a href="https://www.esv.org/Isaiah+48:10/" target="_blank" rel="noopener">Isaiah 48:10</a></span></p>
+  </blockquote>
+
+</div><!-- .page -->
+</div><!-- .page-border -->
+
+</body>
+</html>
