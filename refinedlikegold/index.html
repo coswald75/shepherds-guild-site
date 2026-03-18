@@ -20,7 +20,6 @@
       --brown-dark: #2e2118;
       --brown-light: #6b5241;
       --ink: #1a1209;
-      --border-color: #3d2e1f;
     }
 
     body {
@@ -124,7 +123,7 @@
     /* ---- Section headers ---- */
     .series-header {
       text-align: center;
-      margin-bottom: 28px;
+      margin-bottom: 32px;
     }
 
     .series-book {
@@ -145,73 +144,64 @@
       letter-spacing: 0.02em;
     }
 
-    /* ---- Table ---- */
-    .schedule-table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-bottom: 8px;
+    /* ---- Sermon cards (stacked, centered) ---- */
+    .sermon-list {
+      list-style: none;
+      max-width: 520px;
+      margin: 0 auto;
     }
 
-    .schedule-table thead th {
-      font-family: 'Playfair Display', Georgia, serif;
-      font-weight: 700;
-      font-size: 0.72rem;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-      color: var(--gold-dark);
-      text-align: left;
-      padding: 0 0 8px 0;
-      border-bottom: 2px solid var(--gold);
+    .sermon-item {
+      text-align: center;
+      padding: 18px 0;
+      border-bottom: 1px solid rgba(184, 148, 62, 0.25);
     }
 
-    .schedule-table thead th:nth-child(1) { width: 22%; }
-    .schedule-table thead th:nth-child(2) { width: 30%; }
-    .schedule-table thead th:nth-child(3) { width: 48%; }
-
-    .schedule-table tbody td {
-      padding: 9px 0;
-      border-bottom: 1px solid rgba(184, 148, 62, 0.2);
-      vertical-align: top;
-    }
-
-    .schedule-table tbody tr:last-child td {
+    .sermon-item:last-child {
       border-bottom: none;
     }
 
-    .date-cell {
-      font-size: 1rem;
-      color: var(--brown);
+    .sermon-date {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-weight: 700;
+      font-size: 0.78rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--gold-dark);
+      margin-bottom: 4px;
     }
 
-    .passage-cell a {
-      font-size: 1rem;
+    .sermon-passage a {
+      font-family: 'EB Garamond', Georgia, serif;
+      font-size: 1.1rem;
       color: var(--gold-dark);
       text-decoration: none;
       border-bottom: 1px solid transparent;
       transition: border-color 0.2s, color 0.2s;
     }
 
-    .passage-cell a:hover {
+    .sermon-passage a:hover {
       color: var(--brown-dark);
       border-bottom-color: var(--gold);
     }
 
-    .title-cell {
-      font-size: 1rem;
+    .sermon-title {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 1.2rem;
+      font-weight: 600;
       color: var(--ink);
-      font-weight: 400;
+      margin-top: 2px;
     }
 
-    /* TBD rows */
-    .tbd-row {
-      opacity: 0.45;
+    /* TBD items */
+    .sermon-item.tbd {
+      opacity: 0.4;
     }
 
-    .tbd-separator td {
-      border-bottom: 1px dashed rgba(184, 148, 62, 0.4) !important;
-      padding: 0;
-      height: 0;
-      line-height: 0;
+    .tbd-separator {
+      border-bottom: 1px dashed rgba(184, 148, 62, 0.4);
+      margin: 0 auto;
+      max-width: 520px;
     }
 
     /* ---- Isaiah teaser ---- */
@@ -276,31 +266,7 @@
       .page { padding: 28px 18px 40px; }
       .logo { max-width: 240px; }
       .series-book { font-size: 1.3rem; }
-
-      .schedule-table thead { display: none; }
-      .schedule-table tbody tr {
-        display: block;
-        padding: 14px 0;
-        border-bottom: 1px solid rgba(184, 148, 62, 0.25);
-      }
-      .schedule-table tbody td {
-        display: block;
-        padding: 1px 0;
-        border-bottom: none;
-      }
-      .date-cell {
-        font-weight: 600;
-        font-size: 0.88rem;
-        color: var(--gold-dark);
-        letter-spacing: 0.04em;
-        text-transform: uppercase;
-      }
-      .title-cell {
-        font-size: 1.05rem;
-        font-weight: 600;
-        color: var(--brown-dark);
-      }
-      .tbd-separator { display: none; }
+      .sermon-item { padding: 14px 0; }
     }
   </style>
 </head>
@@ -323,74 +289,66 @@
     <p class="series-subtitle">When the Fire Proves Who You Are</p>
   </div>
 
-  <table class="schedule-table">
-    <thead>
-      <tr>
-        <th>Date</th>
-        <th>Passage</th>
-        <th>Sermon Title</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td class="date-cell">April 5 (Easter)</td>
-        <td class="passage-cell"><a href="https://www.esv.org/1+Peter+1:1-12/" target="_blank" rel="noopener">1 Peter 1:1–12</a></td>
-        <td class="title-cell">Born Again Through Fire</td>
-      </tr>
-      <tr>
-        <td class="date-cell">April 12</td>
-        <td class="passage-cell"><a href="https://www.esv.org/1+Peter+1:13-21/" target="_blank" rel="noopener">1 Peter 1:13–21</a></td>
-        <td class="title-cell">Ransomed from the False Self</td>
-      </tr>
-      <tr>
-        <td class="date-cell">April 19</td>
-        <td class="passage-cell"><a href="https://www.esv.org/1+Peter+1:22-2:3/" target="_blank" rel="noopener">1 Peter 1:22–2:3</a></td>
-        <td class="title-cell">Purified for Love</td>
-      </tr>
-      <tr>
-        <td class="date-cell">April 26</td>
-        <td class="passage-cell"><a href="https://www.esv.org/1+Peter+2:4-10/" target="_blank" rel="noopener">1 Peter 2:4–10</a></td>
-        <td class="title-cell">From Not-a-People to God's People</td>
-      </tr>
-      <tr>
-        <td class="date-cell">May 3</td>
-        <td class="passage-cell"><a href="https://www.esv.org/1+Peter+2:11-17/" target="_blank" rel="noopener">1 Peter 2:11–17</a></td>
-        <td class="title-cell">The Free Self in a World of Power</td>
-      </tr>
-      <tr>
-        <td class="date-cell">May 10</td>
-        <td class="passage-cell"><a href="https://www.esv.org/1+Peter+2:18-25/" target="_blank" rel="noopener">1 Peter 2:18–25</a></td>
-        <td class="title-cell">Returning to the Shepherd of Your Soul</td>
-      </tr>
-      <tr>
-        <td class="date-cell">May 17</td>
-        <td class="passage-cell"><a href="https://www.esv.org/1+Peter+3:1-7/" target="_blank" rel="noopener">1 Peter 3:1–7</a></td>
-        <td class="title-cell">The Imperishable Beauty</td>
-      </tr>
-      <tr>
-        <td class="date-cell">May 24</td>
-        <td class="passage-cell"><a href="https://www.esv.org/1+Peter+3:8-22/" target="_blank" rel="noopener">1 Peter 3:8–22</a></td>
-        <td class="title-cell">What the Fire Can't Burn</td>
-      </tr>
-      <tr>
-        <td class="date-cell">May 31</td>
-        <td class="passage-cell"><a href="https://www.esv.org/1+Peter+5/" target="_blank" rel="noopener">1 Peter 5</a></td>
-        <td class="title-cell">Restored, Confirmed, Strengthened, Established</td>
-      </tr>
-      <!-- TBD separator -->
-      <tr class="tbd-separator"><td colspan="3"></td></tr>
-      <tr class="tbd-row">
-        <td class="date-cell">June 7</td>
-        <td class="passage-cell">TBD</td>
-        <td class="title-cell">TBD</td>
-      </tr>
-      <tr class="tbd-row">
-        <td class="date-cell">June 14</td>
-        <td class="passage-cell">TBD</td>
-        <td class="title-cell">TBD</td>
-      </tr>
-    </tbody>
-  </table>
+  <ul class="sermon-list">
+    <li class="sermon-item">
+      <div class="sermon-date">April 5 (Easter)</div>
+      <div class="sermon-passage"><a href="https://www.esv.org/1+Peter+1:1-12/" target="_blank" rel="noopener">1 Peter 1:1–12</a></div>
+      <div class="sermon-title">Born Again Through Fire</div>
+    </li>
+    <li class="sermon-item">
+      <div class="sermon-date">April 12</div>
+      <div class="sermon-passage"><a href="https://www.esv.org/1+Peter+1:13-21/" target="_blank" rel="noopener">1 Peter 1:13–21</a></div>
+      <div class="sermon-title">Ransomed from the False Self</div>
+    </li>
+    <li class="sermon-item">
+      <div class="sermon-date">April 19</div>
+      <div class="sermon-passage"><a href="https://www.esv.org/1+Peter+1:22-2:3/" target="_blank" rel="noopener">1 Peter 1:22–2:3</a></div>
+      <div class="sermon-title">Purified for Love</div>
+    </li>
+    <li class="sermon-item">
+      <div class="sermon-date">April 26</div>
+      <div class="sermon-passage"><a href="https://www.esv.org/1+Peter+2:4-10/" target="_blank" rel="noopener">1 Peter 2:4–10</a></div>
+      <div class="sermon-title">From Not-a-People to God's People</div>
+    </li>
+    <li class="sermon-item">
+      <div class="sermon-date">May 3</div>
+      <div class="sermon-passage"><a href="https://www.esv.org/1+Peter+2:11-17/" target="_blank" rel="noopener">1 Peter 2:11–17</a></div>
+      <div class="sermon-title">The Free Self in a World of Power</div>
+    </li>
+    <li class="sermon-item">
+      <div class="sermon-date">May 10</div>
+      <div class="sermon-passage"><a href="https://www.esv.org/1+Peter+2:18-25/" target="_blank" rel="noopener">1 Peter 2:18–25</a></div>
+      <div class="sermon-title">Returning to the Shepherd of Your Soul</div>
+    </li>
+    <li class="sermon-item">
+      <div class="sermon-date">May 17</div>
+      <div class="sermon-passage"><a href="https://www.esv.org/1+Peter+3:1-7/" target="_blank" rel="noopener">1 Peter 3:1–7</a></div>
+      <div class="sermon-title">The Imperishable Beauty</div>
+    </li>
+    <li class="sermon-item">
+      <div class="sermon-date">May 24</div>
+      <div class="sermon-passage"><a href="https://www.esv.org/1+Peter+3:8-22/" target="_blank" rel="noopener">1 Peter 3:8–22</a></div>
+      <div class="sermon-title">What the Fire Can't Burn</div>
+    </li>
+    <li class="sermon-item">
+      <div class="sermon-date">May 31</div>
+      <div class="sermon-passage"><a href="https://www.esv.org/1+Peter+5/" target="_blank" rel="noopener">1 Peter 5</a></div>
+      <div class="sermon-title">Restored, Confirmed, Strengthened, Established</div>
+    </li>
+  </ul>
+  <div class="tbd-separator"></div>
+  <ul class="sermon-list">
+    <li class="sermon-item tbd">
+      <div class="sermon-date">June 7</div>
+      <div class="sermon-passage">TBD</div>
+      <div class="sermon-title">TBD</div>
+    </li>
+    <li class="sermon-item tbd">
+      <div class="sermon-date">June 14</div>
+      <div class="sermon-passage">TBD</div>
+      <div class="sermon-title">TBD</div>
+    </li>
+  </ul>
 
   <!-- ═══════ ECCLESIASTES ═══════ -->
   <div class="divider"><span class="diamond"></span></div>
@@ -400,47 +358,38 @@
     <p class="series-subtitle">When the Fire Burns Away Every Illusion</p>
   </div>
 
-  <table class="schedule-table">
-    <thead>
-      <tr>
-        <th>Date</th>
-        <th>Passage</th>
-        <th>Sermon Title</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td class="date-cell">June 21</td>
-        <td class="passage-cell"><a href="https://www.esv.org/Ecclesiastes+1-2/" target="_blank" rel="noopener">Ecclesiastes 1–2</a></td>
-        <td class="title-cell">The Dross Rises</td>
-      </tr>
-      <tr>
-        <td class="date-cell">June 28</td>
-        <td class="passage-cell"><a href="https://www.esv.org/Ecclesiastes+3/" target="_blank" rel="noopener">Ecclesiastes 3</a></td>
-        <td class="title-cell">Eternity in the Heart</td>
-      </tr>
-      <tr>
-        <td class="date-cell">July 5</td>
-        <td class="passage-cell"><a href="https://www.esv.org/Ecclesiastes+3-4/" target="_blank" rel="noopener">Ecclesiastes 3–4</a></td>
-        <td class="title-cell">The Cord That Doesn't Break</td>
-      </tr>
-      <tr>
-        <td class="date-cell">July 12</td>
-        <td class="passage-cell"><a href="https://www.esv.org/Ecclesiastes+5-6/" target="_blank" rel="noopener">Ecclesiastes 5–6</a></td>
-        <td class="title-cell">Naked You Came</td>
-      </tr>
-      <tr>
-        <td class="date-cell">July 19</td>
-        <td class="passage-cell"><a href="https://www.esv.org/Ecclesiastes+7-8/" target="_blank" rel="noopener">Ecclesiastes 7–8</a></td>
-        <td class="title-cell">The Humility the Fire Forges</td>
-      </tr>
-      <tr>
-        <td class="date-cell">July 26</td>
-        <td class="passage-cell"><a href="https://www.esv.org/Ecclesiastes+9-12/" target="_blank" rel="noopener">Ecclesiastes 9–12</a></td>
-        <td class="title-cell">The Self That Remains</td>
-      </tr>
-    </tbody>
-  </table>
+  <ul class="sermon-list">
+    <li class="sermon-item">
+      <div class="sermon-date">June 21</div>
+      <div class="sermon-passage"><a href="https://www.esv.org/Ecclesiastes+1-2/" target="_blank" rel="noopener">Ecclesiastes 1–2</a></div>
+      <div class="sermon-title">The Dross Rises</div>
+    </li>
+    <li class="sermon-item">
+      <div class="sermon-date">June 28</div>
+      <div class="sermon-passage"><a href="https://www.esv.org/Ecclesiastes+3/" target="_blank" rel="noopener">Ecclesiastes 3</a></div>
+      <div class="sermon-title">Eternity in the Heart</div>
+    </li>
+    <li class="sermon-item">
+      <div class="sermon-date">July 5</div>
+      <div class="sermon-passage"><a href="https://www.esv.org/Ecclesiastes+3-4/" target="_blank" rel="noopener">Ecclesiastes 3–4</a></div>
+      <div class="sermon-title">The Cord That Doesn't Break</div>
+    </li>
+    <li class="sermon-item">
+      <div class="sermon-date">July 12</div>
+      <div class="sermon-passage"><a href="https://www.esv.org/Ecclesiastes+5-6/" target="_blank" rel="noopener">Ecclesiastes 5–6</a></div>
+      <div class="sermon-title">Naked You Came</div>
+    </li>
+    <li class="sermon-item">
+      <div class="sermon-date">July 19</div>
+      <div class="sermon-passage"><a href="https://www.esv.org/Ecclesiastes+7-8/" target="_blank" rel="noopener">Ecclesiastes 7–8</a></div>
+      <div class="sermon-title">The Humility the Fire Forges</div>
+    </li>
+    <li class="sermon-item">
+      <div class="sermon-date">July 26</div>
+      <div class="sermon-passage"><a href="https://www.esv.org/Ecclesiastes+9-12/" target="_blank" rel="noopener">Ecclesiastes 9–12</a></div>
+      <div class="sermon-title">The Self That Remains</div>
+    </li>
+  </ul>
 
   <!-- ═══════ 1 SAMUEL ═══════ -->
   <div class="divider"><span class="diamond"></span></div>
@@ -450,77 +399,68 @@
     <p class="series-subtitle">Forging a King</p>
   </div>
 
-  <table class="schedule-table">
-    <thead>
-      <tr>
-        <th>Date</th>
-        <th>Passage</th>
-        <th>Sermon Title</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td class="date-cell">August 2</td>
-        <td class="passage-cell"><a href="https://www.esv.org/Ruth+1-2/" target="_blank" rel="noopener">Ruth 1–2</a></td>
-        <td class="title-cell">Providence in the Fire</td>
-      </tr>
-      <tr>
-        <td class="date-cell">August 9</td>
-        <td class="passage-cell"><a href="https://www.esv.org/Ruth+3-4/" target="_blank" rel="noopener">Ruth 3–4</a></td>
-        <td class="title-cell">The Redeemer Who Restores Your Name</td>
-      </tr>
-      <tr>
-        <td class="date-cell">August 16</td>
-        <td class="passage-cell"><a href="https://www.esv.org/1+Samuel+1-2/" target="_blank" rel="noopener">1 Samuel 1–2</a></td>
-        <td class="title-cell">The Prayer Forged in the Fire</td>
-      </tr>
-      <tr>
-        <td class="date-cell">August 23</td>
-        <td class="passage-cell"><a href="https://www.esv.org/1+Samuel+2-4/" target="_blank" rel="noopener">1 Samuel 2–4</a></td>
-        <td class="title-cell">What Happens When You Refuse the Fire</td>
-      </tr>
-      <tr>
-        <td class="date-cell">August 30</td>
-        <td class="passage-cell"><a href="https://www.esv.org/1+Samuel+3/" target="_blank" rel="noopener">1 Samuel 3</a></td>
-        <td class="title-cell">Learning to Hear in the Dark</td>
-      </tr>
-      <tr>
-        <td class="date-cell">September 6</td>
-        <td class="passage-cell"><a href="https://www.esv.org/1+Samuel+7/" target="_blank" rel="noopener">1 Samuel 7–8, 10, 16</a></td>
-        <td class="title-cell">The Fire of Letting Go</td>
-      </tr>
-      <tr>
-        <td class="date-cell">September 13</td>
-        <td class="passage-cell"><a href="https://www.esv.org/1+Samuel+9-15/" target="_blank" rel="noopener">1 Samuel 9–15</a></td>
-        <td class="title-cell">A Crown Without Gold</td>
-      </tr>
-      <tr>
-        <td class="date-cell">September 20</td>
-        <td class="passage-cell"><a href="https://www.esv.org/1+Samuel+18-20/" target="_blank" rel="noopener">1 Samuel 18–20</a></td>
-        <td class="title-cell">The Prince Who Gave Away His Crown</td>
-      </tr>
-      <tr>
-        <td class="date-cell">September 27</td>
-        <td class="passage-cell"><a href="https://www.esv.org/1+Samuel+16/" target="_blank" rel="noopener">1 Samuel 16</a></td>
-        <td class="title-cell">The Heart the Fire Sees</td>
-      </tr>
-      <tr>
-        <td class="date-cell">October 4</td>
-        <td class="passage-cell"><a href="https://www.esv.org/Psalms/" target="_blank" rel="noopener">Selected Psalms</a></td>
-        <td class="title-cell">Songs Written in the Fire</td>
-      </tr>
-      <tr>
-        <td class="date-cell">October 11</td>
-        <td class="passage-cell"><a href="https://www.esv.org/2+Samuel+11-12/" target="_blank" rel="noopener">2 Samuel 11–12</a></td>
-        <td class="title-cell">The Fire Within</td>
-      </tr>
-      <tr>
-        <td class="date-cell">October 18</td>
-        <td class="passage-cell"><a href="https://www.esv.org/2+Samuel+7:12-16/" target="_blank" rel="noopener">2 Samuel 7:12–16</a></td>
-        <td class="title-cell">The Promise of Purer Gold</td>
-      </tr>
-    </tbody>
-  </table>
+  <ul class="sermon-list">
+    <li class="sermon-item">
+      <div class="sermon-date">August 2</div>
+      <div class="sermon-passage"><a href="https://www.esv.org/Ruth+1-2/" target="_blank" rel="noopener">Ruth 1–2</a></div>
+      <div class="sermon-title">Providence in the Fire</div>
+    </li>
+    <li class="sermon-item">
+      <div class="sermon-date">August 9</div>
+      <div class="sermon-passage"><a href="https://www.esv.org/Ruth+3-4/" target="_blank" rel="noopener">Ruth 3–4</a></div>
+      <div class="sermon-title">The Redeemer Who Restores Your Name</div>
+    </li>
+    <li class="sermon-item">
+      <div class="sermon-date">August 16</div>
+      <div class="sermon-passage"><a href="https://www.esv.org/1+Samuel+1-2/" target="_blank" rel="noopener">1 Samuel 1–2</a></div>
+      <div class="sermon-title">The Prayer Forged in the Fire</div>
+    </li>
+    <li class="sermon-item">
+      <div class="sermon-date">August 23</div>
+      <div class="sermon-passage"><a href="https://www.esv.org/1+Samuel+2-4/" target="_blank" rel="noopener">1 Samuel 2–4</a></div>
+      <div class="sermon-title">What Happens When You Refuse the Fire</div>
+    </li>
+    <li class="sermon-item">
+      <div class="sermon-date">August 30</div>
+      <div class="sermon-passage"><a href="https://www.esv.org/1+Samuel+3/" target="_blank" rel="noopener">1 Samuel 3</a></div>
+      <div class="sermon-title">Learning to Hear in the Dark</div>
+    </li>
+    <li class="sermon-item">
+      <div class="sermon-date">September 6</div>
+      <div class="sermon-passage"><a href="https://www.esv.org/1+Samuel+7/" target="_blank" rel="noopener">1 Samuel 7–8, 10, 16</a></div>
+      <div class="sermon-title">The Fire of Letting Go</div>
+    </li>
+    <li class="sermon-item">
+      <div class="sermon-date">September 13</div>
+      <div class="sermon-passage"><a href="https://www.esv.org/1+Samuel+9-15/" target="_blank" rel="noopener">1 Samuel 9–15</a></div>
+      <div class="sermon-title">A Crown Without Gold</div>
+    </li>
+    <li class="sermon-item">
+      <div class="sermon-date">September 20</div>
+      <div class="sermon-passage"><a href="https://www.esv.org/1+Samuel+18-20/" target="_blank" rel="noopener">1 Samuel 18–20</a></div>
+      <div class="sermon-title">The Prince Who Gave Away His Crown</div>
+    </li>
+    <li class="sermon-item">
+      <div class="sermon-date">September 27</div>
+      <div class="sermon-passage"><a href="https://www.esv.org/1+Samuel+16/" target="_blank" rel="noopener">1 Samuel 16</a></div>
+      <div class="sermon-title">The Heart the Fire Sees</div>
+    </li>
+    <li class="sermon-item">
+      <div class="sermon-date">October 4</div>
+      <div class="sermon-passage"><a href="https://www.esv.org/Psalms/" target="_blank" rel="noopener">Selected Psalms</a></div>
+      <div class="sermon-title">Songs Written in the Fire</div>
+    </li>
+    <li class="sermon-item">
+      <div class="sermon-date">October 11</div>
+      <div class="sermon-passage"><a href="https://www.esv.org/2+Samuel+11-12/" target="_blank" rel="noopener">2 Samuel 11–12</a></div>
+      <div class="sermon-title">The Fire Within</div>
+    </li>
+    <li class="sermon-item">
+      <div class="sermon-date">October 18</div>
+      <div class="sermon-passage"><a href="https://www.esv.org/2+Samuel+7:12-16/" target="_blank" rel="noopener">2 Samuel 7:12–16</a></div>
+      <div class="sermon-title">The Promise of Purer Gold</div>
+    </li>
+  </ul>
 
   <!-- ═══════ ISAIAH ═══════ -->
   <div class="divider"><span class="diamond"></span></div>
