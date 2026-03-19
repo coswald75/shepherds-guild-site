@@ -658,6 +658,23 @@ mark { background: rgba(196,162,101,0.2); color: var(--ink); border-radius: 2px;
   letter-spacing: 0.08em; padding: 4px 10px; border-radius: 3px;
   background: rgba(196,162,101,0.1); border: 1px solid rgba(196,162,101,0.2);
 }
+.herald-card-footer .dl-btn {
+  cursor: pointer; opacity: 0.6; transition: opacity 0.15s;
+}
+.herald-card-footer .dl-btn:hover { opacity: 1; }
+.herald-format-row {
+  display: flex; align-items: center; gap: 6px;
+  font-family: var(--mono); font-size: 0.5rem; color: var(--warm-gray);
+  letter-spacing: 0.08em; text-transform: uppercase;
+}
+.herald-format-btn {
+  padding: 3px 8px; border-radius: 2px; cursor: pointer;
+  border: 1px solid var(--rule-light); background: transparent; color: var(--warm-gray);
+  font-family: var(--mono); font-size: 0.48rem; letter-spacing: 0.08em; text-transform: uppercase;
+  transition: all 0.15s;
+}
+.herald-format-btn.active { background: var(--accent); color: var(--parchment); border-color: var(--accent); }
+.herald-format-btn:hover { border-color: var(--gold-bright); }
 
 /* VoxPrompt specific */
 .vox-prompt-box {
@@ -1460,13 +1477,20 @@ mark { background: rgba(196,162,101,0.2); color: var(--ink); border-radius: 2px;
         </div>
       </div>
 
-      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:8px;">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;flex-wrap:wrap;gap:8px;">
         <div class="section-eyebrow" style="margin-bottom:0;">Money Quotes</div>
-        <div class="filter-row" style="margin:0;">
-          <button class="filter-btn active" onclick="setHeraldFilter('all', this)">All</button>
-          <button class="filter-btn" onclick="setHeraldFilter('voice', this)">My Voice</button>
-          <button class="filter-btn" onclick="setHeraldFilter('cited', this)">Cited Quotes</button>
-          <button class="filter-btn" onclick="refreshHerald()" style="margin-left:8px;">↻ Shuffle</button>
+        <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
+          <div class="filter-row" style="margin:0;">
+            <button class="filter-btn active" onclick="setHeraldFilter('all', this)">All</button>
+            <button class="filter-btn" onclick="setHeraldFilter('voice', this)">My Voice</button>
+            <button class="filter-btn" onclick="setHeraldFilter('cited', this)">Cited Quotes</button>
+            <button class="filter-btn" onclick="refreshHerald()" style="margin-left:8px;">↻ Shuffle</button>
+          </div>
+          <div class="herald-format-row">
+            <span>Format:</span>
+            <button class="herald-format-btn active" onclick="setHeraldFormat('square', this)">Square</button>
+            <button class="herald-format-btn" onclick="setHeraldFormat('wide', this)">Wide</button>
+          </div>
         </div>
       </div>
       <div class="herald-preview" id="heraldGrid">
@@ -2278,6 +2302,123 @@ document.addEventListener('click', function(e) {
 // ── HERALD: MONEY QUOTES ──
 var ALL_HERALD_QUOTES = [];
 var heraldFilter = 'all';
+var heraldFormat = 'square'; // 'square' (1080x1080) or 'wide' (1200x675)
+
+// ── HERALD: CANVAS RENDERER ──
+function heraldDownload(index) {
+  var q = heraldCurrentCards[index];
+  if (!q) return;
+
+  var isWide = heraldFormat === 'wide';
+  var W = isWide ? 1200 : 1080;
+  var H = isWide ? 675 : 1080;
+
+  var canvas = document.createElement('canvas');
+  canvas.width = W;
+  canvas.height = H;
+  var ctx = canvas.getContext('2d');
+
+  // Theme colors
+  var themes = {
+    navy:      { bg: '#0f2d3d', text: '#f5f0e8', attr: 'rgba(196,162,101,0.7)', accent: '#c4a265' },
+    parchment: { bg: '#f5f0e8', text: '#1a1a1a', attr: '#8a8070',              accent: '#c4a265' },
+    dark:      { bg: '#1a1a1a', text: '#f5f0e8', attr: 'rgba(196,162,101,0.7)', accent: '#c4a265' }
+  };
+  var t = themes[q.theme] || themes.navy;
+
+  // Background
+  ctx.fillStyle = t.bg;
+  ctx.fillRect(0, 0, W, H);
+
+  // Subtle border accent line at top
+  ctx.fillStyle = t.accent;
+  ctx.fillRect(0, 0, W, 4);
+
+  // Padding
+  var padX = isWide ? 80 : 72;
+  var padTop = isWide ? 100 : 160;
+  var maxW = W - padX * 2;
+
+  // Quote text — wrap it
+  var fontSize = isWide ? 32 : 38;
+  if (q.text.length > 200) fontSize = isWide ? 26 : 32;
+  if (q.text.length > 280) fontSize = isWide ? 22 : 28;
+
+  ctx.fillStyle = t.text;
+  ctx.font = 'italic ' + fontSize + 'px Georgia, "Times New Roman", serif';
+  ctx.textBaseline = 'top';
+
+  var quoteText = '\u201c' + q.text + '\u201d';
+  var lines = wrapText(ctx, quoteText, maxW);
+  var lineHeight = fontSize * 1.55;
+  var totalTextH = lines.length * lineHeight;
+
+  // Vertically center the quote block
+  var textTop = padTop;
+  var contentH = totalTextH + 80; // text + gap + attribution
+  if (contentH < H - padTop * 1.5) {
+    textTop = Math.max(padTop, (H - contentH) / 2 - 20);
+  }
+
+  for (var li = 0; li < lines.length; li++) {
+    ctx.fillText(lines[li], padX, textTop + li * lineHeight);
+  }
+
+  // Attribution
+  var attrY = textTop + lines.length * lineHeight + 32;
+  ctx.fillStyle = t.attr;
+  ctx.font = '500 ' + (isWide ? 14 : 15) + 'px "SF Mono", "Fira Code", monospace';
+  ctx.letterSpacing = '2px';
+  var attrText = q.attribution.toUpperCase();
+  if (q.church) attrText += '  \u00b7  ' + q.church.toUpperCase();
+  ctx.fillText(attrText, padX, attrY);
+
+  // Watermark — bottom
+  var wmY = H - (isWide ? 36 : 48);
+  ctx.fillStyle = t.accent;
+  ctx.globalAlpha = 0.35;
+  ctx.font = (isWide ? 11 : 12) + 'px "SF Mono", "Fira Code", monospace';
+  ctx.fillText('THE SHEPHERD\u2019S GUILD', padX, wmY);
+
+  // Pool tag on right
+  var poolLabel = q.pool === 'voice' ? 'PASTOR\u2019S VOICE' : 'CITED QUOTE';
+  var poolW = ctx.measureText(poolLabel).width;
+  ctx.fillText(poolLabel, W - padX - poolW, wmY);
+  ctx.globalAlpha = 1.0;
+
+  // Download
+  var link = document.createElement('a');
+  var slug = q.text.substring(0, 30).replace(/[^a-zA-Z0-9]/g, '-').replace(/-+/g, '-').toLowerCase();
+  link.download = 'herald-' + q.theme + '-' + slug + '.png';
+  link.href = canvas.toDataURL('image/png');
+  link.click();
+}
+
+function wrapText(ctx, text, maxWidth) {
+  var words = text.split(' ');
+  var lines = [];
+  var currentLine = '';
+  for (var i = 0; i < words.length; i++) {
+    var test = currentLine ? currentLine + ' ' + words[i] : words[i];
+    if (ctx.measureText(test).width > maxWidth && currentLine) {
+      lines.push(currentLine);
+      currentLine = words[i];
+    } else {
+      currentLine = test;
+    }
+  }
+  if (currentLine) lines.push(currentLine);
+  return lines;
+}
+
+var heraldCurrentCards = [];
+
+function setHeraldFormat(fmt, btn) {
+  heraldFormat = fmt;
+  btn.parentElement.querySelectorAll('.herald-format-btn').forEach(function(b) { b.classList.remove('active'); });
+  btn.classList.add('active');
+  renderHeraldCards();
+}
 
 async function loadHeraldQuotes() {
   await initSermons();
@@ -2375,11 +2516,15 @@ function renderHeraldCards() {
   var shuffled = shuffle(pool).slice(0, 9);
   var themes = ['navy', 'parchment', 'dark'];
 
-  grid.innerHTML = shuffled.map(function(q, i) {
-    var theme = themes[i % 3];
-    var attrLine = q.pool === 'voice'
-      ? (q.attribution + (q.church ? ' · ' + q.church : ''))
-      : (q.attribution + (q.church ? ' · ' + q.church : ''));
+  // Store for download access
+  heraldCurrentCards = shuffled.map(function(q, i) {
+    return Object.assign({}, q, { theme: themes[i % 3] });
+  });
+
+  var fmtLabel = heraldFormat === 'wide' ? '1200×675' : '1080×1080';
+
+  grid.innerHTML = heraldCurrentCards.map(function(q, i) {
+    var attrLine = q.attribution + (q.church ? ' \u00b7 ' + q.church : '');
     var poolTag = q.pool === 'voice'
       ? '<span class="herald-pool-tag voice">My Voice</span>'
       : '<span class="herald-pool-tag cited">Cited</span>';
@@ -2388,13 +2533,13 @@ function renderHeraldCards() {
       : (q.source ? q.source.charAt(0).toUpperCase() + q.source.slice(1) : 'Quotation');
 
     return '<div class="herald-card">' +
-      '<div class="herald-card-bg ' + theme + '">' +
+      '<div class="herald-card-bg ' + q.theme + '">' +
         '<div class="herald-quote-text">\u201c' + q.text + '\u201d</div>' +
         '<div class="herald-attr">' + attrLine + '</div>' +
       '</div>' +
       '<div class="herald-card-footer">' +
-        '<span>' + poolTag + ' · ' + footerLeft + '</span>' +
-        '<span>' + theme.charAt(0).toUpperCase() + theme.slice(1) + '</span>' +
+        '<span>' + poolTag + ' \u00b7 ' + footerLeft + '</span>' +
+        '<span class="dl-btn" onclick="event.stopPropagation(); heraldDownload(' + i + ')" title="Download ' + fmtLabel + ' PNG">\u2913 Download PNG</span>' +
       '</div>' +
     '</div>';
   }).join('');
