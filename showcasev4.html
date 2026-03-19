@@ -844,6 +844,20 @@ mark { background: rgba(196,162,101,0.2); color: var(--ink); border-radius: 2px;
 .q-text { font-size: 1.12rem; line-height: 1.75; margin-bottom: 14px; }
 .q-attr { font-size: 0.58rem; }
 
+/* Scriptures */
+.scripture-book-group { margin-bottom: 32px; }
+.scripture-book-name { font-family: var(--display); font-size: 1.2rem; font-weight: 400; color: var(--ink); margin-bottom: 8px; padding-bottom: 6px; border-bottom: 1px solid rgba(196,162,101,0.2); }
+.scripture-book-name span { font-family: var(--mono); font-size: 0.55rem; color: var(--warm-gray); margin-left: 8px; }
+.scripture-ref { display: flex; align-items: baseline; gap: 12px; padding: 8px 0; border-bottom: 1px solid rgba(196,162,101,0.06); cursor: pointer; transition: background 0.15s; }
+.scripture-ref:hover { background: rgba(196,162,101,0.05); }
+.scripture-ref-verse { font-family: var(--mono); font-size: 0.7rem; font-weight: 500; color: var(--gold-dim); min-width: 120px; }
+.scripture-ref-claim { font-size: 0.78rem; color: var(--slate); flex: 1; }
+.scripture-ref-sermon { font-family: var(--mono); font-size: 0.52rem; color: var(--warm-gray); text-align: right; min-width: 100px; }
+.scripture-summary { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 28px; }
+.scripture-summary-chip { font-family: var(--mono); font-size: 0.55rem; padding: 5px 12px; background: rgba(196,162,101,0.08); border: 1px solid rgba(196,162,101,0.15); border-radius: 100px; color: var(--slate); }
+.scripture-summary-chip strong { color: var(--ink); font-weight: 600; }
+.scripture-testament-label { font-family: var(--mono); font-size: 0.55rem; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold); margin: 32px 0 16px; padding-bottom: 6px; border-bottom: 2px solid var(--gold); }
+
 /* Search */
 .search-input-wrap { padding: 16px 22px; margin-bottom: 20px; }
 .search-input-wrap input { font-size: 1rem; }
@@ -1018,9 +1032,202 @@ mark { background: rgba(196,162,101,0.2); color: var(--ink); border-radius: 2px;
 }
 .preflight-missed li::before { content: '\25cb'; color: var(--warm-gray); flex-shrink: 0; font-size: 0.6rem; margin-top: 4px; }
 
+/* ═══════════════════════════════════════
+   MOBILE RESPONSIVE — hamburger + stacking
+═══════════════════════════════════════ */
+
+/* Hamburger toggle (hidden on desktop) */
+.mobile-toggle {
+  display: none;
+  position: fixed; top: 12px; left: 12px; z-index: 10001;
+  width: 42px; height: 42px; border-radius: 50%;
+  background: var(--accent); border: 1px solid rgba(196,162,101,0.3);
+  color: var(--gold-bright); font-size: 1.2rem;
+  cursor: pointer; align-items: center; justify-content: center;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.25);
+}
+
+/* Overlay behind sidebar on mobile */
+.sidebar-overlay {
+  display: none;
+  position: fixed; inset: 0; z-index: 9998;
+  background: rgba(15,45,61,0.6);
+  backdrop-filter: blur(2px);
+}
+
+/* ── TABLET (≤ 1024px) ── */
+@media (max-width: 1024px) {
+  :root { --sidebar-w: 260px; }
+  .content { padding: 36px 32px; }
+  .exemplar-cards { grid-template-columns: 1fr 1fr; }
+  .illus-grid { grid-template-columns: 1fr 1fr; }
+  .herald-preview { grid-template-columns: 1fr 1fr; }
+  .book-hero { flex-direction: column; gap: 24px; }
+  .book-hero-right { align-self: flex-start; }
+  .distinction { flex-direction: column; gap: 20px; }
+  .distinction-stat { text-align: left; }
+  .sermon-modal-inner { padding: 36px 32px; }
+}
+
+/* ── TABLET + MOBILE: sidebar drawer (≤ 900px) ── */
+@media (max-width: 900px) {
+  html, body { overflow: auto; height: auto; }
+  body { flex-direction: column; }
+
+  /* Hamburger visible */
+  .mobile-toggle { display: flex; }
+
+  /* Sidebar: off-screen drawer */
+  .sidebar {
+    position: fixed; left: -300px; top: 0; z-index: 9999;
+    width: 280px; height: 100vh;
+    transition: left 0.25s ease;
+  }
+  .sidebar.open { left: 0; }
+  .sidebar-overlay.open { display: block; }
+
+  /* Main takes full width */
+  .main { width: 100%; height: auto; min-height: 100vh; overflow-x: hidden; overflow-y: auto; }
+  .main-topbar { padding: 0 16px; padding-left: 58px; height: 52px; }
+  .main-topbar-title { font-size: 0.95rem; }
+  .topbar-tag, .topbar-pill { font-size: 0.5rem; padding: 3px 8px; }
+
+  /* Content padding */
+  .content { padding: 24px 18px; }
+
+  /* Section headings */
+  .section-title { font-size: 1.5rem; margin-bottom: 24px; }
+  .section-eyebrow { font-size: 0.55rem; }
+
+  /* Kill all max-width constraints on mobile */
+  .distinction-text,
+  .growth-diagnosis,
+  .growth-intro-text,
+  .book-hero-body,
+  .addon-desc { max-width: none !important; }
+
+  /* Cards */
+  .card { padding: 20px 18px; }
+
+  /* Overview grid → stack */
+  .overview-grid { grid-template-columns: 1fr; gap: 16px; }
+  .method-grid { grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
+  .method-n { font-size: 1.4rem; }
+  .method-item { padding: 12px 10px; }
+  .bar-lbl { width: 100px; font-size: 0.74rem; }
+
+  /* Exemplar → 2-col on tablet, 1-col further down */
+  .exemplar-cards { grid-template-columns: 1fr 1fr; gap: 14px; }
+  .ex-card { padding: 22px 20px; }
+  .ex-pct { font-size: 2.6rem; }
+  .ex-name { font-size: 1.2rem; }
+
+  /* Illustrations → 2-col on tablet, 1-col further down */
+  .illus-grid { grid-template-columns: 1fr 1fr; gap: 12px; }
+  .illus-card { padding: 18px 16px; overflow-wrap: break-word; word-wrap: break-word; }
+  .filter-row { gap: 5px; }
+  .filter-btn { font-size: 0.52rem; padding: 5px 10px; }
+
+  /* Quotes → single column */
+  .quotes-grid { grid-template-columns: 1fr; gap: 12px; }
+  .quote-card { padding: 18px 20px; }
+  .q-text { font-size: 1rem; }
+
+  /* Scripture refs → wrap */
+  .scripture-ref { flex-wrap: wrap; gap: 4px; }
+  .scripture-ref-verse { min-width: auto; }
+  .scripture-ref-sermon { min-width: auto; text-align: left; width: 100%; margin-top: 2px; }
+  .scripture-ref-claim { width: 100%; }
+
+  /* Search */
+  .search-input-wrap { padding: 12px 14px; }
+  .search-input-wrap input { font-size: 0.9rem; }
+  .prompt-chips { gap: 5px; }
+  .prompt-chip { font-size: 0.52rem; padding: 5px 10px; }
+
+  /* Sermons table → responsive */
+  .sermon-tbl th { font-size: 0.5rem; padding: 8px 10px; }
+  .sermon-tbl td { font-size: 0.78rem; padding: 10px 10px; }
+
+  /* Distinction → stack */
+  .distinction { flex-direction: column; gap: 16px; padding: 24px 20px; }
+  .distinction-text { font-size: 1rem; max-width: none; }
+  .distinction-stat { text-align: left; }
+  .distinction-stat-n { font-size: 2.2rem; }
+
+  /* Growth areas */
+  .growth-intro { padding: 22px 18px; overflow: hidden; }
+  .growth-intro-text { font-size: 0.95rem; max-width: none; }
+  .growth-card-header { flex-direction: column; padding: 20px 18px 16px; gap: 14px; }
+  .growth-metric { min-width: auto; width: 100%; text-align: left; }
+  .growth-metric-row { justify-content: flex-start; }
+  .growth-card-footer { padding: 14px 18px 16px; flex-direction: column; gap: 8px; }
+  .growth-title { font-size: 1.2rem; }
+  .growth-diagnosis { font-size: 0.82rem; max-width: none; }
+
+  /* Latent Book → stack */
+  .book-hero { flex-direction: column; padding: 24px 20px; gap: 20px; }
+  .book-hero-title { font-size: 1.6rem; }
+  .book-hero-body { max-width: none; }
+  .book-conf-label { width: 140px; font-size: 0.72rem; }
+  .book-evidence-grid { grid-template-columns: 1fr; }
+
+  /* Add-ons */
+  .addon-hero-band { flex-direction: column; padding: 20px 18px; gap: 14px; }
+  .addon-body { padding: 20px 18px; }
+  .addon-desc { max-width: none; }
+  .herald-preview { grid-template-columns: 1fr; gap: 10px; }
+  .herald-card-bg { min-height: 100px; padding: 18px; }
+
+  /* PreFlight */
+  .preflight-grade { font-size: 2.8rem; }
+  .preflight-benchmark { padding: 18px 16px; }
+  .preflight-score { font-size: 1.5rem; }
+
+  /* Sermon modal */
+  .sermon-modal.open { padding: 16px 10px; }
+  .sermon-modal-inner { padding: 28px 20px; max-width: none; }
+  .sermon-modal-title { font-size: 1.4rem; }
+  .sermon-modal-unit { padding: 16px 18px; }
+
+  /* VoxPrompt */
+  .vox-prompt-box { padding: 16px 14px; font-size: 0.66rem; }
+
+  /* PrepKing */
+  .prep-report-header { flex-direction: column; gap: 6px; padding: 14px 16px; }
+  .prep-section { padding: 14px 16px; }
+
+  /* Hall Query */
+  .hq-input-wrap { padding: 12px 14px; }
+}
+
+/* ── PHONE (≤ 520px) — single column everything ── */
+@media (max-width: 520px) {
+  .exemplar-cards { grid-template-columns: 1fr; }
+  .illus-grid { grid-template-columns: 1fr; }
+  .quotes-grid { grid-template-columns: 1fr; }
+  .book-evidence-grid { grid-template-columns: 1fr; }
+  .overview-grid { grid-template-columns: 1fr; }
+}
+
+/* ── SMALL MOBILE (≤ 420px) ── */
+@media (max-width: 420px) {
+  .method-grid { grid-template-columns: 1fr 1fr; }
+  .bar-lbl { width: 80px; font-size: 0.68rem; }
+  .reg-name { width: 70px; font-size: 0.72rem; }
+  .main-topbar-right { display: none; }
+  .sidebar-mini-stats { grid-template-columns: 1fr 1fr; gap: 6px; }
+  .mini-stat { padding: 8px 10px; }
+  .mini-stat-n { font-size: 1.2rem; }
+}
+
 </style>
 </head>
 <body>
+
+<!-- Mobile hamburger + overlay -->
+<button class="mobile-toggle" onclick="toggleSidebar()" aria-label="Menu">☰</button>
+<div class="sidebar-overlay" onclick="toggleSidebar()"></div>
 
 <!-- ═══════════════════════════════════════════
      SIDEBAR
@@ -1054,6 +1261,9 @@ mark { background: rgba(196,162,101,0.2); color: var(--ink); border-radius: 2px;
     </div>
     <div class="nav-item" onclick="switchView('sermons', this)">
       <span class="nav-icon">≡</span>Recent Sermons<span class="nav-badge" id="navBadgeSermons">&mdash;</span>
+    </div>
+    <div class="nav-item" onclick="switchView('scriptures', this)">
+      <span class="nav-icon">✦</span>Scriptures<span class="nav-badge" id="navBadgeScriptures">&mdash;</span>
     </div>
     <div class="nav-item" onclick="switchView('search', this)">
       <span class="nav-icon">⌕</span>Search Archive
@@ -1148,6 +1358,14 @@ mark { background: rgba(196,162,101,0.2); color: var(--ink); border-radius: 2px;
         <button class="refresh-btn" onclick="refreshQuotes()">↺ Refresh Quotes</button>
       </div>
       <div class="quotes-grid" id="quotesGrid"></div>
+    </div>
+
+    <!-- ── SCRIPTURES ── -->
+    <div class="view" id="view-scriptures">
+      <div class="section-eyebrow">Scripture Index</div>
+      <div class="section-title" id="scripturesTitle">Scriptures, <em>cross-referenced.</em></div>
+      <div class="scripture-summary" id="scriptureSummary"></div>
+      <div id="scripturesBody"><div style="padding:24px;font-family:var(--mono);font-size:0.65rem;color:var(--warm-gray);">Loading scriptures…</div></div>
     </div>
 
     <!-- ── SEARCH ── -->
@@ -1759,6 +1977,154 @@ function renderQuotes() {
 
 function refreshQuotes() { renderQuotes(); }
 
+// ── SCRIPTURES ──
+const BIBLE_BOOK_ORDER = [
+  'Genesis','Exodus','Leviticus','Numbers','Deuteronomy','Joshua','Judges','Ruth',
+  '1 Samuel','2 Samuel','1 Kings','2 Kings','1 Chronicles','2 Chronicles',
+  'Ezra','Nehemiah','Esther','Job','Psalms','Psalm','Proverbs','Ecclesiastes',
+  'Song of Solomon','Song of Songs','Isaiah','Jeremiah','Lamentations','Ezekiel','Daniel',
+  'Hosea','Joel','Amos','Obadiah','Jonah','Micah','Nahum','Habakkuk',
+  'Zephaniah','Haggai','Zechariah','Malachi',
+  'Matthew','Mark','Luke','John','Acts',
+  'Romans','1 Corinthians','2 Corinthians','Galatians','Ephesians','Philippians','Colossians',
+  '1 Thessalonians','2 Thessalonians','1 Timothy','2 Timothy','Titus','Philemon',
+  'Hebrews','James','1 Peter','2 Peter','1 John','2 John','3 John','Jude','Revelation'
+];
+const OT_LAST = 'Malachi';
+let ALL_SCRIPTURES = [];
+let scripturesLoaded = false;
+
+function parseBookName(ref) {
+  if (!ref) return { book: 'Unknown', rest: ref || '' };
+  // Handle references like "1 Corinthians 15:10", "Psalm 23", "Romans 8"
+  const m = ref.match(/^(\d?\s?[A-Za-z]+(?:\s+of\s+[A-Za-z]+)?)\s*(.*)/);
+  if (m) return { book: m[1].trim(), rest: m[2].trim() };
+  return { book: ref, rest: '' };
+}
+
+function bookSortKey(book) {
+  // Normalize Psalm/Psalms
+  const norm = book === 'Psalm' ? 'Psalms' : book;
+  const idx = BIBLE_BOOK_ORDER.indexOf(norm);
+  return idx >= 0 ? idx : 999;
+}
+
+async function loadScriptures() {
+  if (scripturesLoaded) return;
+  await initSermons();
+  if (!allSermonIds) return;
+  try {
+    // Fetch all tier 2 citations (cross-references) for this preacher's sermons
+    // Need to go through units → sermons
+    const unitRes = await fetch(REST + '/units?sermon_id=in.(' + allSermonIds + ')&select=id,sermon_id', { headers: HEADERS });
+    const units = await unitRes.json();
+    const unitMap = {};
+    units.forEach(function(u) { unitMap[u.id] = u.sermon_id; });
+    const unitIds = units.map(function(u) { return u.id; });
+
+    // Fetch citations in batches
+    const batchSize = 200;
+    let allCitations = [];
+    for (let i = 0; i < unitIds.length; i += batchSize) {
+      const batch = unitIds.slice(i, i + batchSize).join(',');
+      const citRes = await fetch(REST + '/citations?unit_id=in.(' + batch + ')&tier=eq.2&select=id,unit_id,reference,function,supports_claim&limit=1000', { headers: HEADERS });
+      const cits = await citRes.json();
+      allCitations = allCitations.concat(cits);
+    }
+
+    ALL_SCRIPTURES = allCitations.map(function(c) {
+      const sid = unitMap[c.unit_id];
+      const sermon = sermonMap[sid] || {};
+      return {
+        reference: c.reference,
+        function: c.function,
+        supports_claim: c.supports_claim || '',
+        sermon_id: sid,
+        sermon_title: sermon.title || '',
+        sermon_text: sermon.primary_text || ''
+      };
+    });
+    scripturesLoaded = true;
+
+    // Update badge
+    var badge = document.getElementById('navBadgeScriptures');
+    if (badge) badge.textContent = ALL_SCRIPTURES.length;
+
+  } catch(e) { console.error('loadScriptures failed:', e); }
+}
+
+async function renderScriptures() {
+  const body = document.getElementById('scripturesBody');
+  const summary = document.getElementById('scriptureSummary');
+  const title = document.getElementById('scripturesTitle');
+  if (!body) return;
+
+  if (!scripturesLoaded) {
+    body.innerHTML = '<div style="padding:24px;font-family:var(--mono);font-size:0.65rem;color:var(--warm-gray);">Loading scriptures\u2026</div>';
+    await loadScriptures();
+  }
+
+  if (ALL_SCRIPTURES.length === 0) {
+    body.innerHTML = '<div style="padding:24px;font-family:var(--mono);font-size:0.65rem;color:var(--warm-gray);">No cross-references found.</div>';
+    return;
+  }
+
+  if (title) title.innerHTML = ALL_SCRIPTURES.length + ' cross-references, <em>indexed by book.</em>';
+
+  // Group by book
+  const byBook = {};
+  ALL_SCRIPTURES.forEach(function(s) {
+    const parsed = parseBookName(s.reference);
+    const book = parsed.book;
+    if (!byBook[book]) byBook[book] = [];
+    byBook[book].push(Object.assign({}, s, { verse: parsed.rest }));
+  });
+
+  // Sort books by canonical order
+  const sortedBooks = Object.keys(byBook).sort(function(a, b) { return bookSortKey(a) - bookSortKey(b); });
+
+  // Build summary chips (top books)
+  const bookCounts = sortedBooks.map(function(b) { return { book: b, count: byBook[b].length }; });
+  bookCounts.sort(function(a, b) { return b.count - a.count; });
+  if (summary) {
+    summary.innerHTML = bookCounts.slice(0, 10).map(function(bc) {
+      return '<span class="scripture-summary-chip"><strong>' + bc.book + '</strong> ' + bc.count + '\u00d7</span>';
+    }).join('');
+  }
+
+  // Render grouped by testament then book
+  let html = '';
+  let inNT = false;
+  let inOT = false;
+  sortedBooks.forEach(function(book) {
+    const bKey = bookSortKey(book);
+    const otLastKey = BIBLE_BOOK_ORDER.indexOf(OT_LAST);
+    if (!inOT && bKey <= otLastKey) {
+      html += '<div class="scripture-testament-label">Old Testament</div>';
+      inOT = true;
+    }
+    if (!inNT && bKey > otLastKey) {
+      html += '<div class="scripture-testament-label">New Testament</div>';
+      inNT = true;
+    }
+
+    const refs = byBook[book];
+    html += '<div class="scripture-book-group">';
+    html += '<div class="scripture-book-name">' + book + '<span>' + refs.length + ' reference' + (refs.length !== 1 ? 's' : '') + '</span></div>';
+    refs.forEach(function(r) {
+      var clickAttr = r.sermon_id ? ' onclick="openSermon(\'' + r.sermon_id + '\')"' : '';
+      html += '<div class="scripture-ref"' + clickAttr + '>';
+      html += '<span class="scripture-ref-verse">' + (r.verse || book) + '</span>';
+      html += '<span class="scripture-ref-claim">' + (r.supports_claim.length > 100 ? r.supports_claim.slice(0, 100) + '\u2026' : r.supports_claim) + '</span>';
+      html += '<span class="scripture-ref-sermon">' + r.sermon_title + '</span>';
+      html += '</div>';
+    });
+    html += '</div>';
+  });
+
+  body.innerHTML = html;
+}
+
 async function renderSermonTable() {
   const tbody = document.getElementById('sermonTbody');
   if (!tbody) return;
@@ -1867,11 +2233,19 @@ function toggleContent(btn) {
 
 const titleMap = {
   overview:'Overview', exemplar:'Exemplar Similarities', illustrations:'Illustrations',
-  quotes:'Quotes & Citations', search:'Search Archive', sermons:'Recent Sermons',
+  quotes:'Quotes & Citations', scriptures:'Scriptures', search:'Search Archive', sermons:'Recent Sermons',
   growth:'Growth Areas', preflight:'PreFlight Check', latentbook:'Latent Book',
   herald:'Herald \u00b7 Quote Graphics', voxprompt:'VoxPrompt \u00b7 Your Voice',
   hallquery:'Hall Query \u00b7 Search the Masters'
 };
+
+/* Mobile sidebar toggle */
+function toggleSidebar() {
+  document.querySelector('.sidebar').classList.toggle('open');
+  document.querySelector('.sidebar-overlay').classList.toggle('open');
+  var btn = document.querySelector('.mobile-toggle');
+  btn.textContent = document.querySelector('.sidebar').classList.contains('open') ? '✕' : '☰';
+}
 
 function switchView(id, navEl) {
   document.querySelectorAll('.view').forEach(function(v) { v.classList.remove('active'); });
@@ -1880,7 +2254,14 @@ function switchView(id, navEl) {
   navEl.classList.add('active');
   document.getElementById('topbarTitle').textContent = titleMap[id] || id;
   document.querySelector('.content').scrollTop = 0;
+  /* Close sidebar on mobile after nav */
+  if (window.innerWidth <= 900 && document.querySelector('.sidebar').classList.contains('open')) {
+    document.querySelector('.sidebar').classList.remove('open');
+    document.querySelector('.sidebar-overlay').classList.remove('open');
+    document.querySelector('.mobile-toggle').textContent = '☰';
+  }
   if (id === 'sermons') renderSermonTable();
+  if (id === 'scriptures') renderScriptures();
   if (id === 'search') {
     initSermons();
     if (!searchListenerAdded) {
