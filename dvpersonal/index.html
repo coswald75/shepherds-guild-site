@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Archive Index & Analysis · Shepherd's Guild</title>
+<title>David VanAcker — The Shepherd's Guild</title>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,500&family=DM+Sans:wght@300;400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
 <style>
 :root {
@@ -618,19 +618,17 @@ mark { background: rgba(196,162,101,0.2); color: var(--ink); border-radius: 2px;
 .herald-preview { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin-top: 4px; }
 .herald-card {
   border-radius: 3px; overflow: hidden; box-shadow: var(--shadow-soft);
-  border: 1px solid var(--rule-light); cursor: pointer;
-  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  border: 1px solid var(--rule-light);
 }
-.herald-card:hover { transform: translateY(-2px); box-shadow: 0 4px 16px rgba(0,0,0,0.15); }
 .herald-card-bg {
-  padding: 20px; min-height: 140px; display: flex; flex-direction: column; justify-content: center;
+  padding: 20px; min-height: 120px; display: flex; flex-direction: column; justify-content: center;
 }
 .herald-card-bg.navy { background: var(--accent); }
 .herald-card-bg.parchment { background: var(--parchment); border-bottom: 1px solid var(--rule-light); }
 .herald-card-bg.dark { background: var(--ink); }
 .herald-quote-text {
-  font-family: var(--serif); font-size: 0.88rem; font-style: italic; line-height: 1.55;
-  margin-bottom: 10px;
+  font-family: var(--serif); font-size: 0.9rem; font-style: italic; line-height: 1.5;
+  margin-bottom: 8px;
 }
 .herald-card-bg.navy .herald-quote-text,
 .herald-card-bg.dark .herald-quote-text { color: var(--parchment); }
@@ -646,17 +644,6 @@ mark { background: rgba(196,162,101,0.2); color: var(--ink); border-radius: 2px;
   font-family: var(--mono); font-size: 0.48rem; color: var(--warm-gray);
   letter-spacing: 0.08em; text-transform: uppercase;
   display: flex; justify-content: space-between;
-}
-.herald-pool-tag {
-  display: inline-block; padding: 1px 6px; border-radius: 2px; font-size: 0.42rem;
-  font-family: var(--mono); letter-spacing: 0.1em; text-transform: uppercase;
-}
-.herald-pool-tag.voice { background: rgba(196,162,101,0.15); color: var(--gold-bright); }
-.herald-pool-tag.cited { background: rgba(255,255,255,0.08); color: var(--warm-gray); }
-.herald-stats-badge {
-  font-family: var(--mono); font-size: 0.55rem; color: var(--gold-bright);
-  letter-spacing: 0.08em; padding: 4px 10px; border-radius: 3px;
-  background: rgba(196,162,101,0.1); border: 1px solid rgba(196,162,101,0.2);
 }
 
 /* VoxPrompt specific */
@@ -1301,7 +1288,7 @@ mark { background: rgba(196,162,101,0.2); color: var(--ink); border-radius: 2px;
 
     <div class="nav-section-label">Add-ons</div>
     <div class="nav-item" onclick="switchView('herald', this)">
-      <span class="nav-icon">✦</span>Herald
+      <span class="nav-icon">✦</span>Herald<span class="nav-badge-addon">Soon</span>
     </div>
     <div class="nav-item" onclick="switchView('voxprompt', this)">
       <span class="nav-icon">◉</span>VoxPrompt<span class="nav-badge-addon">Soon</span>
@@ -1441,7 +1428,7 @@ mark { background: rgba(196,162,101,0.2); color: var(--ink); border-radius: 2px;
 
     <!-- ── HERALD ── -->
     <div class="view" id="view-herald">
-      <div class="section-eyebrow">Herald · Money Quotes</div>
+      <div class="section-eyebrow">Add-ons · Herald</div>
       <div class="section-title">Your best lines, <em>ready to share.</em></div>
 
       <div class="addon-hero">
@@ -1453,24 +1440,37 @@ mark { background: rgba(196,162,101,0.2); color: var(--ink); border-radius: 2px;
               <div class="addon-tagline">Quote graphic generator · Social-ready formats</div>
             </div>
           </div>
-          <div class="herald-stats-badge" id="heraldStatsBadge"></div>
+          <div class="addon-price-badge">Coming Soon</div>
         </div>
         <div class="addon-body">
-          <div class="addon-desc">Herald surfaces your highest-impact lines — key claims from your own voice and memorable quotes you've cited — and renders them as shareable graphics. Navy, parchment, or dark. Download and post, or hand them to your social media team.</div>
+          <div class="addon-desc">Each week, Herald surfaces your highest-impact lines from recent sermons — what we call Money Quotes — and renders them as shareable graphics in three formats. Navy, parchment, or dark. Square for Instagram, wide for Twitter/X. Download and post, or connect your accounts and we post for you.</div>
+          <button class="addon-unlock-btn">Join Waitlist →</button>
         </div>
       </div>
 
-      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:8px;">
-        <div class="section-eyebrow" style="margin-bottom:0;">Money Quotes</div>
-        <div class="filter-row" style="margin:0;">
-          <button class="filter-btn active" onclick="setHeraldFilter('all', this)">All</button>
-          <button class="filter-btn" onclick="setHeraldFilter('voice', this)">My Voice</button>
-          <button class="filter-btn" onclick="setHeraldFilter('cited', this)">Cited Quotes</button>
-          <button class="filter-btn" onclick="refreshHerald()" style="margin-left:8px;">↻ Shuffle</button>
+      <div class="section-eyebrow" style="margin-bottom:14px;">Sample Graphics · This Month's Quotes</div>
+      <div class="herald-preview">
+        <div class="herald-card">
+          <div class="herald-card-bg navy">
+            <div class="herald-quote-text">"Lament is not the opposite of faith. It is what faith sounds like when the night is long."</div>
+            <div class="herald-attr">Chris Oswald · Providence Community Church</div>
+          </div>
+          <div class="herald-card-footer"><span>Navy · Square</span><span>↓ Download</span></div>
         </div>
-      </div>
-      <div class="herald-preview" id="heraldGrid">
-        <div style="grid-column:1/-1;padding:24px;font-family:var(--mono);font-size:0.65rem;color:var(--warm-gray);">Loading money quotes…</div>
+        <div class="herald-card">
+          <div class="herald-card-bg parchment">
+            <div class="herald-quote-text">"The Psalms do not ask you to feel less. They ask you to bring everything you feel to the one who can bear it."</div>
+            <div class="herald-attr">Chris Oswald · Providence Community Church</div>
+          </div>
+          <div class="herald-card-footer"><span>Parchment · Square</span><span>↓ Download</span></div>
+        </div>
+        <div class="herald-card">
+          <div class="herald-card-bg dark">
+            <div class="herald-quote-text">"Union with Christ is not a doctrine to be mastered. It is the water you swim in."</div>
+            <div class="herald-attr">Chris Oswald · Providence Community Church</div>
+          </div>
+          <div class="herald-card-footer"><span>Dark · Wide</span><span>↓ Download</span></div>
+        </div>
       </div>
     </div>
 
@@ -1571,7 +1571,7 @@ mark { background: rgba(196,162,101,0.2); color: var(--ink); border-radius: 2px;
 // ── SUPABASE CONFIG ──
 const SUPABASE_URL = 'https://twbunmbzyqcqzgffdrib.supabase.co';
 const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InR3YnVubWJ6eXFjcXpnZmZkcmliIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzE1ODgxODUsImV4cCI6MjA4NzE2NDE4NX0.8Y6tMnX5bhIWxTS7llFZElPY-st7rji0MtlTzxeqiW8';
-const DEFAULT_PREACHER_ID = '9c6f8d69-de55-45db-ac60-0fe6d0cfff59';
+const DEFAULT_PREACHER_ID = null; // Will be set after pipeline completes for David VanAcker
 const PREACHER_ID = new URLSearchParams(window.location.search).get('id') || DEFAULT_PREACHER_ID;
 const REST = SUPABASE_URL + '/rest/v1';
 const HEADERS = { 'apikey': SUPABASE_KEY, 'Authorization': 'Bearer ' + SUPABASE_KEY };
@@ -2275,147 +2275,6 @@ document.addEventListener('click', function(e) {
   if (e.target.classList.contains('prompt-chip')) suggestSearch(e.target.textContent.trim());
 });
 
-// ── HERALD: MONEY QUOTES ──
-var ALL_HERALD_QUOTES = [];
-var heraldFilter = 'all';
-
-async function loadHeraldQuotes() {
-  await initSermons();
-  if (!allSermonIds) return;
-
-  var themes = ['navy', 'parchment', 'dark'];
-
-  try {
-    // Pool A: key_claims from theological_claim and application units (the preacher's own voice)
-    var claimRes = await fetch(REST + '/units?sermon_id=in.(' + allSermonIds + ')&rhetorical_function=in.(theological_claim,application)&select=key_claim,sermon_id,rhetorical_function&key_claim=not.is.null&limit=500', { headers: HEADERS });
-    var claims = await claimRes.json();
-
-    // Filter to good-length claims (punchy enough for a graphic)
-    var voiceQuotes = claims
-      .filter(function(c) { return c.key_claim && c.key_claim.length >= 40 && c.key_claim.length <= 280; })
-      .map(function(c, i) {
-        var sermon = sermonMap[c.sermon_id] || {};
-        var sd = sermon.date ? new Date(sermon.date).toLocaleDateString('en-US', {month:'short', year:'numeric'}) : '';
-        var source = [sermon.title, sd].filter(Boolean).join(' · ');
-        return {
-          pool: 'voice',
-          text: c.key_claim,
-          attribution: preacherName || 'Pastor',
-          church: churchName || '',
-          source: source,
-          sermon_id: c.sermon_id,
-          theme: themes[i % 3]
-        };
-      });
-
-    // Pool B: cited quotations with attribution
-    var quotRes = await fetch(REST + '/quotations?unit_id=in.(select id from units where sermon_id in (' + allSermonIds + '))&select=text,attribution,source,function,unit_id', { headers: HEADERS });
-    var citedRaw = [];
-    // Supabase REST might not support subqueries — fetch unit IDs first
-    var unitRes = await fetch(REST + '/units?sermon_id=in.(' + allSermonIds + ')&select=id&limit=2000', { headers: HEADERS });
-    var unitRows = await unitRes.json();
-    if (unitRows.length > 0) {
-      var unitIds = unitRows.map(function(u) { return u.id; });
-      // Batch in chunks of 200 unit IDs to avoid URL length limits
-      for (var ci = 0; ci < unitIds.length; ci += 200) {
-        var chunk = unitIds.slice(ci, ci + 200).join(',');
-        var qRes = await fetch(REST + '/quotations?unit_id=in.(' + chunk + ')&select=text,attribution,source,function,unit_id&limit=200', { headers: HEADERS });
-        var qRows = await qRes.json();
-        citedRaw = citedRaw.concat(qRows);
-      }
-    }
-
-    var citedQuotes = citedRaw
-      .filter(function(q) { return q.text && q.text.length >= 30 && q.text.length <= 350; })
-      .map(function(q, i) {
-        return {
-          pool: 'cited',
-          text: q.text,
-          attribution: q.attribution || 'Unknown',
-          church: q.source || '',
-          source: (q.function || '').replace(/_/g, ' '),
-          sermon_id: null,
-          theme: themes[(i + 1) % 3]
-        };
-      });
-
-    ALL_HERALD_QUOTES = voiceQuotes.concat(citedQuotes);
-
-    // Update stats badge
-    var badge = document.getElementById('heraldStatsBadge');
-    if (badge) {
-      badge.textContent = voiceQuotes.length + ' voice · ' + citedQuotes.length + ' cited';
-    }
-
-  } catch(e) {
-    console.error('loadHeraldQuotes failed:', e);
-    ALL_HERALD_QUOTES = [];
-  }
-}
-
-function renderHeraldCards() {
-  var grid = document.getElementById('heraldGrid');
-  if (!grid) return;
-
-  var pool;
-  if (heraldFilter === 'voice') {
-    pool = ALL_HERALD_QUOTES.filter(function(q) { return q.pool === 'voice'; });
-  } else if (heraldFilter === 'cited') {
-    pool = ALL_HERALD_QUOTES.filter(function(q) { return q.pool === 'cited'; });
-  } else {
-    pool = ALL_HERALD_QUOTES;
-  }
-
-  if (pool.length === 0) {
-    grid.innerHTML = '<div style="grid-column:1/-1;padding:24px;font-family:var(--mono);font-size:0.65rem;color:var(--warm-gray);">No quotes found for this filter.</div>';
-    return;
-  }
-
-  // Shuffle and pick up to 9
-  var shuffled = shuffle(pool).slice(0, 9);
-  var themes = ['navy', 'parchment', 'dark'];
-
-  grid.innerHTML = shuffled.map(function(q, i) {
-    var theme = themes[i % 3];
-    var attrLine = q.pool === 'voice'
-      ? (q.attribution + (q.church ? ' · ' + q.church : ''))
-      : (q.attribution + (q.church ? ' · ' + q.church : ''));
-    var poolTag = q.pool === 'voice'
-      ? '<span class="herald-pool-tag voice">My Voice</span>'
-      : '<span class="herald-pool-tag cited">Cited</span>';
-    var footerLeft = q.pool === 'voice'
-      ? (q.source || 'Key Claim')
-      : (q.source ? q.source.charAt(0).toUpperCase() + q.source.slice(1) : 'Quotation');
-
-    return '<div class="herald-card">' +
-      '<div class="herald-card-bg ' + theme + '">' +
-        '<div class="herald-quote-text">\u201c' + q.text + '\u201d</div>' +
-        '<div class="herald-attr">' + attrLine + '</div>' +
-      '</div>' +
-      '<div class="herald-card-footer">' +
-        '<span>' + poolTag + ' · ' + footerLeft + '</span>' +
-        '<span>' + theme.charAt(0).toUpperCase() + theme.slice(1) + '</span>' +
-      '</div>' +
-    '</div>';
-  }).join('');
-}
-
-async function renderHerald() {
-  if (ALL_HERALD_QUOTES.length === 0) {
-    await loadHeraldQuotes();
-  }
-  renderHeraldCards();
-}
-
-function refreshHerald() { renderHeraldCards(); }
-
-function setHeraldFilter(filter, btn) {
-  heraldFilter = filter;
-  btn.closest('.filter-row') && btn.closest('.filter-row').querySelectorAll('.filter-btn').forEach(function(b) { b.classList.remove('active'); });
-  btn.classList.add('active');
-  renderHeraldCards();
-}
-
 document.addEventListener('DOMContentLoaded', async function() {
   // Load preacher info and analysis data in parallel
   await Promise.all([loadPreacherInfo(), loadAnalysis()]);
@@ -2433,7 +2292,6 @@ document.addEventListener('DOMContentLoaded', async function() {
   initSermons();
   renderIllus();
   renderQuotes();
-  renderHerald();
   const input = document.getElementById('searchInput');
   if (input && !searchListenerAdded) {
     input.addEventListener('keydown', function(e) { if (e.key === 'Enter') runSearch(); });
