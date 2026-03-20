@@ -1030,6 +1030,32 @@ mark { background: rgba(196,162,101,0.2); color: var(--ink); border-radius: 2px;
   font-family: var(--sans); font-size: 0.86rem; color: var(--slate);
   line-height: 1.85;
 }
+.sermon-modal-unit.highlighted {
+  border-color: var(--gold-dim);
+  box-shadow: 0 0 0 2px rgba(196,162,101,0.3), var(--shadow-soft);
+  background: rgba(196,162,101,0.06);
+}
+.sermon-modal-toggle {
+  display: flex; gap: 0; margin: 16px 0 20px; border: 1px solid var(--rule-light); border-radius: 3px; overflow: hidden; width: fit-content;
+}
+.sermon-modal-toggle button {
+  font-family: var(--mono); font-size: 0.55rem; letter-spacing: 0.1em; text-transform: uppercase;
+  padding: 7px 16px; border: none; cursor: pointer; background: transparent; color: var(--warm-gray);
+  transition: all 0.15s;
+}
+.sermon-modal-toggle button.active {
+  background: var(--accent); color: var(--parchment);
+}
+.sermon-modal-toggle button:not(.active):hover { background: rgba(196,162,101,0.08); }
+.sermon-modal-raw-transcript {
+  font-family: var(--serif); font-size: 0.95rem; color: var(--ink);
+  line-height: 2; white-space: pre-wrap; word-wrap: break-word;
+}
+.sermon-modal-raw-transcript p { margin-bottom: 1em; }
+.sermon-modal-no-transcript {
+  font-family: var(--mono); font-size: 0.65rem; color: var(--warm-gray);
+  padding: 32px 0; text-align: center;
+}
 
 /* ── PREFLIGHT CHECK ── */
 .preflight-grade {
@@ -1329,7 +1355,7 @@ mark { background: rgba(196,162,101,0.2); color: var(--ink); border-radius: 2px;
   </nav>
 
   <div class="sidebar-footer">
-    <button class="build-cta">Build Your Archive →</button>
+    <button class="build-cta" onclick="window.location.href='/onboarding'">Build Your Archive →</button>
   </div>
 </div>
 
@@ -1947,7 +1973,7 @@ async function loadIllustrations() {
       const typeLabel = ILLUS_TYPE_MAP[u.illustration_type] || (u.illustration_type || 'Illustration').replace(/_/g, ' ').replace(/\b\w/g, function(c) { return c.toUpperCase(); });
       const sd = sermon.date ? new Date(sermon.date).toLocaleDateString('en-US', {month:'short', year:'numeric'}) : '';
       const source = [sermon.title, sermon.primary_text, sd].filter(Boolean).join(' \u00b7 ');
-      return { type: typeLabel, text: u.summary || '', source: source, sermon_id: u.sermon_id };
+      return { type: typeLabel, text: u.summary || '', source: source, sermon_id: u.sermon_id, unit_id: u.id };
     });
   } catch(e) { console.error('loadIllustrations failed:', e); ALL_ILLUS = []; }
 }
@@ -1975,7 +2001,7 @@ async function renderIllus() {
     return;
   }
   grid.innerHTML = shown.map(function(i) {
-    var clickAttr = i.sermon_id ? ' onclick="openSermon(\'' + i.sermon_id + '\')" style="cursor:pointer"' : '';
+    var clickAttr = i.sermon_id ? ' onclick="openSermon(\'' + i.sermon_id + '\', {unitId:\'' + (i.unit_id || '') + '\'})" style="cursor:pointer"' : '';
     return '<div class="illus-card"' + clickAttr + '><div class="illus-type-lbl">' + i.type + '</div><div class="illus-text">' + i.text + '</div>' + (i.source ? '<div class="illus-source">' + i.source + '</div>' : '') + '</div>';
   }).join('');
 }
@@ -1994,7 +2020,8 @@ function renderQuotes() {
   if (!grid) return;
   const shown = shuffle(ALL_QUOTES).slice(0, 12);
   grid.innerHTML = shown.map(function(q) {
-    var clickAttr = q.sermon_id ? ' onclick="openSermon(\'' + q.sermon_id + '\')" style="cursor:pointer;" title="Click to view sermon"' : '';
+    var safeText = (q.text || '').replace(/'/g, "\\'").replace(/"/g, '&quot;').slice(0, 80);
+    var clickAttr = q.sermon_id ? ' onclick="openSermon(\'' + q.sermon_id + '\', {searchText:\'' + safeText + '\'})" style="cursor:pointer;" title="Click to view sermon"' : '';
     return '<div class="quote-card"' + clickAttr + '><div class="q-text">\u201c' + q.text + '\u201d</div><div class="q-attr">' + q.attr + '</div>' + (q.source ? '<div style="font-family:var(--mono);font-size:0.48rem;color:var(--warm-gray);margin-top:2px;">' + q.source + '</div>' : '') + '</div>';
   }).join('');
 }
@@ -2161,7 +2188,7 @@ async function renderSermonTable() {
     const date = s.date ? new Date(s.date).toLocaleDateString('en-US', {month:'short', day:'numeric', year:'numeric'}) : '';
     const type = s.sermon_type || 'Expository';
     const badgeCls = type.toLowerCase() === 'expository' ? 'exp' : 'top';
-    return '<tr><td class="s-title-cell">' + (s.title || 'Untitled') + '</td><td>' + (s.series_name || '') + '</td><td>' + (s.primary_text || '') + '</td><td>' + date + '</td><td><span class="s-badge ' + badgeCls + '">' + type + '</span></td></tr>';
+    return '<tr onclick="openSermon(\'' + s.id + '\')" style="cursor:pointer"><td class="s-title-cell">' + (s.title || 'Untitled') + '</td><td>' + (s.series_name || '') + '</td><td>' + (s.primary_text || '') + '</td><td>' + date + '</td><td><span class="s-badge ' + badgeCls + '">' + type + '</span></td></tr>';
   }).join('');
 }
 
@@ -2229,7 +2256,8 @@ function renderNextPage(query) {
     const expandBtn = hasContent ? '<button class="result-expand" onclick="toggleContent(this)">\u25b6 View excerpt</button><div class="result-content">' + highlight(unit.content, query) + '</div>' : '';
     const card = document.createElement('div');
     card.className = 'result-card';
-    card.innerHTML = '<div class="result-header"><span class="result-fn ' + fnCls + '">' + fn + '</span><span class="result-sermon-lbl">' + sermonTitle + (sermonDate ? ' \u00b7 ' + sermonDate : '') + '</span><div class="result-summary">' + summary + '</div>' + claim + expandBtn + '</div>';
+    var sermonClick = unit.sermon_id ? ' onclick="openSermon(\'' + unit.sermon_id + '\', {unitId:\'' + unit.id + '\'})" style="cursor:pointer;text-decoration:underline;text-underline-offset:2px;"' : '';
+    card.innerHTML = '<div class="result-header"><span class="result-fn ' + fnCls + '">' + fn + '</span><span class="result-sermon-lbl"' + sermonClick + '>' + sermonTitle + (sermonDate ? ' \u00b7 ' + sermonDate : '') + '</span><div class="result-summary">' + summary + '</div>' + claim + expandBtn + '</div>';
     container.appendChild(card);
   });
   const moreBtn = document.getElementById('searchMoreBtn');
@@ -2587,44 +2615,111 @@ document.addEventListener('DOMContentLoaded', async function() {
 });
 
 // ── SERMON MODAL ──
-async function openSermon(sermonId) {
+// Cache for loaded sermon data (units + raw transcript)
+var sermonModalCache = {};
+
+// opts: { unitId: string, searchText: string } — optional, used to scroll+highlight a specific unit
+async function openSermon(sermonId, opts) {
   var modal = document.getElementById('sermonModal');
   var content = document.getElementById('sermonModalContent');
   if (!modal || !content) return;
+  opts = opts || {};
 
   var sermon = sermonMap[sermonId] || {};
   var title = sermon.title || 'Untitled';
   var date = sermon.date ? new Date(sermon.date).toLocaleDateString('en-US', {month:'long', day:'numeric', year:'numeric'}) : '';
   var metaParts = [sermon.series_name, sermon.primary_text, date].filter(Boolean);
 
-  content.innerHTML = '<div class="sermon-modal-title">' + title + '</div>' +
-    '<div class="sermon-modal-meta">' + metaParts.join(' \u00b7 ') + '</div>' +
-    '<div style="padding:24px;text-align:center;font-family:var(--mono);font-size:0.65rem;color:var(--warm-gray);">Loading units\u2026</div>';
+  // Show loading state
+  content.innerHTML = buildSermonHeader(title, metaParts) +
+    '<div style="padding:24px;text-align:center;font-family:var(--mono);font-size:0.65rem;color:var(--warm-gray);">Loading\u2026</div>';
   modal.classList.add('open');
 
   try {
-    var res = await fetch(REST + '/units?sermon_id=eq.' + sermonId + '&select=unit_index,rhetorical_function,summary,key_claim,content&order=unit_index', { headers: HEADERS });
-    var units = await res.json();
+    // Fetch units and raw transcript in parallel (use cache if available)
+    var cached = sermonModalCache[sermonId];
+    if (!cached) {
+      var results = await Promise.all([
+        fetch(REST + '/units?sermon_id=eq.' + sermonId + '&select=id,unit_index,rhetorical_function,summary,key_claim,content&order=unit_index', { headers: HEADERS }).then(function(r) { return r.json(); }),
+        fetch(REST + '/sermons?id=eq.' + sermonId + '&select=raw_transcript', { headers: HEADERS }).then(function(r) { return r.json(); })
+      ]);
+      cached = { units: results[0], rawTranscript: (results[1][0] || {}).raw_transcript || '' };
+      sermonModalCache[sermonId] = cached;
+    }
 
-    var unitsHtml = units.map(function(u) {
+    var units = cached.units;
+    var rawTranscript = cached.rawTranscript;
+
+    // Determine which unit to highlight
+    var highlightIdx = -1;
+    if (opts.unitId) {
+      highlightIdx = units.findIndex(function(u) { return u.id === opts.unitId; });
+    } else if (opts.searchText) {
+      var needle = opts.searchText.toLowerCase().slice(0, 80);
+      highlightIdx = units.findIndex(function(u) {
+        return (u.content && u.content.toLowerCase().indexOf(needle) !== -1) ||
+               (u.summary && u.summary.toLowerCase().indexOf(needle) !== -1);
+      });
+    }
+
+    // Build indexed (units) view
+    var unitsHtml = units.map(function(u, idx) {
       var fn = (u.rhetorical_function || '').replace(/_/g, ' ');
       var fnCls = u.rhetorical_function || '';
-      return '<div class="sermon-modal-unit">' +
+      var hlCls = idx === highlightIdx ? ' highlighted' : '';
+      var hlId = idx === highlightIdx ? ' id="sermon-modal-target"' : '';
+      return '<div class="sermon-modal-unit' + hlCls + '"' + hlId + '>' +
         '<span class="sermon-modal-unit-fn ' + fnCls + '">' + fn + '</span>' +
         (u.summary ? '<div class="sermon-modal-unit-summary">' + u.summary + '</div>' : '') +
         (u.content ? '<div class="sermon-modal-unit-content">' + u.content + '</div>' : '') +
       '</div>';
     }).join('');
 
-    content.innerHTML = '<div class="sermon-modal-title">' + title + '</div>' +
-      '<div class="sermon-modal-meta">' + metaParts.join(' \u00b7 ') + '</div>' +
-      unitsHtml;
+    // Build full transcript view
+    var transcriptHtml = rawTranscript
+      ? '<div class="sermon-modal-raw-transcript">' + rawTranscript.split(/\n\n+/).map(function(p) { return '<p>' + p.replace(/\n/g, '<br>') + '</p>'; }).join('') + '</div>'
+      : '<div class="sermon-modal-no-transcript">Full transcript not available for this sermon.</div>';
+
+    // Default to indexed view, unless explicitly coming from a non-unit context
+    var defaultView = 'indexed';
+
+    content.innerHTML = buildSermonHeader(title, metaParts) +
+      '<div class="sermon-modal-toggle">' +
+        '<button class="' + (defaultView === 'indexed' ? 'active' : '') + '" onclick="toggleSermonView(\'indexed\', this)">Indexed</button>' +
+        '<button class="' + (defaultView === 'transcript' ? 'active' : '') + '" onclick="toggleSermonView(\'transcript\', this)">Full Transcript</button>' +
+      '</div>' +
+      '<div id="sermonViewIndexed" style="display:' + (defaultView === 'indexed' ? 'block' : 'none') + ';">' + unitsHtml + '</div>' +
+      '<div id="sermonViewTranscript" style="display:' + (defaultView === 'transcript' ? 'block' : 'none') + ';">' + transcriptHtml + '</div>';
+
+    // Scroll to highlighted unit
+    var target = document.getElementById('sermon-modal-target');
+    if (target) {
+      setTimeout(function() { target.scrollIntoView({ behavior: 'smooth', block: 'center' }); }, 100);
+    }
   } catch(e) {
-    content.innerHTML = '<div class="sermon-modal-title">' + title + '</div>' +
-      '<div class="sermon-modal-meta">' + metaParts.join(' \u00b7 ') + '</div>' +
-      '<div style="padding:24px;font-family:var(--mono);font-size:0.65rem;color:var(--warm-gray);">Failed to load sermon units.</div>';
+    content.innerHTML = buildSermonHeader(title, metaParts) +
+      '<div style="padding:24px;font-family:var(--mono);font-size:0.65rem;color:var(--warm-gray);">Failed to load sermon.</div>';
     console.error('openSermon failed:', e);
   }
+}
+
+function buildSermonHeader(title, metaParts) {
+  return '<div class="sermon-modal-title">' + title + '</div>' +
+    '<div class="sermon-modal-meta">' + metaParts.join(' \u00b7 ') + '</div>';
+}
+
+function toggleSermonView(view, btn) {
+  var indexed = document.getElementById('sermonViewIndexed');
+  var transcript = document.getElementById('sermonViewTranscript');
+  if (!indexed || !transcript) return;
+
+  // Toggle visibility
+  indexed.style.display = view === 'indexed' ? 'block' : 'none';
+  transcript.style.display = view === 'transcript' ? 'block' : 'none';
+
+  // Update button states
+  btn.parentElement.querySelectorAll('button').forEach(function(b) { b.classList.remove('active'); });
+  btn.classList.add('active');
 }
 
 function closeSermon() {
