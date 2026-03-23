@@ -1281,6 +1281,55 @@ mark { background: rgba(196,162,101,0.2); color: var(--ink); border-radius: 2px;
 </head>
 <body>
 
+<!-- ── PASSWORD GATE ── -->
+<div id="passwordGate" style="position:fixed;inset:0;z-index:9999;background:var(--accent);display:flex;align-items:center;justify-content:center;">
+  <div style="text-align:center;max-width:360px;padding:40px;">
+    <div style="font-family:var(--mono);font-size:0.58rem;color:rgba(196,162,101,0.5);letter-spacing:0.2em;text-transform:uppercase;margin-bottom:20px;">Shepherd's Guild</div>
+    <div style="font-family:var(--serif);font-size:1.8rem;color:var(--parchment);margin-bottom:8px;">Pastor's Dashboard</div>
+    <div style="font-family:var(--sans);font-size:0.82rem;color:rgba(247,243,238,0.4);margin-bottom:32px;line-height:1.6;">Enter your access code to view your archive.</div>
+    <input id="gateInput" type="password" placeholder="Access code" autofocus
+      style="width:100%;padding:13px 18px;border:1px solid rgba(196,162,101,0.3);border-radius:3px;background:rgba(196,162,101,0.06);color:var(--parchment);font-family:var(--sans);font-size:0.88rem;outline:none;text-align:center;letter-spacing:0.1em;"
+      onkeydown="if(event.key==='Enter')checkGatePassword()">
+    <div id="gateError" style="font-family:var(--sans);font-size:0.72rem;color:#c45;margin-top:10px;min-height:1.2em;"></div>
+    <button onclick="checkGatePassword()"
+      style="margin-top:16px;width:100%;padding:12px;border:none;border-radius:3px;background:var(--gold);color:var(--accent);font-family:var(--sans);font-size:0.75rem;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;cursor:pointer;transition:background 0.18s;">
+      Enter
+    </button>
+    <div style="font-family:var(--sans);font-size:0.68rem;color:rgba(247,243,238,0.25);margin-top:20px;">Questions? chris@sovgracekc.org</div>
+  </div>
+</div>
+<script>
+// SHA-256 hash of the password — change the password by updating this hash
+// To change the password, update this hash. Generate at any JS console:
+//   crypto.subtle.digest('SHA-256', new TextEncoder().encode('YOUR_PASSWORD')).then(b => Array.from(new Uint8Array(b)).map(x => x.toString(16).padStart(2,'0')).join(''))
+const GATE_HASH = '11f4608b6f55123e0c004385dd8cadf9e7ee9dd1db0c2ba4f1c28ccadf634f88';
+
+// Allow bypass if already authenticated this session
+if (sessionStorage.getItem('sg_authed') === '1') {
+  document.getElementById('passwordGate').style.display = 'none';
+}
+
+async function checkGatePassword() {
+  var input = document.getElementById('gateInput');
+  var pw = input.value.trim();
+  if (!pw) return;
+
+  // Hash the input
+  var encoded = new TextEncoder().encode(pw);
+  var hashBuffer = await crypto.subtle.digest('SHA-256', encoded);
+  var hashHex = Array.from(new Uint8Array(hashBuffer)).map(function(b) { return b.toString(16).padStart(2, '0'); }).join('');
+
+  if (hashHex === GATE_HASH) {
+    sessionStorage.setItem('sg_authed', '1');
+    document.getElementById('passwordGate').style.display = 'none';
+  } else {
+    document.getElementById('gateError').textContent = 'Invalid access code.';
+    input.value = '';
+    input.focus();
+  }
+}
+</script>
+
 <!-- Mobile hamburger + overlay -->
 <button class="mobile-toggle" onclick="toggleSidebar()" aria-label="Menu">☰</button>
 <div class="sidebar-overlay" onclick="toggleSidebar()"></div>
@@ -1355,7 +1404,7 @@ mark { background: rgba(196,162,101,0.2); color: var(--ink); border-radius: 2px;
   </nav>
 
   <div class="sidebar-footer">
-    <button class="build-cta" onclick="window.location.href='/onboarding'">Build Your Archive →</button>
+    <button class="build-cta">Build Your Archive →</button>
   </div>
 </div>
 
