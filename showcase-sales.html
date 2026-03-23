@@ -1264,6 +1264,7 @@ mark { background: rgba(196,162,101,0.2); color: var(--ink); border-radius: 2px;
   .quotes-grid { grid-template-columns: 1fr; }
   .book-evidence-grid { grid-template-columns: 1fr; }
   .overview-grid { grid-template-columns: 1fr; }
+  .hook-grid { grid-template-columns: 1fr !important; }
 }
 
 /* ── SMALL MOBILE (≤ 420px) ── */
@@ -1389,10 +1390,53 @@ mark { background: rgba(196,162,101,0.2); color: var(--ink); border-radius: 2px;
     <!-- ── HOOK (landing view) ── -->
     <div id="view-hook" class="view active">
       <div class="section-eyebrow">Sample Build</div>
-      <div class="section-title" style="margin-bottom:24px;">What a Build Looks Like</div>
-      <div style="max-width:540px;">
-        <p style="font-family:var(--sans);font-size:0.95rem;color:var(--slate);line-height:1.85;margin-bottom:16px;">This is a real pastor's sermon archive &mdash; 79 sermons, fully decomposed. Every section below was generated from the same pipeline we'd use on yours.</p>
-        <p style="font-family:var(--sans);font-size:0.95rem;color:var(--slate);line-height:1.85;">Browse it. See what the data reveals. Then decide if you want to know what's inside your own archive.</p>
+      <div class="section-title" style="margin-bottom:12px;">What a Build Looks Like</div>
+      <p style="font-family:var(--sans);font-size:0.95rem;color:var(--slate);line-height:1.85;max-width:580px;margin-bottom:8px;">This is a real pastor's sermon archive &mdash; 79 sermons, fully decomposed. Every section below was generated from the same pipeline we'd use on yours.</p>
+      <p style="font-family:var(--sans);font-size:0.95rem;color:var(--slate);line-height:1.85;max-width:580px;margin-bottom:36px;">Use the menu on the left to explore. Here's what you'll find:</p>
+
+      <!-- Feature preview grid -->
+      <div class="hook-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:16px;max-width:680px;margin-bottom:36px;">
+
+        <a onclick="switchView('overview', document.querySelector('[data-view=view-overview]'))" style="cursor:pointer;display:block;padding:22px 20px;background:var(--card-bg-tint);border:1px solid var(--rule-light);border-radius:4px;text-decoration:none;transition:border-color 0.2s;">
+          <div style="font-family:var(--mono);font-size:0.52rem;color:var(--gold);letter-spacing:0.15em;text-transform:uppercase;margin-bottom:8px;">Your Analysis</div>
+          <div style="font-family:var(--serif);font-size:1.05rem;color:var(--ink);margin-bottom:8px;">Voice Analysis</div>
+          <div style="font-family:var(--sans);font-size:0.78rem;color:var(--slate);line-height:1.65;">Your theological center of gravity, rhetorical register, tone distribution &mdash; the fingerprint that makes your preaching yours.</div>
+        </a>
+
+        <a onclick="switchView('exemplar', document.querySelector('[data-view=view-exemplar]'))" style="cursor:pointer;display:block;padding:22px 20px;background:var(--card-bg-tint);border:1px solid var(--rule-light);border-radius:4px;text-decoration:none;transition:border-color 0.2s;">
+          <div style="font-family:var(--mono);font-size:0.52rem;color:var(--gold);letter-spacing:0.15em;text-transform:uppercase;margin-bottom:8px;">Your Analysis</div>
+          <div style="font-family:var(--serif);font-size:1.05rem;color:var(--ink);margin-bottom:8px;">Exemplar Match</div>
+          <div style="font-family:var(--sans);font-size:0.78rem;color:var(--slate);line-height:1.65;">The Guild Hall preacher whose craft most resembles yours &mdash; not to imitate, but to apprentice alongside.</div>
+        </a>
+
+        <a onclick="switchView('growth', document.querySelector('[data-view=view-growth]'))" style="cursor:pointer;display:block;padding:22px 20px;background:var(--card-bg-tint);border:1px solid var(--rule-light);border-radius:4px;text-decoration:none;transition:border-color 0.2s;">
+          <div style="font-family:var(--mono);font-size:0.52rem;color:var(--gold);letter-spacing:0.15em;text-transform:uppercase;margin-bottom:8px;">Your Analysis</div>
+          <div style="font-family:var(--serif);font-size:1.05rem;color:var(--ink);margin-bottom:8px;">Growth Areas</div>
+          <div style="font-family:var(--sans);font-size:0.78rem;color:var(--slate);line-height:1.65;">Data-grounded coaching: not &ldquo;improve your illustrations&rdquo; but specific gaps measured against your exemplar.</div>
+        </a>
+
+        <a onclick="switchView('latentbook', document.querySelector('[data-view=view-latentbook]'))" style="cursor:pointer;display:block;padding:22px 20px;background:var(--card-bg-tint);border:1px solid var(--rule-light);border-radius:4px;text-decoration:none;transition:border-color 0.2s;">
+          <div style="font-family:var(--mono);font-size:0.52rem;color:var(--gold);letter-spacing:0.15em;text-transform:uppercase;margin-bottom:8px;">Your Analysis</div>
+          <div style="font-family:var(--serif);font-size:1.05rem;color:var(--ink);margin-bottom:8px;">Latent Book</div>
+          <div style="font-family:var(--sans);font-size:0.78rem;color:var(--slate);line-height:1.65;">The manuscript hiding inside your sermon archive &mdash; themes, sustained arguments, the book you&rsquo;ve half-written.</div>
+        </a>
+
+        <a onclick="switchView('illustrations', document.querySelector('[data-view=view-illustrations]'))" style="cursor:pointer;display:block;padding:22px 20px;background:var(--card-bg-tint);border:1px solid var(--rule-light);border-radius:4px;text-decoration:none;transition:border-color 0.2s;">
+          <div style="font-family:var(--mono);font-size:0.52rem;color:var(--gold);letter-spacing:0.15em;text-transform:uppercase;margin-bottom:8px;">Your Archive</div>
+          <div style="font-family:var(--serif);font-size:1.05rem;color:var(--ink);margin-bottom:8px;">Illustrations &amp; Quotes</div>
+          <div style="font-family:var(--sans);font-size:0.78rem;color:var(--slate);line-height:1.65;">Every illustration you&rsquo;ve ever used, every quote you&rsquo;ve cited &mdash; extracted, typed, and searchable.</div>
+        </a>
+
+        <a onclick="switchView('preflight', document.querySelector('[data-view=view-preflight]'))" style="cursor:pointer;display:block;padding:22px 20px;background:var(--card-bg-tint);border:1px solid var(--rule-light);border-radius:4px;text-decoration:none;transition:border-color 0.2s;">
+          <div style="font-family:var(--mono);font-size:0.52rem;color:var(--gold);letter-spacing:0.15em;text-transform:uppercase;margin-bottom:8px;">Your Tools</div>
+          <div style="font-family:var(--serif);font-size:1.05rem;color:var(--ink);margin-bottom:8px;">PreFlight Check</div>
+          <div style="font-family:var(--sans);font-size:0.78rem;color:var(--slate);line-height:1.65;">Paste a sermon manuscript before Sunday. Get it scored against your own coaching benchmarks in real time.</div>
+        </a>
+
+      </div>
+
+      <div style="font-family:var(--sans);font-size:0.82rem;color:var(--warm-gray);line-height:1.7;max-width:580px;padding:18px 0;border-top:1px solid var(--rule-light);">
+        Everything you see here was built from one pastor&rsquo;s sermons. Your build will look different &mdash; because your voice is different.
       </div>
     </div>
 
