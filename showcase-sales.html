@@ -2665,10 +2665,9 @@ function setHeraldFilter(filter, btn) {
   renderHeraldCards();
 }
 
-// Placeholder for openModal — sales CTA
 function openModal(event) {
-  // For now, scroll to view-cta or open mailto
-  window.location.href = 'mailto:chris@sovgracekc.org?subject=Build%20Request%20%E2%80%93%20Shepherd%E2%80%99s%20Guild';
+  if (event) event.preventDefault();
+  window.location.href = '/onboarding.html';
 }
 
 document.addEventListener('DOMContentLoaded', async function() {
