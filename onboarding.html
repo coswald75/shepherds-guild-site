@@ -870,7 +870,7 @@ input[type="range"]::-webkit-slider-thumb {
       <!-- STEP: Estimate -->
       <div class="step" data-step="estimate" data-copy-key="estimate">
         <div class="step-label">Your estimate</div>
-        <div class="estimate-card">
+        <div class="estimate-card" id="estimateCard">
           <div class="estimate-header">Corpus Ingestion & Decomposition</div>
           <div class="estimate-caveat">Based on what you've told us — we'll confirm everything in a brief call.</div>
 
@@ -879,7 +879,7 @@ input[type="range"]::-webkit-slider-thumb {
               Ingestion fee
               <small>One-time · <span id="estSermonCount">100</span> sermons</small>
             </div>
-            <div class="estimate-value" id="estIngestion">$200</div>
+            <div class="estimate-value" id="estIngestion">$275</div>
           </div>
 
           <div class="estimate-divider"></div>
@@ -889,7 +889,7 @@ input[type="range"]::-webkit-slider-thumb {
               Monthly subscription
               <small>12-month commitment</small>
             </div>
-            <div class="estimate-value monthly">$50<small> /mo</small></div>
+            <div class="estimate-value monthly">$45<small> /mo</small></div>
           </div>
 
           <div class="features-header">What's included monthly</div>
@@ -903,6 +903,19 @@ input[type="range"]::-webkit-slider-thumb {
             <li>Growth tracking over time</li>
             <li>New sermon processing</li>
           </ul>
+        </div>
+
+        <div class="estimate-card" id="customQuoteCard" style="display:none;">
+          <div class="estimate-header">Corpus Ingestion & Decomposition</div>
+          <div style="font-family: var(--serif); font-size: 1.25rem; font-weight: 400; color: var(--ink); line-height: 1.4; margin-bottom: 16px;">
+            Your archive deserves a personal conversation.
+          </div>
+          <div class="estimate-caveat" style="margin-bottom: 24px;">
+            Based on what you've told us, your archive is large enough — or complex enough — that we'd rather walk through the details with you personally than hand you a number. No pressure, no commitment. Just a conversation about your sermons and what we can do with them.
+          </div>
+          <button class="btn-next cta-final" style="width: 100%; text-align: center;">
+            Schedule a Call →
+          </button>
         </div>
       </div>
 
@@ -1035,9 +1048,13 @@ input[type="range"]::-webkit-slider-thumb {
     if (step === 'dead-end') {
       els.btnNext.style.display = 'none';
     } else if (step === 'estimate') {
-      els.btnNext.style.display = '';
-      els.btnNext.textContent = "Let's Talk";
-      els.btnNext.className = 'btn-next cta-final';
+      // updateEstimate() handles button visibility for this step
+      const customQuoteVisible = document.getElementById('customQuoteCard').style.display !== 'none';
+      if (!customQuoteVisible) {
+        els.btnNext.style.display = '';
+        els.btnNext.textContent = "Let's Talk";
+        els.btnNext.className = 'btn-next cta-final';
+      }
     } else if (step === '0') {
       els.btnNext.style.display = '';
       els.btnNext.textContent = 'Get Started';
@@ -1077,32 +1094,42 @@ input[type="range"]::-webkit-slider-thumb {
     const fidelity = state.answers.fidelity || 'close';
     const hasRec = state.answers.hasRecordings || state.answers.divRecordings || 'yes-transcripts';
 
-    // Base: $200 for 100 clean manuscripts
-    let fee = 200;
+    // Volume scaling (updated bases)
+    let fee = 275;
+    if (count <= 50) fee = 200;
+    else if (count <= 100) fee = 275;
+    else if (count <= 250) fee = Math.round(275 + (count - 100) * 1.75);
+    else if (count <= 500) fee = Math.round(275 + 150 * 1.75 + (count - 250) * 2.00);
+    else fee = Math.round(275 + 150 * 1.75 + 250 * 2.00 + (count - 500) * 2.25);
 
-    // Volume scaling: $1.50/sermon base, discount for smaller, premium for larger
-    if (count <= 50) fee = 150;
-    else if (count <= 100) fee = 200;
-    else if (count <= 250) fee = Math.round(200 + (count - 100) * 1.75);
-    else if (count <= 500) fee = Math.round(200 + 150 * 1.75 + (count - 250) * 2.00);
-    else fee = Math.round(200 + 150 * 1.75 + 250 * 2.00 + (count - 500) * 2.25);
-
-    // Organization multiplier
+    // Organization multiplier (updated scattered)
     if (org === 'mixed') fee = Math.round(fee * 1.25);
-    else if (org === 'scattered') fee = Math.round(fee * 1.5);
+    else if (org === 'scattered') fee = Math.round(fee * 1.6);
 
-    // Transcription needed?
+    // Transcription needed? (updated rate)
     const needsTranscription =
       (style === 'outline' && hasRec !== 'yes-transcripts') ||
       (style === 'manuscript' && fidelity === 'divergent' && hasRec !== 'yes-transcripts');
 
-    if (needsTranscription) fee = Math.round(fee * 1.35);
+    if (needsTranscription) fee = Math.round(fee * 1.45);
 
     // Round to nearest $25
     fee = Math.round(fee / 25) * 25;
 
-    document.getElementById('estIngestion').textContent = '$' + fee.toLocaleString();
-    document.getElementById('estSermonCount').textContent = count >= 1000 ? '1,000+' : count;
+    // Threshold check: show estimate or custom quote
+    const CUSTOM_QUOTE_THRESHOLD = 550;
+
+    if (fee > CUSTOM_QUOTE_THRESHOLD) {
+      document.getElementById('estimateCard').style.display = 'none';
+      document.getElementById('customQuoteCard').style.display = 'block';
+      els.btnNext.style.display = 'none';
+    } else {
+      document.getElementById('estimateCard').style.display = 'block';
+      document.getElementById('customQuoteCard').style.display = 'none';
+      els.btnNext.style.display = '';
+      document.getElementById('estIngestion').textContent = '$' + fee.toLocaleString();
+      document.getElementById('estSermonCount').textContent = count >= 1000 ? '1,000+' : count;
+    }
   }
 
   // Initialize
