@@ -2379,7 +2379,7 @@ document.addEventListener('click', function(e) {
 // ── HERALD: MONEY QUOTES ──
 var ALL_HERALD_QUOTES = [];
 var heraldFilter = 'all';
-var heraldFormat = 'square'; // 'square' (1080x1080) or 'wide' (1200x675)
+var heraldFormat = 'square'; // 'square' (756x756) or 'wide' (840x472)
 
 // ── HERALD: CANVAS RENDERER ──
 function heraldDownload(index) {
@@ -2387,13 +2387,15 @@ function heraldDownload(index) {
   if (!q) return;
 
   var isWide = heraldFormat === 'wide';
-  var W = isWide ? 1200 : 1080;
-  var H = isWide ? 675 : 1080;
+  var W = isWide ? 840 : 756;
+  var H = isWide ? 472 : 756;
 
+  var dpr = window.devicePixelRatio || 1;
   var canvas = document.createElement('canvas');
-  canvas.width = W;
-  canvas.height = H;
+  canvas.width = W * dpr;
+  canvas.height = H * dpr;
   var ctx = canvas.getContext('2d');
+  ctx.scale(dpr, dpr);
 
   // Theme colors
   var themes = {
@@ -2409,17 +2411,17 @@ function heraldDownload(index) {
 
   // Subtle border accent line at top
   ctx.fillStyle = t.accent;
-  ctx.fillRect(0, 0, W, 4);
+  ctx.fillRect(0, 0, W, 3);
 
-  // Padding
-  var padX = isWide ? 80 : 72;
-  var padTop = isWide ? 100 : 160;
+  // Padding — tighter for smaller canvas
+  var padX = isWide ? 52 : 48;
+  var padTop = isWide ? 64 : 100;
   var maxW = W - padX * 2;
 
-  // Quote text — wrap it
-  var fontSize = isWide ? 32 : 38;
-  if (q.text.length > 200) fontSize = isWide ? 26 : 32;
-  if (q.text.length > 280) fontSize = isWide ? 22 : 28;
+  // Quote text — wrap it (keep font sizes close to original so text fills more of the frame)
+  var fontSize = isWide ? 26 : 32;
+  if (q.text.length > 200) fontSize = isWide ? 22 : 27;
+  if (q.text.length > 280) fontSize = isWide ? 19 : 23;
 
   ctx.fillStyle = t.text;
   ctx.font = 'italic ' + fontSize + 'px Georgia, "Times New Roman", serif';
@@ -2427,14 +2429,14 @@ function heraldDownload(index) {
 
   var quoteText = '\u201c' + q.text + '\u201d';
   var lines = wrapText(ctx, quoteText, maxW);
-  var lineHeight = fontSize * 1.55;
+  var lineHeight = fontSize * 1.5;
   var totalTextH = lines.length * lineHeight;
 
   // Vertically center the quote block
   var textTop = padTop;
-  var contentH = totalTextH + 80; // text + gap + attribution
+  var contentH = totalTextH + 56; // text + gap + attribution
   if (contentH < H - padTop * 1.5) {
-    textTop = Math.max(padTop, (H - contentH) / 2 - 20);
+    textTop = Math.max(padTop, (H - contentH) / 2 - 14);
   }
 
   for (var li = 0; li < lines.length; li++) {
@@ -2442,19 +2444,19 @@ function heraldDownload(index) {
   }
 
   // Attribution
-  var attrY = textTop + lines.length * lineHeight + 32;
+  var attrY = textTop + lines.length * lineHeight + 22;
   ctx.fillStyle = t.attr;
-  ctx.font = '500 ' + (isWide ? 14 : 15) + 'px "SF Mono", "Fira Code", monospace';
+  ctx.font = '500 ' + (isWide ? 12 : 22) + 'px "SF Mono", "Fira Code", monospace';
   ctx.letterSpacing = '2px';
   var attrText = q.attribution.toUpperCase();
   if (q.church) attrText += '  \u00b7  ' + q.church.toUpperCase();
   ctx.fillText(attrText, padX, attrY);
 
   // Watermark — bottom
-  var wmY = H - (isWide ? 36 : 48);
+  var wmY = H - (isWide ? 26 : 34);
   ctx.fillStyle = t.accent;
   ctx.globalAlpha = 0.35;
-  ctx.font = (isWide ? 11 : 12) + 'px "SF Mono", "Fira Code", monospace';
+  ctx.font = (isWide ? 9 : 10) + 'px "SF Mono", "Fira Code", monospace';
   ctx.fillText('THE SHEPHERD\u2019S GUILD', padX, wmY);
 
   // Pool tag on right
@@ -2598,7 +2600,7 @@ function renderHeraldCards() {
     return Object.assign({}, q, { theme: themes[i % 3] });
   });
 
-  var fmtLabel = heraldFormat === 'wide' ? '1200×675' : '1080×1080';
+  var fmtLabel = heraldFormat === 'wide' ? '840×472' : '756×756';
 
   grid.innerHTML = heraldCurrentCards.map(function(q, i) {
     var attrLine = q.attribution + (q.church ? ' \u00b7 ' + q.church : '');
