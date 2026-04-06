@@ -913,9 +913,38 @@ input[type="range"]::-webkit-slider-thumb {
           <div class="estimate-caveat" style="margin-bottom: 24px;">
             Based on what you've told us, your archive is large enough — or complex enough — that we'd rather walk through the details with you personally than hand you a number. No pressure, no commitment. Just a conversation about your sermons and what we can do with them.
           </div>
-          <button class="btn-next cta-final" style="width: 100%; text-align: center;">
-            Schedule a Call →
-          </button>
+        </div>
+
+        <!-- Email capture (shown on estimate step) -->
+        <div class="estimate-card" id="emailCapture" style="margin-top: 20px;">
+          <div style="font-family: var(--serif); font-size: 1.25rem; font-weight: 400; color: var(--ink); line-height: 1.4; margin-bottom: 8px;">
+            Share your email and we'll be in touch.
+          </div>
+          <div class="estimate-caveat" style="margin-bottom: 20px;">
+            We'll send you a summary of your estimate and schedule a brief call.
+          </div>
+          <div style="display: flex; gap: 10px;">
+            <input type="email" id="prospectEmail" placeholder="you@church.org"
+              style="flex: 1; padding: 12px 16px; border: 1.5px solid var(--rule-hard); border-radius: 2px;
+                     font-family: var(--sans); font-size: 0.85rem; color: var(--ink); background: var(--card-bg);
+                     outline: none; transition: border-color 0.2s;"
+              onfocus="this.style.borderColor='var(--gold)'"
+              onblur="this.style.borderColor='var(--rule-hard)'" />
+            <button id="btnSubmitLead" class="btn-next cta-final" style="white-space: nowrap;">
+              Let's Talk
+            </button>
+          </div>
+          <div id="emailError" style="color: var(--burgundy); font-size: 0.75rem; margin-top: 8px; display: none;"></div>
+        </div>
+
+        <!-- Confirmation (replaces email capture after submit) -->
+        <div class="estimate-card" id="emailConfirm" style="display: none; margin-top: 20px; text-align: center;">
+          <div style="font-family: var(--serif); font-size: 1.4rem; font-weight: 400; color: var(--ink); line-height: 1.4; margin-bottom: 8px;">
+            Thank you.
+          </div>
+          <div class="estimate-caveat">
+            We've received your information and will be in touch shortly.
+          </div>
         </div>
       </div>
 
@@ -994,13 +1023,6 @@ input[type="range"]::-webkit-slider-thumb {
     if (!def) return;
     if (!canProceed()) return;
 
-    // Final CTA — open email
-    if (state.currentStep === 'estimate') {
-      const subject = encodeURIComponent("Shepherd's Guild — Let's Talk");
-      window.location.href = `mailto:info@theshepherdsguild.com?subject=${subject}`;
-      return;
-    }
-
     const nextKey = def.next(state.answers);
     if (!nextKey) return;
 
@@ -1055,13 +1077,8 @@ input[type="range"]::-webkit-slider-thumb {
     if (step === 'dead-end') {
       els.btnNext.style.display = 'none';
     } else if (step === 'estimate') {
-      // updateEstimate() handles button visibility for this step
-      const customQuoteVisible = document.getElementById('customQuoteCard').style.display !== 'none';
-      if (!customQuoteVisible) {
-        els.btnNext.style.display = '';
-        els.btnNext.textContent = "Let's Talk";
-        els.btnNext.className = 'btn-next cta-final';
-      }
+      // Email capture is inline — hide bottom nav button
+      els.btnNext.style.display = 'none';
     } else if (step === '0') {
       els.btnNext.style.display = '';
       els.btnNext.textContent = 'Get Started';
@@ -1138,6 +1155,84 @@ input[type="range"]::-webkit-slider-thumb {
       document.getElementById('estSermonCount').textContent = count >= 1000 ? '1,000+' : count;
     }
   }
+
+  // ── Email capture submit ──
+  const SUPABASE_URL = 'https://twbunmbzyqcqzgffdrib.supabase.co';
+  const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InR3YnVubWJ6eXFjcXpnZmZkcmliIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzE1ODgxODUsImV4cCI6MjA4NzE2NDE4NX0.8Y6tMnX5bhIWxTS7llFZElPY-st7rji0MtlTzxeqiW8';
+
+  const btnSubmit = document.getElementById('btnSubmitLead');
+  const emailInput = document.getElementById('prospectEmail');
+  const emailError = document.getElementById('emailError');
+
+  // Also allow Enter key in email field
+  emailInput.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') btnSubmit.click();
+  });
+
+  btnSubmit.addEventListener('click', async () => {
+    const email = emailInput.value.trim();
+
+    // Validate
+    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      emailError.textContent = 'Please enter a valid email address.';
+      emailError.style.display = '';
+      emailInput.focus();
+      return;
+    }
+    emailError.style.display = 'none';
+
+    // Gather all answers
+    const payload = {
+      email: email,
+      sermon_count: state.answers.sermonCount || 100,
+      organization: state.answers.organization || null,
+      style: state.answers.style || null,
+      fidelity: state.answers.fidelity || null,
+      has_recordings: state.answers.hasRecordings || state.answers.divRecordings || null,
+      estimate_ingestion: document.getElementById('estIngestion')?.textContent || null,
+      submitted_at: new Date().toISOString()
+    };
+
+    // Disable button while submitting
+    btnSubmit.disabled = true;
+    btnSubmit.textContent = 'Sending…';
+
+    try {
+      const res = await fetch(`${SUPABASE_URL}/rest/v1/onboarding_leads`, {
+        method: 'POST',
+        headers: {
+          'apikey': SUPABASE_KEY,
+          'Authorization': 'Bearer ' + SUPABASE_KEY,
+          'Content-Type': 'application/json',
+          'Prefer': 'return=minimal'
+        },
+        body: JSON.stringify(payload)
+      });
+
+      if (!res.ok) throw new Error(`${res.status}`);
+    } catch (err) {
+      // Supabase insert failed — fall back to Edge Function or just proceed
+      console.warn('Lead insert failed, trying edge function:', err);
+      try {
+        await fetch(`${SUPABASE_URL}/functions/v1/onboarding-lead`, {
+          method: 'POST',
+          headers: {
+            'Authorization': 'Bearer ' + SUPABASE_KEY,
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(payload)
+        });
+      } catch (e2) {
+        console.warn('Edge function also failed:', e2);
+      }
+    }
+
+    // Show confirmation
+    document.getElementById('emailCapture').style.display = 'none';
+    document.getElementById('customQuoteCard').style.display = 'none';
+    document.getElementById('emailConfirm').style.display = '';
+    els.btnNext.style.display = 'none';
+  });
 
   // Initialize
   updateNav();
