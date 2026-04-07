@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Citation Library &middot; Shepherd&rsquo;s Guild</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,500&family=DM+Sans:wght@300;400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+:root {
+  --ink:          #1a1714;
+  --parchment:    #f7f3ee;
+  --cream:        #ede8e0;
+  --warm-gray:    #9e9688;
+  --gold:         #c4a265;
+  --gold-dim:     #a8894f;
+  --gold-bright:  #dbb978;
+  --burgundy:     #6b2d3e;
+  --forest:       #2d4a3e;
+  --slate:        #4a4640;
+  --accent:       #0f2d3d;
+  --accent-mid:   #1a4d68;
+  --accent-light: #2a6888;
+  --shadow-soft:  0 2px 20px rgba(26,23,20,0.06);
+  --shadow-card:  0 4px 30px rgba(26,23,20,0.10);
+  --rule:         rgba(196,162,101,0.18);
+  --rule-hard:    rgba(196,162,101,0.35);
+  --rule-light:   rgba(26,23,20,0.08);
+  --card-bg:      #ffffff;
+  --card-bg-tint: #faf7f2;
+
+  --serif: 'Cormorant Garamond', Georgia, serif;
+  --sans:  'DM Sans', system-ui, sans-serif;
+  --mono:  'JetBrains Mono', monospace;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--parchment);
+  color: var(--ink);
+  font-family: var(--sans);
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+}
+
+/* HEADER */
+.page-header {
+  background: var(--accent);
+  padding: 48px 40px 44px;
+  position: relative;
+  overflow: hidden;
+}
+.page-header::after {
+  content: '';
+  position: absolute; inset: 0;
+  background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.02'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  pointer-events: none;
+}
+.header-inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+.header-brand {
+  font-family: var(--mono);
+  font-size: 0.6rem;
+  color: rgba(196,162,101,0.6);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+}
+.header-title {
+  font-family: var(--serif);
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 300;
+  color: var(--parchment);
+  line-height: 1.15;
+  margin-bottom: 10px;
+}
+.header-subtitle {
+  font-family: var(--sans);
+  font-size: 0.88rem;
+  color: rgba(247,243,238,0.55);
+  font-weight: 300;
+  max-width: 560px;
+  line-height: 1.5;
+}
+.header-rule {
+  width: 48px;
+  height: 1px;
+  background: var(--gold);
+  margin: 18px 0 14px;
+  opacity: 0.5;
+}
+
+/* FILTER BAR */
+.filter-bar {
+  background: var(--card-bg);
+  border-bottom: 1px solid var(--rule-light);
+  padding: 18px 40px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 2px 12px rgba(26,23,20,0.04);
+}
+.filter-inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.search-wrap {
+  position: relative;
+  flex: 1;
+  min-width: 220px;
+}
+.search-icon {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  width: 14px;
+  height: 14px;
+  opacity: 0.4;
+}
+.search-input {
+  width: 100%;
+  font-family: var(--sans);
+  font-size: 0.82rem;
+  color: var(--ink);
+  background: var(--parchment);
+  border: 1px solid var(--rule-light);
+  border-radius: 3px;
+  padding: 10px 14px 10px 38px;
+  outline: none;
+  transition: border-color 0.15s;
+}
+.search-input::placeholder { color: var(--warm-gray); }
+.search-input:focus { border-color: var(--gold); }
+
+.author-select {
+  font-family: var(--sans);
+  font-size: 0.82rem;
+  color: var(--ink);
+  background: var(--parchment);
+  border: 1px solid var(--rule-light);
+  border-radius: 3px;
+  padding: 10px 32px 10px 14px;
+  outline: none;
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%239e9688'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  min-width: 200px;
+  max-width: 280px;
+  transition: border-color 0.15s;
+}
+.author-select:focus { border-color: var(--gold); }
+
+.result-count {
+  font-family: var(--mono);
+  font-size: 0.58rem;
+  color: var(--warm-gray);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  padding: 8px 14px;
+  background: rgba(196,162,101,0.08);
+  border: 1px solid rgba(196,162,101,0.15);
+  border-radius: 3px;
+}
+
+.clear-btn {
+  font-family: var(--sans);
+  font-size: 0.75rem;
+  color: var(--burgundy);
+  background: none;
+  border: 1px solid rgba(107,45,62,0.2);
+  border-radius: 3px;
+  padding: 9px 14px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.15s;
+  display: none;
+}
+.clear-btn:hover {
+  background: rgba(107,45,62,0.06);
+  border-color: rgba(107,45,62,0.35);
+}
+.clear-btn.visible { display: inline-block; }
+
+/* Active author chip */
+.active-author {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0;
+}
+.active-author:not(:empty) {
+  padding: 10px 0 0;
+}
+.author-chip {
+  font-family: var(--mono);
+  font-size: 0.54rem;
+  color: var(--accent);
+  background: rgba(15,45,61,0.08);
+  border: 1px solid rgba(15,45,61,0.15);
+  padding: 4px 10px;
+  border-radius: 2px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.15s;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.author-chip:hover {
+  background: rgba(15,45,61,0.14);
+}
+.author-chip .chip-x {
+  font-size: 0.65rem;
+  line-height: 1;
+  opacity: 0.6;
+}
+
+/* CARD GRID */
+.grid-wrap {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 32px 40px 80px;
+}
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+  gap: 22px;
+}
+
+/* CITATION CARD */
+.cite-card {
+  background: var(--card-bg);
+  border: 1px solid var(--rule-light);
+  border-radius: 3px;
+  padding: 28px 28px 24px;
+  box-shadow: var(--shadow-soft);
+  display: flex;
+  flex-direction: column;
+  transition: box-shadow 0.2s, transform 0.2s;
+  position: relative;
+}
+.cite-card:hover {
+  box-shadow: var(--shadow-card);
+  transform: translateY(-2px);
+}
+.cite-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--gold) 0%, rgba(196,162,101,0.15) 100%);
+  border-radius: 3px 3px 0 0;
+}
+
+.card-quote {
+  font-family: var(--serif);
+  font-size: 1.05rem;
+  font-style: italic;
+  color: var(--ink);
+  line-height: 1.55;
+  flex: 1;
+  margin-bottom: 18px;
+}
+.card-quote::before { content: '\201C'; }
+.card-quote::after  { content: '\201D'; }
+
+.card-function {
+  display: inline-block;
+  font-family: var(--mono);
+  font-size: 0.5rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 3px 8px;
+  border-radius: 2px;
+  margin-bottom: 14px;
+}
+.card-function.fn-authority    { color: var(--accent); background: rgba(15,45,61,0.06); border: 1px solid rgba(15,45,61,0.1); }
+.card-function.fn-illustration { color: var(--forest); background: rgba(45,74,62,0.06); border: 1px solid rgba(45,74,62,0.1); }
+.card-function.fn-devotional   { color: var(--gold-dim); background: rgba(196,162,101,0.08); border: 1px solid rgba(196,162,101,0.15); }
+.card-function.fn-provocation  { color: var(--burgundy); background: rgba(107,45,62,0.06); border: 1px solid rgba(107,45,62,0.1); }
+.card-function.fn-opponent     { color: var(--slate); background: rgba(74,70,64,0.06); border: 1px solid rgba(74,70,64,0.1); }
+
+.card-divider {
+  height: 1px;
+  background: var(--rule);
+  margin-bottom: 14px;
+}
+
+.card-attribution {
+  font-family: var(--serif);
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--ink);
+  text-align: right;
+  cursor: pointer;
+  transition: color 0.15s;
+}
+.card-attribution:hover {
+  color: var(--gold);
+}
+
+.card-work {
+  font-family: var(--serif);
+  font-size: 0.8rem;
+  font-style: italic;
+  color: var(--warm-gray);
+  text-align: right;
+  margin-top: 2px;
+}
+
+.card-source {
+  font-family: var(--sans);
+  font-size: 0.75rem;
+  color: var(--warm-gray);
+  text-align: right;
+  margin-top: 4px;
+}
+.card-source a {
+  color: var(--warm-gray);
+  text-decoration: none;
+  font-style: italic;
+  transition: color 0.15s;
+}
+.card-source a:hover {
+  color: var(--gold);
+}
+
+/* EMPTY STATE */
+.empty-state {
+  text-align: center;
+  padding: 80px 20px;
+}
+.empty-state-icon {
+  font-size: 2.5rem;
+  margin-bottom: 18px;
+  opacity: 0.3;
+}
+.empty-state-title {
+  font-family: var(--serif);
+  font-size: 1.4rem;
+  font-weight: 300;
+  color: var(--ink);
+  margin-bottom: 8px;
+}
+.empty-state-msg {
+  font-family: var(--sans);
+  font-size: 0.84rem;
+  color: var(--warm-gray);
+}
+
+/* BACK TO TOP */
+.back-to-top {
+  position: fixed;
+  bottom: 28px;
+  right: 28px;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: var(--parchment);
+  border: none;
+  cursor: pointer;
+  font-size: 1.1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 16px rgba(15,45,61,0.3);
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity 0.25s, transform 0.25s;
+  z-index: 200;
+}
+.back-to-top.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.back-to-top:hover {
+  background: var(--accent-mid);
+}
+
+/* RESPONSIVE */
+@media (max-width: 900px) {
+  .card-grid {
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 16px;
+  }
+  .grid-wrap {
+    padding: 24px 20px 60px;
+  }
+  .page-header {
+    padding: 36px 20px 32px;
+  }
+  .filter-bar {
+    padding: 14px 20px;
+  }
+}
+@media (max-width: 520px) {
+  .card-grid {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+  .filter-inner {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .search-wrap {
+    min-width: 100%;
+  }
+  .author-select {
+    min-width: 100%;
+    max-width: 100%;
+  }
+  .cite-card {
+    padding: 22px 20px 20px;
+  }
+  .header-title {
+    font-size: 1.8rem;
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.cite-card {
+  animation: fadeIn 0.3s ease both;
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="page-header">
+  <div class="header-inner">
+    <div class="header-brand">Shepherd&rsquo;s Guild</div>
+    <h1 class="header-title">Citation Library</h1>
+    <div class="header-rule"></div>
+    <p class="header-subtitle" id="headerSubtitle">Citations from the Preaching of Chris Oswald &mdash; indexed by author, searchable, and ready for the pulpit.</p>
+  </div>
+</header>
+
+<!-- FILTER BAR -->
+<div class="filter-bar">
+  <div class="filter-inner">
+    <div class="search-wrap">
+      <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input type="text" class="search-input" id="searchInput" placeholder="Search quotes, authors, sources, or sermons..." autocomplete="off"/>
+    </div>
+    <select class="author-select" id="authorSelect">
+      <option value="">All Authors</option>
+    </select>
+    <span class="result-count" id="resultCount">Loading...</span>
+    <button class="clear-btn" id="clearBtn" onclick="clearFilters()">Clear Filters</button>
+  </div>
+  <div class="filter-inner">
+    <div class="active-author" id="activeAuthor"></div>
+  </div>
+</div>
+
+<!-- GRID -->
+<div class="grid-wrap">
+  <div class="card-grid" id="cardGrid"></div>
+  <div class="empty-state" id="emptyState" style="display:none;">
+    <div class="empty-state-icon">&#x1F4D6;</div>
+    <div class="empty-state-title">No citations match your search</div>
+    <p class="empty-state-msg">Try adjusting your search terms or clearing filters.</p>
+  </div>
+</div>
+
+<!-- BACK TO TOP -->
+<button class="back-to-top" id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="Back to top">&uarr;</button>
+
+<script>
+/* SUPABASE CONFIG */
+var SUPABASE_URL = 'https://twbunmbzyqcqzgffdrib.supabase.co';
+var SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InR3YnVubWJ6eXFjcXpnZmZkcmliIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzE1ODgxODUsImV4cCI6MjA4NzE2NDE4NX0.8Y6tMnX5bhIWxTS7llFZElPY-st7rji0MtlTzxeqiW8';
+var REST = SUPABASE_URL + '/rest/v1';
+var HEADERS = { 'apikey': SUPABASE_KEY, 'Authorization': 'Bearer ' + SUPABASE_KEY };
+var CHRIS_ID = '9c6f8d69-de55-45db-ac60-0fe6d0cfff59';
+
+/* Biblical attributions to exclude */
+var BIBLICAL_EXACT = new Set([
+  'paul', 'apostle paul', 'the apostle paul',
+  'jesus', 'jesus christ',
+  'moses', 'peter', 'apostle peter',
+  'david', 'solomon', 'isaiah', 'jeremiah',
+  'psalmist', 'the psalmist',
+  'god', 'the lord', 'yahweh', 'christ',
+  'author of hebrews', 'the author of hebrews',
+  'scripture', 'scripture (paraphrase)'
+]);
+
+/* Bible book prefixes for source-based exclusion */
+var BIBLE_BOOKS = [
+  'genesis','exodus','leviticus','numbers','deuteronomy',
+  'joshua','judges','ruth','1 samuel','2 samuel','1 kings','2 kings',
+  '1 chronicles','2 chronicles','ezra','nehemiah','esther',
+  'job','psalm','proverbs','ecclesiastes','song of solomon',
+  'isaiah','jeremiah','lamentations','ezekiel','daniel',
+  'hosea','joel','amos','obadiah','jonah','micah','nahum',
+  'habakkuk','zephaniah','haggai','zechariah','malachi',
+  'matthew','mark','luke','john','acts','romans',
+  '1 corinthians','2 corinthians','galatians','ephesians',
+  'philippians','colossians','1 thessalonians','2 thessalonians',
+  '1 timothy','2 timothy','titus','philemon','hebrews',
+  'james','1 peter','2 peter','1 john','2 john','3 john',
+  'jude','revelation'
+];
+
+function isBiblical(attr, source) {
+  var lower = (attr || '').toLowerCase().trim();
+  /* Exact match */
+  if (BIBLICAL_EXACT.has(lower)) return true;
+  /* Pattern match: "Paul (1 Corinthians...)", "Jesus (Matthew...)", "God (through...", "God (via..." */
+  if (/^(paul|jesus|god|christ|peter|moses|isaiah|jeremiah|solomon|david)\s*\(/.test(lower)) return true;
+  /* Attribution IS a Bible reference (e.g. "2 Corinthians 8:9 (paraphrased)", "Isaiah 55", "1 Peter 4:19") */
+  /* Only match if the attribution is JUST the book name, optionally followed by chapter:verse or parenthetical */
+  for (var i = 0; i < BIBLE_BOOKS.length; i++) {
+    if (lower === BIBLE_BOOKS[i]) return true;
+    /* Match "Book N:N" or "Book N" or "Book (..." patterns — but NOT "John Owen", "John Calvin" etc. */
+    var bookPat = BIBLE_BOOKS[i];
+    if (lower.indexOf(bookPat + ' ') === 0) {
+      var rest = lower.substring(bookPat.length + 1);
+      /* If what follows starts with a digit or parenthesis, it's a Bible ref */
+      if (/^[\d(]/.test(rest)) return true;
+    }
+  }
+  /* Catch "Revelation (book)" */
+  if (/^revelation\s*\(/.test(lower)) return true;
+  /* Source is a Bible reference */
+  if (source) {
+    var srcLower = source.toLowerCase().trim();
+    for (var j = 0; j < BIBLE_BOOKS.length; j++) {
+      if (srcLower.indexOf(BIBLE_BOOKS[j]) === 0) return true;
+    }
+  }
+  return false;
+}
+
+/* STATE */
+var CITATIONS = [];
+var selectedAuthor = '';
+var searchTerm = '';
+
+/* FETCH FROM SUPABASE */
+async function loadCitations() {
+  /* Step 1: Get Chris's sermon IDs + titles */
+  var sermonRes = await fetch(
+    REST + '/sermons?preacher_id=eq.' + CHRIS_ID + '&select=id,title&limit=1000',
+    { headers: HEADERS }
+  );
+  var sermons = await sermonRes.json();
+  var sermonMap = {};
+  var sermonIds = [];
+  sermons.forEach(function(s) {
+    sermonMap[s.id] = s.title;
+    sermonIds.push(s.id);
+  });
+
+  /* Step 2: Fetch quotations via sermon_quotations view in batches */
+  var all = [];
+  var batchSize = 50; /* sermon IDs per request */
+  for (var i = 0; i < sermonIds.length; i += batchSize) {
+    var chunk = sermonIds.slice(i, i + batchSize).join(',');
+    var offset = 0;
+    while (true) {
+      var res = await fetch(
+        REST + '/sermon_quotations?sermon_id=in.(' + chunk + ')&select=text,attribution,source,function,sermon_id,sermon_title&offset=' + offset + '&limit=1000',
+        { headers: HEADERS }
+      );
+      var batch = await res.json();
+      all = all.concat(batch);
+      if (batch.length < 1000) break;
+      offset += 1000;
+    }
+  }
+
+  /* Step 3: Filter out biblical attributions */
+  var filtered = all.filter(function(q) {
+    return !isBiblical(q.attribution, q.source);
+  });
+
+  return filtered.map(function(q) {
+    return {
+      text: q.text,
+      attribution: q.attribution,
+      source: q.source || '',
+      fn: q.function || '',
+      sermon_title: q.sermon_title || '',
+      sermon_id: q.sermon_id || ''
+    };
+  });
+}
+
+/* INIT */
+(async function init() {
+  document.getElementById('resultCount').textContent = 'Loading...';
+
+  CITATIONS = await loadCitations();
+
+  /* Sort by attribution alphabetically */
+  CITATIONS.sort(function(a, b) {
+    return (a.attribution || '').localeCompare(b.attribution || '');
+  });
+
+  /* Build author list from live data */
+  var authorCounts = {};
+  CITATIONS.forEach(function(c) {
+    var a = c.attribution || 'Anonymous';
+    authorCounts[a] = (authorCounts[a] || 0) + 1;
+  });
+  var authors = Object.keys(authorCounts).sort();
+
+  /* Update header */
+  document.getElementById('headerSubtitle').textContent =
+    CITATIONS.length + ' Citations from ' + authors.length + ' authors in the Preaching of Chris Oswald \u2014 indexed by author, searchable, and ready for the pulpit.';
+
+  /* Populate author dropdown */
+  var sel = document.getElementById('authorSelect');
+  authors.forEach(function(a) {
+    var opt = document.createElement('option');
+    opt.value = a;
+    opt.textContent = a + ' (' + authorCounts[a] + ')';
+    sel.appendChild(opt);
+  });
+
+  document.getElementById('searchInput').addEventListener('input', debounce(function(e) {
+    searchTerm = e.target.value.trim().toLowerCase();
+    render();
+  }, 180));
+
+  document.getElementById('authorSelect').addEventListener('change', function(e) {
+    selectedAuthor = e.target.value;
+    render();
+  });
+
+  window.addEventListener('scroll', function() {
+    document.getElementById('backToTop').classList.toggle('visible', window.scrollY > 400);
+  });
+
+  render();
+})();
+
+/* RENDER */
+function render() {
+  var grid = document.getElementById('cardGrid');
+  var empty = document.getElementById('emptyState');
+  var countEl = document.getElementById('resultCount');
+  var clearBtn = document.getElementById('clearBtn');
+  var authorEl = document.getElementById('activeAuthor');
+
+  /* Show active author chip */
+  authorEl.innerHTML = '';
+  if (selectedAuthor) {
+    var chip = document.createElement('span');
+    chip.className = 'author-chip';
+    chip.innerHTML = escHTML(selectedAuthor) + ' <span class="chip-x">&times;</span>';
+    chip.onclick = function() {
+      selectedAuthor = '';
+      document.getElementById('authorSelect').value = '';
+      render();
+    };
+    authorEl.appendChild(chip);
+  }
+
+  clearBtn.classList.toggle('visible', searchTerm !== '' || selectedAuthor !== '');
+
+  var filtered = CITATIONS.filter(function(c) {
+    if (selectedAuthor && c.attribution !== selectedAuthor) return false;
+    if (searchTerm) {
+      var haystack = (c.text + ' ' + c.attribution + ' ' + c.source + ' ' + c.fn + ' ' + c.sermon_title).toLowerCase();
+      var terms = searchTerm.split(/\s+/);
+      for (var i = 0; i < terms.length; i++) {
+        if (haystack.indexOf(terms[i]) === -1) return false;
+      }
+    }
+    return true;
+  });
+
+  var n = filtered.length;
+  countEl.textContent = n + ' citation' + (n !== 1 ? 's' : '');
+
+  if (n === 0) {
+    grid.style.display = 'none';
+    empty.style.display = 'block';
+  } else {
+    grid.style.display = '';
+    empty.style.display = 'none';
+    grid.innerHTML = filtered.map(function(c, i) { return cardHTML(c, i); }).join('');
+  }
+}
+
+function cardHTML(c, index) {
+  var fnLabel = c.fn ? c.fn.charAt(0).toUpperCase() + c.fn.slice(1) : '';
+  var fnClass = c.fn ? 'fn-' + c.fn : '';
+
+  return '<article class="cite-card" style="animation-delay:' + Math.min(index * 0.02, 0.6) + 's">'
+    + (fnLabel ? '<span class="card-function ' + fnClass + '">' + escHTML(fnLabel) + '</span>' : '')
+    + '<div class="card-quote">' + escHTML(c.text) + '</div>'
+    + '<div class="card-divider"></div>'
+    + '<div class="card-attribution" onclick="setAuthorFilter(\'' + escAttr(c.attribution) + '\')">&mdash;' + escHTML(c.attribution) + '</div>'
+    + (c.source ? '<div class="card-work">' + escHTML(c.source) + '</div>' : '')
+    + (c.sermon_title ? '<div class="card-source">From: <a href="showcasev4.html?id=' + CHRIS_ID + '">' + escHTML(c.sermon_title) + '</a></div>' : '')
+    + '</article>';
+}
+
+function setAuthorFilter(author) {
+  selectedAuthor = author;
+  document.getElementById('authorSelect').value = author;
+  render();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function clearFilters() {
+  searchTerm = '';
+  selectedAuthor = '';
+  document.getElementById('searchInput').value = '';
+  document.getElementById('authorSelect').value = '';
+  render();
+}
+
+function escHTML(s) {
+  var d = document.createElement('div');
+  d.textContent = s;
+  return d.innerHTML;
+}
+
+function escAttr(s) {
+  return s.replace(/'/g, "\\'").replace(/"/g, '&quot;');
+}
+
+function debounce(fn, ms) {
+  var t;
+  return function() {
+    var args = arguments;
+    var ctx = this;
+    clearTimeout(t);
+    t = setTimeout(function() { fn.apply(ctx, args); }, ms);
+  };
+}
+</script>
+</body>
+</html>
