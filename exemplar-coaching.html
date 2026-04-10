@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Exemplar-Based Coaching: The Nuts & Bolts — Shepherd's Guild</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500&family=DM+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1714; --parchment: #f7f3ee; --cream: #ede8e0;
+    --warm-gray: #9e9688; --gold: #c4a265; --gold-dim: #a8894f;
+    --gold-bright: #dbb978; --burgundy: #6b2d3e; --forest: #2d4a3e;
+    --slate: #4a4640;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--parchment); color: var(--ink); line-height: 1.7; -webkit-font-smoothing: antialiased; }
+
+  /* NAV */
+  .nav { position: sticky; top: 0; z-index: 100; background: rgba(247,243,238,0.94); backdrop-filter: blur(16px); border-bottom: 1px solid rgba(196,162,101,0.15); padding: 0 30px; }
+  .nav-inner { max-width: 900px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; height: 56px; }
+  .nav-brand { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+  .nav-brand-icon { width: 28px; height: 28px; border: 1px solid var(--gold); border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+  .nav-brand-icon svg { width: 12px; height: 12px; }
+  .nav-brand-text { font-size: 0.72rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink); }
+  .nav-brand-text span { color: var(--gold); }
+  .nav-back { font-size: 0.7rem; font-weight: 500; color: var(--slate); text-decoration: none; letter-spacing: 0.04em; }
+  .nav-back:hover { color: var(--gold); }
+
+  /* HERO */
+  .page-hero { background: var(--ink); color: var(--parchment); padding: 80px 30px 72px; text-align: center; }
+  .page-hero-inner { max-width: 760px; margin: 0 auto; }
+  .page-eyebrow { font-size: 0.65rem; font-weight: 600; letter-spacing: 0.28em; text-transform: uppercase; color: var(--gold); margin-bottom: 16px; }
+  .page-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(2.2rem, 5vw, 3.5rem); font-weight: 300; line-height: 1.1; margin-bottom: 24px; }
+  .page-title em { font-style: italic; color: var(--gold-bright); }
+  .page-intro { font-size: 0.95rem; color: rgba(247,243,238,0.62); line-height: 1.85; max-width: 620px; margin: 0 auto; }
+  .page-intro strong { color: var(--gold-bright); font-weight: 500; }
+
+  /* CONTENT */
+  .content { max-width: 900px; margin: 0 auto; padding: 80px 30px 120px; }
+
+  /* TOC */
+  .toc { background: #fff; border: 1px solid rgba(196,162,101,0.15); border-radius: 12px; padding: 32px 36px; margin-bottom: 64px; }
+  .toc-title { font-size: 0.65rem; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); margin-bottom: 16px; }
+  .toc-list { list-style: none; display: grid; grid-template-columns: 1fr 1fr; gap: 8px 40px; }
+  .toc-list a { font-size: 0.88rem; color: var(--slate); text-decoration: none; display: flex; align-items: center; gap: 8px; }
+  .toc-list a:hover { color: var(--burgundy); }
+  .toc-list a::before { content: '→'; color: var(--gold); font-size: 0.75rem; }
+
+  /* SECTIONS */
+  .gloss-section { margin-bottom: 72px; }
+  .gloss-section-label { font-size: 0.62rem; font-weight: 600; letter-spacing: 0.25em; text-transform: uppercase; color: var(--gold); margin-bottom: 8px; }
+  .gloss-section-title { font-family: 'Cormorant Garamond', serif; font-size: 1.7rem; font-weight: 500; margin-bottom: 16px; padding-bottom: 16px; border-bottom: 1px solid rgba(196,162,101,0.2); }
+  .gloss-section-intro { font-size: 0.9rem; color: var(--slate); line-height: 1.8; margin-bottom: 28px; max-width: 680px; }
+
+  /* BODY PROSE */
+  .prose p { font-size: 0.92rem; color: var(--slate); line-height: 1.85; margin-bottom: 18px; max-width: 720px; }
+  .prose p strong { color: var(--ink); font-weight: 600; }
+  .prose p em { color: var(--burgundy); font-style: italic; }
+  .prose a { color: var(--burgundy); text-decoration: none; border-bottom: 1px dotted rgba(107,45,62,0.4); }
+  .prose a:hover { color: var(--gold-dim); border-bottom-color: var(--gold); }
+  .prose ul { margin: 0 0 24px 20px; padding: 0; }
+  .prose ul li { font-size: 0.92rem; color: var(--slate); line-height: 1.85; margin-bottom: 8px; }
+  .prose ul li strong { color: var(--ink); font-weight: 600; }
+
+  /* STEP CARDS (how the engine works) */
+  .step-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin-bottom: 28px; }
+  .step-card { background: #fff; border-radius: 10px; padding: 28px; border: 1px solid rgba(196,162,101,0.12); position: relative; }
+  .step-num { font-family: 'JetBrains Mono', monospace; font-size: 0.58rem; font-weight: 600; letter-spacing: 0.2em; color: var(--gold); margin-bottom: 10px; }
+  .step-title { font-family: 'Cormorant Garamond', serif; font-size: 1.25rem; font-weight: 600; margin-bottom: 10px; }
+  .step-desc { font-size: 0.86rem; color: var(--slate); line-height: 1.75; }
+
+  /* TABLE (reused from glossary) */
+  .gloss-table { width: 100%; border-collapse: collapse; margin-bottom: 8px; font-size: 0.88rem; }
+  .gloss-table th { font-size: 0.62rem; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase; color: var(--warm-gray); text-align: left; padding: 10px 16px; background: var(--cream); border-bottom: 1px solid rgba(196,162,101,0.15); }
+  .gloss-table td { padding: 14px 16px; border-bottom: 1px solid rgba(196,162,101,0.08); vertical-align: top; line-height: 1.65; }
+  .gloss-table tr:last-child td { border-bottom: none; }
+  .term { font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; color: var(--burgundy); background: rgba(107,45,62,0.06); padding: 2px 8px; border-radius: 4px; white-space: nowrap; }
+
+  /* CALLOUT */
+  .callout { background: linear-gradient(135deg, rgba(196,162,101,0.08), rgba(196,162,101,0.02)); border-left: 3px solid var(--gold); padding: 24px 28px; margin: 32px 0; border-radius: 0 8px 8px 0; }
+  .callout-label { font-size: 0.62rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold-dim); margin-bottom: 8px; }
+  .callout p { font-size: 0.9rem; color: var(--slate); line-height: 1.8; margin: 0; max-width: none; }
+  .callout p strong { color: var(--ink); }
+
+  /* EXAMPLE BLOCK */
+  .example { background: #fff; border: 1px solid rgba(196,162,101,0.15); border-radius: 10px; padding: 28px 32px; margin: 24px 0; }
+  .example-label { font-size: 0.6rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); margin-bottom: 12px; }
+  .example-title { font-family: 'Cormorant Garamond', serif; font-size: 1.15rem; font-weight: 600; margin-bottom: 8px; }
+  .example p { font-size: 0.88rem; color: var(--slate); line-height: 1.78; margin-bottom: 12px; }
+  .example p:last-child { margin-bottom: 0; }
+  .example a { color: var(--burgundy); text-decoration: none; border-bottom: 1px dotted rgba(107,45,62,0.4); }
+  .example a:hover { color: var(--gold-dim); border-bottom-color: var(--gold); }
+
+  /* CROSSLINK STRIP */
+  .crosslink-strip { background: #fff; border: 1px solid rgba(196,162,101,0.15); border-radius: 12px; padding: 32px 36px; margin-top: 80px; text-align: center; }
+  .crosslink-strip p { font-size: 0.88rem; color: var(--slate); max-width: none; margin-bottom: 16px; }
+  .crosslink-strip a { color: var(--burgundy); text-decoration: none; font-weight: 500; }
+  .crosslink-strip a:hover { color: var(--gold-dim); }
+  .crosslink-pills { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin-top: 12px; }
+  .crosslink-pill { display: inline-block; font-size: 0.75rem; font-weight: 500; color: var(--gold-dim); background: rgba(196,162,101,0.08); border: 1px solid rgba(196,162,101,0.2); padding: 6px 14px; border-radius: 99px; text-decoration: none; transition: all 0.2s; }
+  .crosslink-pill:hover { background: var(--gold); color: var(--ink); border-color: var(--gold); }
+
+  /* FOOTER */
+  .page-footer { background: var(--ink); color: var(--parchment); padding: 48px 30px; text-align: center; }
+  .page-footer a { color: var(--gold); text-decoration: none; font-size: 0.85rem; }
+  .page-footer p { font-size: 0.75rem; color: rgba(247,243,238,0.3); margin-top: 12px; }
+
+  @media (max-width: 700px) {
+    .toc-list { grid-template-columns: 1fr; }
+    .step-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="/" class="nav-brand">
+      <div class="nav-brand-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#c4a265" stroke-width="1.5">
+          <path d="M12 2L2 7v10l10 5 10-5V7L12 2z"/><path d="M12 22V12"/><path d="M2 7l10 5 10-5"/>
+        </svg>
+      </div>
+      <span class="nav-brand-text">Shepherd's Guild <span>/ The Guild Hall</span></span>
+    </a>
+    <a href="/" class="nav-back">← Back to the Hall</a>
+  </div>
+</nav>
+
+<div class="page-hero">
+  <div class="page-hero-inner">
+    <div class="page-eyebrow">Shepherd's Guild — Methodology</div>
+    <h1 class="page-title">Exemplar-Based Coaching: <em>The Nuts &amp; Bolts</em></h1>
+    <p class="page-intro">Every pastor wants feedback on his preaching — but generic advice ages out the moment it's spoken. Our <strong>proprietary exemplar matching engine</strong> doesn't hand you a checklist. It compares your actual sermons — unit by unit, doctrine by doctrine — against the preaching greats who have already solved the problems you're wrestling with.</p>
+  </div>
+</div>
+
+<div class="content">
+
+  <nav class="toc">
+    <div class="toc-title">On This Page</div>
+    <ul class="toc-list">
+      <li><a href="#why">Why Exemplar Matching</a></li>
+      <li><a href="#engine">How the Engine Works</a></li>
+      <li><a href="#data">What We Measure</a></li>
+      <li><a href="#matching">The Matching Algorithm</a></li>
+      <li><a href="#growth">How Growth Areas Are Generated</a></li>
+      <li><a href="#example">A Worked Example</a></li>
+    </ul>
+  </nav>
+
+  <!-- WHY -->
+  <div class="gloss-section" id="why">
+    <div class="gloss-section-label">The Premise</div>
+    <h2 class="gloss-section-title">Why Exemplar Matching</h2>
+    <div class="prose">
+      <p>Most homiletical coaching is trapped in the land of abstractions — "preach the gospel more clearly," "be more Christ-centered," "work on your applications." It's the preaching equivalent of a golf coach telling you to "swing better." Technically correct. Practically useless.</p>
+      <p>The Guild's approach is different. We start with a simple conviction: <strong>the best preachers in the Christian tradition already solved the problems you're facing.</strong> Spurgeon figured out how to wield application like a surgeon. Keller mastered the art of cultural apologetic. Lloyd-Jones turned exposition into spiritual warfare. Piper built every sermon around affective theology. These aren't hypothetical masters — they're measurable, quantifiable, and now <em>comparable</em>.</p>
+      <p>Our <strong>proprietary decomposition pipeline</strong> reads every sermon in our Guild Hall corpus the same way it reads yours — extracting every rhetorical unit, every doctrinal move, every illustration, every citation, every shift in tone. The result is something nobody else in homiletics has: a <strong>controlled-vocabulary fingerprint</strong> of how each preaching exemplar actually preaches, not how he describes his preaching in a book.</p>
+      <p>Then we do the work. We match your fingerprint against theirs. Not on style or feel — on <em>measurable structural reality</em>.</p>
+    </div>
+  </div>
+
+  <!-- ENGINE -->
+  <div class="gloss-section" id="engine">
+    <div class="gloss-section-label">The Pipeline</div>
+    <h2 class="gloss-section-title">How the Engine Works</h2>
+    <p class="gloss-section-intro">Every analysis runs through a <strong>four-stage proprietary pipeline</strong>. Stages one through three are deterministic: pure computation against your sermon corpus and the Guild Hall corpus. Stage four is where the Guild's editorial voice takes over and turns the numbers into pastoral counsel.</p>
+
+    <div class="step-grid">
+      <div class="step-card">
+        <div class="step-num">Stage 01 · Aggregate</div>
+        <div class="step-title">Your Signature Profile</div>
+        <div class="step-desc">We compute your full preaching fingerprint from every sermon in your corpus — rhetorical function distribution, doctrinal loci frequency, illustration density, application cadence, citation architecture, and rhetorical register. See the <a href="/glossary" style="color:var(--burgundy);">Decomposition Glossary</a> for the full taxonomy.</div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">Stage 02 · Compare</div>
+        <div class="step-title">Guild Hall Benchmark</div>
+        <div class="step-desc">Your profile is compared against pre-computed signatures for every preacher in the <a href="/" style="color:var(--burgundy);">Guild Hall</a> — the same metrics, computed the same way. Apples to apples. No self-reporting, no vibes, no cherry-picked excerpts.</div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">Stage 03 · Match</div>
+        <div class="step-title">Top Three Exemplars</div>
+        <div class="step-desc">Our matching algorithm returns your three closest Guild Hall exemplars with a similarity percentage and the specific metrics driving each match. You see <em>which</em> aspects of your preaching mirror theirs — and which don't.</div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">Stage 04 · Diagnose</div>
+        <div class="step-title">Growth Area Generation</div>
+        <div class="step-desc">The largest measurable gaps between you and your top exemplars become your growth areas — each with a specific diagnosis, a concrete target metric, and a recommended move drawn from how the exemplar actually preaches. This is coaching rooted in data, not generic best practices.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DATA -->
+  <div class="gloss-section" id="data">
+    <div class="gloss-section-label">The Measurements</div>
+    <h2 class="gloss-section-title">What We Actually Measure</h2>
+    <p class="gloss-section-intro">The power of exemplar matching lies in its precision. We don't reduce your preaching to three or four crude scores. Every sermon is broken into dozens of discrete measurements — each one rooted in the <a href="/glossary">controlled vocabulary</a> of our decomposition spec.</p>
+
+    <table class="gloss-table">
+      <thead><tr><th>Metric Category</th><th>What It Captures</th></tr></thead>
+      <tbody>
+        <tr><td><span class="term">Rhetorical Register</span></td><td>The percentage of every sermon spent in exposition, theological claim, application, illustration, introduction, conclusion, transition, pastoral aside, and prayer. Your signature mix.</td></tr>
+        <tr><td><span class="term">Doctrinal Loci</span></td><td>Which of the 16 theological categories you return to most often — your theological center of gravity. Ecclesiology vs. Christology vs. Soteriology vs. Sanctification, all measured and tracked across years of preaching.</td></tr>
+        <tr><td><span class="term">Illustration Density</span></td><td>Illustrations per sermon, classified by type (personal story, historical example, analogy, cultural reference, hypothetical). Reveals whether you lean on narrative or argument.</td></tr>
+        <tr><td><span class="term">Application Cadence</span></td><td>How often you turn toward the congregation with direct imperatives, and what kind of applications you favor — indicative, imperative, promissory, or interrogative.</td></tr>
+        <tr><td><span class="term">Citation Architecture</span></td><td>How you use the rest of Scripture (tier-2 cross-references) and how you engage human voices (tier-3 quotations) — with what frequency, from which authors, for what function.</td></tr>
+        <tr><td><span class="term">Hermeneutical Method</span></td><td>Your default interpretive lens — grammatical-historical, redemptive-historical, canonical, applicatory, or polemic. The approach you reach for when a text opens.</td></tr>
+        <tr><td><span class="term">Biblical-Theological Moves</span></td><td>How often you reach across the canon to connect texts — via typology, fulfillment, progressive revelation, narrative arc, intertextual echo, contrast, or thematic thread.</td></tr>
+      </tbody>
+    </table>
+
+    <div class="callout">
+      <div class="callout-label">Why This Matters</div>
+      <p>Every one of these measurements is <strong>computed identically</strong> for you and for every Guild Hall exemplar. When you see that your illustration density is 2.1 per sermon and <a href="/preacher-spurgeon.html">Spurgeon</a>'s is 4.8, that's not a style judgment — it's a structural measurement, drawn from the same vocabulary, computed the same way, on the same kind of data. The gap is real, quantifiable, and actionable.</p>
+    </div>
+  </div>
+
+  <!-- MATCHING -->
+  <div class="gloss-section" id="matching">
+    <div class="gloss-section-label">The Algorithm</div>
+    <h2 class="gloss-section-title">The Matching Algorithm</h2>
+    <div class="prose">
+      <p>Once your signature profile is computed, the matching algorithm goes to work. It runs a weighted similarity score against every preacher in the Guild Hall, using the metrics above as comparison dimensions.</p>
+      <p>The algorithm is <strong>tuned for structural kinship, not superficial resemblance</strong>. A match isn't triggered because two preachers both love Ephesians or both quote C.S. Lewis. A match is triggered when the underlying shape of their preaching — how they move between exposition and application, what doctrines anchor their work, how they reach across the canon, how often they pivot to the pastoral — is measurably similar.</p>
+      <p>The top three results come back with:</p>
+      <ul>
+        <li><strong>A similarity percentage</strong> — the overall match across all weighted dimensions.</li>
+        <li><strong>The ranking</strong> — first, second, and third closest exemplars.</li>
+        <li><strong>The reasons</strong> — the specific metrics driving the match. Not "vibe" or "feel." The actual measurements.</li>
+      </ul>
+      <p>You might discover your rhetorical cadence mirrors <a href="/preacher-keller.html">Tim Keller</a>, your doctrinal preoccupations track with <a href="/preacher-piper.html">John Piper</a>, and your illustration strategy echoes <a href="/preacher-spurgeon.html">Charles Spurgeon</a>. Or you might find you're sailing in uncharted water — a signature the Hall hasn't seen before. Either way, the data will tell you.</p>
+    </div>
+  </div>
+
+  <!-- GROWTH -->
+  <div class="gloss-section" id="growth">
+    <div class="gloss-section-label">The Coaching Layer</div>
+    <h2 class="gloss-section-title">How Growth Areas Are Generated</h2>
+    <p class="gloss-section-intro">This is where the engine stops calculating and starts coaching. The growth areas on your dashboard are <strong>not a menu of generic suggestions</strong>. They are surgically identified gaps between your signature and your exemplars' signatures — three of them, chosen for the largest measurable distance and the clearest path forward.</p>
+
+    <div class="prose">
+      <p>Here's what happens under the hood. Once your top three matches are locked in, our system computes the <strong>Hall average baseline</strong> — the average value for every metric across every preacher in the Guild Hall. That baseline becomes the reference point for identifying where you're running lean and where you're running hot.</p>
+      <p>Then the largest gaps are flagged. If your illustration density sits at 1.8 per sermon and the Hall average is 4.2, that's a candidate. If you spend 64% of your sermons in exposition but your closest exemplar spends 51% — also a candidate. If you haven't touched eschatology in six months and the Hall's top eschatological voices are preaching it regularly — candidate.</p>
+      <p>The system then hands these candidate gaps to our <strong>proprietary prose generator</strong>. Each growth area gets:</p>
+      <ul>
+        <li><strong>A diagnosis</strong> — three to five sentences that frame the gap honestly, affirm what's working, and name the specific numbers driving the concern.</li>
+        <li><strong>A current metric</strong> — what you're actually doing, drawn from your corpus.</li>
+        <li><strong>A target metric</strong> — what your closest exemplar does, or what the Hall average is. Something real and reachable.</li>
+        <li><strong>A concrete recommendation</strong> — a pastoral move you can make this week, drawn from how the exemplar actually preaches. Not "work on illustrations." Instead: <em>"Spurgeon anchored nearly every third unit with a concrete image. Try borrowing his discipline of reaching for the ordinary — a lamp, a road, a garment — before reaching for the abstract."</em></li>
+      </ul>
+      <p>The result is coaching that <em>could not be generated any other way</em>. It's rooted in your actual preaching, benchmarked against the best, and translated into specific moves. No homiletical platitudes. No generic book recommendations. Just data, diagnosis, and direction.</p>
+    </div>
+
+    <div class="callout">
+      <div class="callout-label">What Makes This Different</div>
+      <p>You cannot get this kind of feedback from a homiletics textbook, a preaching class, or even a trusted mentor. Textbooks offer <em>principles</em>. Mentors offer <em>impressions</em>. The Guild offers <strong>measurement</strong> — your actual corpus compared to the actual corpora of preaching exemplars, with gaps identified at the unit level and recommendations tied to specific structural moves. It is, to our knowledge, the first system of its kind.</p>
+    </div>
+  </div>
+
+  <!-- EXAMPLE -->
+  <div class="gloss-section" id="example">
+    <div class="gloss-section-label">In Practice</div>
+    <h2 class="gloss-section-title">A Worked Example</h2>
+    <p class="gloss-section-intro">Here's what a growth area looks like when the pipeline has done its job. This is the kind of recommendation that shows up on a pastor's dashboard — data-grounded, exemplar-referenced, and specific enough to act on this week.</p>
+
+    <div class="example">
+      <div class="example-label">Growth Area · Example</div>
+      <div class="example-title">The Illustration Deficit</div>
+      <p><strong>Diagnosis:</strong> Your corpus runs expositionally rich but illustratively lean — 1.4 illustrations per sermon against a Hall average of 3.6. This isn't a stylistic failure; your exegetical rigor is a signature strength. But your closest exemplar match, <a href="/preacher-spurgeon.html">Charles Spurgeon</a>, anchors every other unit with a concrete image — a lamp, a road, a garment, a wound. The result is preaching that moves at the speed of memory, not just argument.</p>
+      <p><strong>Current metric:</strong> 1.4 illustrations per sermon</p>
+      <p><strong>Target metric:</strong> 3.6 (Hall average) / 4.8 (Spurgeon)</p>
+      <p><strong>Recommendation:</strong> <em>Before you prepare your next theological claim, draft a sensory image alongside it.</em> Not a story — just an image. A lamp, a road, a garment. Spurgeon's discipline was to reach for the ordinary before reaching for the abstract. Borrow that discipline for three Sundays and measure the difference.</p>
+    </div>
+
+    <p class="prose" style="margin-top: 28px;">That's one growth area. Your dashboard will have three. Each one is generated the same way — gap identified from data, target drawn from an exemplar, recommendation tied to a specific move you can practice. No abstractions. No fluff.</p>
+  </div>
+
+  <!-- CROSSLINKS -->
+  <div class="crosslink-strip">
+    <p><strong>Ready to go deeper?</strong> The Guild's methodology is fully documented. Every term used on this page is defined in the <a href="/glossary">Decomposition Glossary</a>. And every exemplar we match you against has a full public profile in the Hall.</p>
+    <div class="crosslink-pills">
+      <a href="/glossary" class="crosslink-pill">Decomposition Glossary</a>
+      <a href="/preacher-spurgeon.html" class="crosslink-pill">Charles Spurgeon</a>
+      <a href="/preacher-keller.html" class="crosslink-pill">Tim Keller</a>
+      <a href="/preacher-piper.html" class="crosslink-pill">John Piper</a>
+      <a href="/preacher-sproul.html" class="crosslink-pill">R.C. Sproul</a>
+      <a href="/" class="crosslink-pill">The Guild Hall</a>
+    </div>
+  </div>
+
+</div>
+
+<footer class="page-footer">
+  <a href="/">← Return to the Guild Hall</a>
+  <p>© 2026 Shepherd's Guild. Proprietary decomposition methodology.</p>
+</footer>
+
+</body>
+</html>
