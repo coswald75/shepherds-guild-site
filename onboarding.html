@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Get Started · Shepherd's Guild</title>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,500&family=DM+Sans:wght@300;400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<title>Shepherd's Guild · Build your sermon corpus</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=DM+Sans:wght@300;400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
 <style>
 :root {
   --ink:          #1a1714;
@@ -15,16 +15,16 @@
   --gold-dim:     #a8894f;
   --gold-bright:  #dbb978;
   --burgundy:     #6b2d3e;
-  --forest:       #2d4a3e;
   --slate:        #4a4640;
   --accent:       #0f2d3d;
   --accent-mid:   #1a4d68;
   --accent-light: #2a6888;
-
+  --shadow-soft:  0 2px 20px rgba(26,23,20,0.06);
+  --shadow-card:  0 4px 30px rgba(26,23,20,0.10);
   --rule:         rgba(196,162,101,0.18);
   --rule-hard:    rgba(196,162,101,0.35);
+  --rule-light:   rgba(26,23,20,0.08);
   --card-bg:      #ffffff;
-  --card-bg-tint: #faf7f2;
 
   --serif: 'Cormorant Garamond', Georgia, serif;
   --sans:  'DM Sans', system-ui, sans-serif;
@@ -32,1181 +32,696 @@
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-html, body {
-  height: 100%;
-  background: var(--accent);
-  color: var(--parchment);
+html { scroll-behavior: smooth; }
+body {
+  background: var(--parchment);
+  color: var(--ink);
   font-family: var(--sans);
+  font-weight: 300;
   -webkit-font-smoothing: antialiased;
-  overflow: hidden;
+  line-height: 1.6;
 }
 
-/* ── Layout ── */
-.funnel-wrap {
-  display: flex;
-  height: 100vh;
-  width: 100vw;
-}
+a { color: inherit; }
 
-/* ── Left: Sales copy panel ── */
-.copy-panel {
-  width: 42%;
-  min-width: 360px;
-  height: 100vh;
-  background: var(--accent);
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding: 60px 56px;
-  position: relative;
-  overflow: hidden;
-}
-
-.copy-panel::after {
+/* ─── Decorative dot pattern for dark sections ─── */
+.dot-pattern::before {
   content: '';
-  position: absolute; inset: 0;
-  background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.02'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(rgba(196,162,101,0.08) 1px, transparent 1px);
+  background-size: 28px 28px;
   pointer-events: none;
 }
 
-.copy-brand {
+/* ─── Shared section ─── */
+section {
+  position: relative;
+  padding: 96px 40px;
+}
+.wrap {
+  max-width: 1180px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+.section-label {
   font-family: var(--mono);
-  font-size: 0.55rem;
-  color: rgba(196,162,101,0.5);
-  letter-spacing: 0.2em;
+  font-size: 0.62rem;
+  letter-spacing: 0.22em;
   text-transform: uppercase;
-  margin-bottom: 32px;
-  position: relative;
-  z-index: 1;
+  color: var(--gold);
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 28px;
 }
-
-.copy-block {
-  position: relative;
-  z-index: 1;
-  display: none;
-  opacity: 0;
-  transform: translateY(16px);
-  transition: opacity 0.5s ease, transform 0.5s ease;
-}
-.copy-block.active {
+.section-label::after {
+  content: '';
   display: block;
-  opacity: 1;
-  transform: translateY(0);
+  width: 40px;
+  height: 1px;
+  background: var(--gold);
+  opacity: 0.5;
+}
+.section-label.dark { color: rgba(196,162,101,0.72); }
+.section-label.dark::after { background: rgba(196,162,101,0.4); }
+
+.section-heading {
+  font-family: var(--serif);
+  font-size: clamp(2.2rem, 4.2vw, 3.4rem);
+  font-weight: 300;
+  line-height: 1.1;
+  color: var(--ink);
+  margin-bottom: 18px;
+  max-width: 900px;
+  letter-spacing: -0.01em;
+}
+.section-heading em {
+  font-style: italic;
+  color: var(--accent);
+}
+.section-heading.dark { color: var(--parchment); }
+.section-heading.dark em { color: var(--gold-bright); }
+
+.section-subhead {
+  font-family: var(--sans);
+  font-size: 1.05rem;
+  font-weight: 300;
+  line-height: 1.65;
+  color: var(--slate);
+  max-width: 680px;
+  margin-bottom: 48px;
+}
+.section-subhead.dark { color: rgba(247,243,238,0.72); }
+.section-subhead strong { color: var(--accent); font-weight: 500; }
+.section-subhead.dark strong { color: var(--gold-bright); font-weight: 400; }
+
+/* ─── 1. Hero ─── */
+.hero {
+  background: var(--accent);
+  padding: 120px 40px 128px;
+  overflow: hidden;
+}
+.hero-brand {
+  font-family: var(--mono);
+  font-size: 0.62rem;
+  color: rgba(196,162,101,0.6);
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  margin-bottom: 42px;
+}
+.hero-headline {
+  font-family: var(--serif);
+  font-size: clamp(2.6rem, 6vw, 4.6rem);
+  font-weight: 300;
+  line-height: 1.05;
+  color: var(--parchment);
+  margin-bottom: 28px;
+  max-width: 920px;
+  letter-spacing: -0.015em;
+}
+.hero-headline em {
+  font-style: italic;
+  color: var(--gold-bright);
+}
+.hero-subhead {
+  font-family: var(--sans);
+  font-size: 1.1rem;
+  font-weight: 300;
+  line-height: 1.7;
+  color: rgba(247,243,238,0.72);
+  max-width: 640px;
+  margin-bottom: 44px;
+}
+.hero-subhead strong {
+  color: var(--gold-bright);
+  font-weight: 400;
+}
+.hero-cta {
+  display: inline-block;
+  font-family: var(--sans);
+  font-size: 0.84rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  background: var(--gold);
+  color: var(--accent);
+  padding: 16px 36px;
+  border-radius: 2px;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.2s;
+  box-shadow: 0 4px 22px rgba(196,162,101,0.22);
+}
+.hero-cta:hover {
+  background: var(--gold-bright);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 28px rgba(196,162,101,0.32);
 }
 
-.copy-quote {
-  font-family: var(--serif);
-  font-size: 1.55rem;
-  font-weight: 300;
-  font-style: italic;
-  line-height: 1.45;
-  color: var(--parchment);
-  margin-bottom: 20px;
-  position: relative;
-  padding-left: 24px;
+/* ─── 2. Pricing ─── */
+.pricing {
+  background: var(--card-bg);
+  padding: 104px 40px;
 }
-.copy-quote::before {
+.pricing-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+  margin-top: 12px;
+}
+.price-card {
+  background: var(--parchment);
+  border: 1px solid var(--rule);
+  border-radius: 3px;
+  padding: 52px 44px;
+  position: relative;
+  transition: all 0.25s;
+}
+.price-card::before {
   content: '';
   position: absolute;
-  left: 0; top: 4px; bottom: 4px;
-  width: 2px;
-  background: var(--gold);
-  border-radius: 1px;
-}
-
-.copy-attribution {
-  font-family: var(--sans);
-  font-size: 0.72rem;
-  color: rgba(196,162,101,0.7);
-  padding-left: 24px;
-  margin-bottom: 32px;
-}
-
-.copy-note {
-  font-family: var(--sans);
-  font-size: 0.82rem;
-  line-height: 1.65;
-  color: rgba(247,243,238,0.55);
-  padding-left: 24px;
-  max-width: 420px;
-}
-
-.copy-note strong {
-  color: var(--gold-bright);
-  font-weight: 500;
-}
-
-/* ── Right: Question panel ── */
-.question-panel {
-  flex: 1;
-  height: 100vh;
-  background: var(--parchment);
-  display: flex;
-  flex-direction: column;
-  position: relative;
-}
-
-/* Progress bar */
-.progress-bar {
+  top: 0;
+  left: 0;
+  right: 0;
   height: 3px;
-  background: var(--cream);
-  flex-shrink: 0;
+  background: linear-gradient(90deg, var(--gold) 0%, var(--gold-bright) 50%, rgba(196,162,101,0.2) 100%);
+  border-radius: 3px 3px 0 0;
 }
-.progress-fill {
-  height: 100%;
-  background: var(--gold);
-  transition: width 0.4s ease;
-  width: 0%;
+.price-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-card);
+  border-color: var(--rule-hard);
 }
-
-.progress-meta {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 16px 48px 0;
-  flex-shrink: 0;
-}
-.progress-step {
+.price-kind {
   font-family: var(--mono);
-  font-size: 0.52rem;
-  color: var(--warm-gray);
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-}
-.progress-time {
-  font-family: var(--mono);
-  font-size: 0.52rem;
-  color: var(--warm-gray);
-  letter-spacing: 0.08em;
-}
-
-/* Question area */
-.question-area {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding: 0 48px;
-  max-width: 640px;
-}
-
-.step {
-  display: none;
-  flex-direction: column;
-}
-.step.active {
-  display: flex;
-  animation: fadeUp 0.4s ease;
-}
-
-@keyframes fadeUp {
-  from { opacity: 0; transform: translateY(20px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-
-.step-label {
-  font-family: var(--mono);
-  font-size: 0.5rem;
-  color: var(--gold-dim);
+  font-size: 0.58rem;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  margin-bottom: 12px;
+  color: var(--gold-dim);
+  margin-bottom: 18px;
 }
-
-.step-question {
+.price-amount {
   font-family: var(--serif);
-  font-size: 1.7rem;
-  font-weight: 400;
+  font-size: 3.6rem;
+  font-weight: 300;
+  line-height: 1;
   color: var(--ink);
-  line-height: 1.35;
-  margin-bottom: 32px;
+  margin-bottom: 6px;
+  letter-spacing: -0.02em;
 }
-
-.step-question em {
+.price-amount small {
+  font-size: 1rem;
+  color: var(--warm-gray);
+  font-weight: 300;
+  letter-spacing: 0;
+}
+.price-unit {
+  font-family: var(--serif);
   font-style: italic;
-  color: var(--accent-mid);
+  font-size: 1.15rem;
+  color: var(--slate);
+  margin-bottom: 22px;
 }
-
-/* Option cards */
-.option-group {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.option-card {
-  background: var(--card-bg);
-  border: 1.5px solid rgba(26,23,20,0.08);
-  border-radius: 4px;
-  padding: 18px 22px;
-  cursor: pointer;
-  transition: all 0.18s;
-  display: flex;
-  align-items: flex-start;
-  gap: 14px;
-}
-.option-card:hover {
-  border-color: var(--gold);
-  box-shadow: 0 2px 16px rgba(196,162,101,0.12);
-}
-.option-card.selected {
-  border-color: var(--gold);
-  background: var(--card-bg-tint);
-  box-shadow: 0 2px 16px rgba(196,162,101,0.15);
-}
-
-.option-radio {
-  width: 18px; height: 18px;
-  border-radius: 50%;
-  border: 2px solid rgba(26,23,20,0.15);
-  flex-shrink: 0;
-  margin-top: 2px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.18s;
-}
-.option-card.selected .option-radio {
-  border-color: var(--gold);
-}
-.option-card.selected .option-radio::after {
-  content: '';
-  width: 8px; height: 8px;
-  border-radius: 50%;
-  background: var(--gold);
-}
-
-.option-label {
+.price-desc {
   font-family: var(--sans);
-  font-size: 0.88rem;
+  font-size: 0.92rem;
+  line-height: 1.6;
+  color: var(--slate);
+  margin-bottom: 18px;
+}
+.price-note {
+  font-family: var(--mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--warm-gray);
+  padding-top: 18px;
+  border-top: 1px solid var(--rule);
+}
+.pricing-tagline {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 1.25rem;
+  color: var(--warm-gray);
+  text-align: center;
+  margin-top: 44px;
+}
+
+/* ─── 3. Features ─── */
+.features {
+  background: var(--parchment);
+  padding: 104px 40px;
+}
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 28px;
+  margin-top: 8px;
+}
+.feature-card {
+  background: var(--card-bg);
+  border: 1px solid var(--rule-light);
+  border-radius: 3px;
+  padding: 36px 32px;
+  position: relative;
+  transition: all 0.25s;
+}
+.feature-card:hover {
+  border-color: var(--rule-hard);
+  box-shadow: var(--shadow-soft);
+  transform: translateY(-2px);
+}
+.feature-num {
+  font-family: var(--mono);
+  font-size: 0.58rem;
+  letter-spacing: 0.16em;
+  color: var(--gold-dim);
+  margin-bottom: 14px;
+}
+.feature-title {
+  font-family: var(--serif);
+  font-size: 1.4rem;
   font-weight: 500;
   color: var(--ink);
-  line-height: 1.3;
+  line-height: 1.25;
+  margin-bottom: 12px;
+  letter-spacing: -0.005em;
 }
-.option-desc {
+.feature-desc {
   font-family: var(--sans);
-  font-size: 0.75rem;
-  color: var(--warm-gray);
-  margin-top: 3px;
-  line-height: 1.45;
+  font-size: 0.88rem;
+  line-height: 1.62;
+  color: var(--slate);
 }
 
-/* Slider input for sermon count */
-.slider-wrap {
+/* ─── 4. Testimonials ─── */
+.testimonials {
+  background: var(--card-bg);
+  padding: 104px 40px;
+}
+.testimonials-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 36px;
+  margin-top: 8px;
+}
+.t-card {
+  padding: 8px 0;
+  border-left: 2px solid var(--gold);
+  padding-left: 32px;
+}
+.t-quote {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 1.15rem;
+  line-height: 1.5;
+  color: var(--ink);
+  margin-bottom: 20px;
+  font-weight: 400;
+}
+.t-quote::before { content: '\201C'; margin-right: 2px; }
+.t-quote::after { content: '\201D'; margin-left: 2px; }
+.t-attribution {
+  font-family: var(--mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--warm-gray);
+}
+
+/* ─── 5. Contact ─── */
+.contact {
+  background: var(--accent);
+  padding: 112px 40px;
+  overflow: hidden;
+}
+.contact .wrap {
+  max-width: 680px;
+}
+.contact-form {
+  margin-top: 44px;
   display: flex;
   flex-direction: column;
   gap: 16px;
+  max-width: 560px;
 }
-
-.slider-display {
-  font-family: var(--serif);
-  font-size: 3rem;
-  font-weight: 300;
-  color: var(--accent);
-  text-align: center;
-}
-.slider-display span {
-  font-family: var(--mono);
-  font-size: 0.6rem;
-  color: var(--warm-gray);
-  letter-spacing: 0.08em;
-  display: block;
-  margin-top: 4px;
-}
-
-input[type="range"] {
-  -webkit-appearance: none;
-  appearance: none;
-  width: 100%;
-  height: 4px;
-  background: var(--cream);
-  border-radius: 2px;
-  outline: none;
-}
-input[type="range"]::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  appearance: none;
-  width: 22px; height: 22px;
-  background: var(--gold);
-  border-radius: 50%;
-  cursor: pointer;
-  box-shadow: 0 2px 8px rgba(196,162,101,0.35);
-}
-
-.slider-labels {
-  display: flex;
-  justify-content: space-between;
-  font-family: var(--mono);
-  font-size: 0.48rem;
-  color: var(--warm-gray);
-  letter-spacing: 0.06em;
-}
-
-/* Navigation */
-.step-nav {
-  padding: 0 48px 48px;
-  display: flex;
-  gap: 12px;
-  align-items: center;
-}
-
-.btn-back {
-  font-family: var(--sans);
-  font-size: 0.78rem;
-  color: var(--warm-gray);
-  background: none;
-  border: 1px solid rgba(26,23,20,0.1);
-  padding: 12px 24px;
-  border-radius: 2px;
-  cursor: pointer;
-  transition: all 0.15s;
-}
-.btn-back:hover {
-  border-color: rgba(26,23,20,0.25);
-  color: var(--ink);
-}
-.btn-back:disabled {
-  opacity: 0.3;
-  cursor: default;
-}
-
-.btn-next {
-  font-family: var(--sans);
-  font-size: 0.78rem;
-  font-weight: 500;
-  color: var(--accent);
-  background: var(--gold);
-  border: none;
-  padding: 12px 32px;
-  border-radius: 2px;
-  cursor: pointer;
-  letter-spacing: 0.05em;
-  transition: all 0.18s;
-  box-shadow: 0 2px 12px rgba(196,162,101,0.25);
-}
-.btn-next:hover {
-  background: var(--gold-bright);
-}
-.btn-next:disabled {
-  opacity: 0.4;
-  cursor: default;
-}
-
-.btn-next.cta-final {
-  background: var(--forest);
-  color: var(--parchment);
-  padding: 14px 36px;
-  font-size: 0.82rem;
-  box-shadow: 0 2px 16px rgba(45,74,62,0.3);
-}
-.btn-next.cta-final:hover {
-  background: #3a6354;
-}
-
-/* ── Estimate screen ── */
-.estimate-card {
-  background: var(--card-bg);
-  border: 1.5px solid var(--rule);
-  border-radius: 6px;
-  padding: 36px 32px;
-  max-width: 520px;
-}
-
-.estimate-header {
-  font-family: var(--mono);
-  font-size: 0.5rem;
-  color: var(--gold-dim);
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  margin-bottom: 6px;
-}
-
-.estimate-caveat {
-  font-family: var(--sans);
-  font-size: 0.72rem;
-  color: var(--warm-gray);
-  margin-bottom: 28px;
-  line-height: 1.5;
-}
-
-.estimate-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  padding: 14px 0;
-  border-bottom: 1px solid var(--rule);
-}
-.estimate-row:last-of-type {
-  border-bottom: none;
-}
-
-.estimate-label {
-  font-family: var(--sans);
-  font-size: 0.85rem;
-  color: var(--ink);
-}
-.estimate-label small {
-  display: block;
-  font-size: 0.7rem;
-  color: var(--warm-gray);
-  font-weight: 300;
-  margin-top: 2px;
-}
-
-.estimate-value {
-  font-family: var(--serif);
-  font-size: 1.5rem;
-  font-weight: 600;
-  color: var(--accent);
-}
-.estimate-value.monthly {
-  color: var(--forest);
-}
-.estimate-value small {
-  font-family: var(--sans);
-  font-size: 0.65rem;
-  font-weight: 400;
-  color: var(--warm-gray);
-}
-
-.estimate-divider {
-  height: 1px;
-  background: var(--rule-hard);
-  margin: 8px 0;
-}
-
-/* Feature list */
-.features-header {
-  font-family: var(--mono);
-  font-size: 0.48rem;
-  color: var(--gold-dim);
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  margin-top: 28px;
-  margin-bottom: 14px;
-}
-
-.feature-list {
-  list-style: none;
+.form-row {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 8px 20px;
+  gap: 16px;
 }
-.feature-list li {
+.field-label {
+  font-family: var(--mono);
+  font-size: 0.58rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(196,162,101,0.6);
+  margin-bottom: 7px;
+  display: block;
+}
+.field-input {
+  width: 100%;
   font-family: var(--sans);
-  font-size: 0.78rem;
-  color: var(--slate);
-  padding-left: 18px;
-  position: relative;
-  line-height: 1.45;
+  font-size: 0.95rem;
+  color: var(--parchment);
+  background: rgba(247,243,238,0.04);
+  border: 1px solid rgba(196,162,101,0.25);
+  border-radius: 2px;
+  padding: 14px 16px;
+  outline: none;
+  transition: all 0.2s;
 }
-.feature-list li::before {
-  content: '·';
-  position: absolute;
-  left: 4px;
-  color: var(--gold);
-  font-weight: 700;
-  font-size: 1.1rem;
-  line-height: 1.2;
+.field-input::placeholder { color: rgba(247,243,238,0.28); }
+.field-input:focus {
+  border-color: var(--gold);
+  background: rgba(247,243,238,0.06);
 }
-
-/* Dead end */
-.dead-end {
-  background: rgba(107,45,62,0.06);
-  border: 1px solid rgba(107,45,62,0.15);
-  border-radius: 4px;
-  padding: 24px;
-}
-.dead-end h3 {
-  font-family: var(--serif);
-  font-size: 1.15rem;
-  color: var(--burgundy);
-  margin-bottom: 8px;
-}
-.dead-end p {
+.contact-submit {
+  display: inline-block;
   font-family: var(--sans);
   font-size: 0.82rem;
-  color: var(--slate);
-  line-height: 1.55;
-  margin-bottom: 14px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  background: var(--gold);
+  color: var(--accent);
+  padding: 16px 36px;
+  border-radius: 2px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s;
+  margin-top: 12px;
+  align-self: flex-start;
+  box-shadow: 0 4px 22px rgba(196,162,101,0.22);
 }
-.dead-end a {
+.contact-submit:hover:not(:disabled) {
+  background: var(--gold-bright);
+  transform: translateY(-1px);
+}
+.contact-submit:disabled { opacity: 0.5; cursor: wait; }
+.form-error {
   font-family: var(--sans);
   font-size: 0.78rem;
-  color: var(--burgundy);
-  font-weight: 500;
-  text-decoration: underline;
-  text-underline-offset: 3px;
+  color: #e57373;
+  min-height: 1.2em;
+  margin-top: 4px;
+}
+.confirmation {
+  display: none;
+  text-align: center;
+  padding: 40px 0;
+}
+.confirmation-title {
+  font-family: var(--serif);
+  font-size: 2rem;
+  font-weight: 300;
+  color: var(--gold-bright);
+  margin-bottom: 14px;
+  font-style: italic;
+}
+.confirmation-msg {
+  font-family: var(--sans);
+  font-size: 0.95rem;
+  color: rgba(247,243,238,0.72);
+  line-height: 1.6;
 }
 
-/* ── Responsive ── */
+/* ─── Footer ─── */
+footer {
+  background: var(--accent);
+  padding: 32px 40px 48px;
+  border-top: 1px solid rgba(196,162,101,0.14);
+  text-align: center;
+}
+footer .line {
+  font-family: var(--mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(247,243,238,0.4);
+}
+footer .line a { color: rgba(196,162,101,0.68); text-decoration: none; }
+footer .line a:hover { color: var(--gold-bright); }
+
+/* ─── Responsive ─── */
 @media (max-width: 900px) {
-  .funnel-wrap { flex-direction: column; }
-  .copy-panel {
-    width: 100%;
-    min-width: unset;
-    height: auto;
-    padding: 36px 28px;
-  }
-  .question-panel { height: auto; min-height: 60vh; }
-  .question-area { padding: 0 28px; }
-  .step-nav { padding: 0 28px 36px; }
-  .progress-meta { padding: 12px 28px 0; }
-  .feature-list { grid-template-columns: 1fr; }
+  section, .hero, .pricing, .features, .testimonials, .contact { padding: 72px 24px; }
+  .pricing-grid { grid-template-columns: 1fr; gap: 20px; }
+  .features-grid { grid-template-columns: 1fr 1fr; gap: 20px; }
+  .testimonials-grid { grid-template-columns: 1fr; gap: 28px; }
+  .price-card { padding: 40px 32px; }
+  .price-amount { font-size: 3rem; }
+  .hero { padding: 84px 24px 96px; }
+  .hero-headline { font-size: clamp(2.2rem, 7vw, 3.4rem); }
+}
+@media (max-width: 560px) {
+  .features-grid { grid-template-columns: 1fr; }
+  .form-row { grid-template-columns: 1fr; }
+  .feature-card { padding: 32px 26px; }
+  .t-card { padding-left: 24px; }
+  .t-quote { font-size: 1.05rem; }
+  .section-heading { font-size: 1.9rem; }
 }
 
-/* ── Large screens (27" iMac, ultrawide, etc.) ── */
-@media (min-width: 1600px) {
-  .copy-panel { padding: 80px 72px; }
-  .copy-quote { font-size: 2.2rem; line-height: 1.4; }
-  .copy-attribution { font-size: 0.88rem; }
-  .copy-note { font-size: 1.05rem; line-height: 1.7; max-width: 520px; }
-  .copy-brand { font-size: 0.65rem; margin-bottom: 44px; }
-
-  .question-area { padding: 0 80px; max-width: 820px; }
-  .step-question { font-size: 2.4rem; margin-bottom: 40px; }
-  .step-label { font-size: 0.58rem; margin-bottom: 16px; }
-  .option-group { gap: 14px; }
-  .option-card { padding: 26px 30px; }
-  .option-radio { width: 22px; height: 22px; margin-top: 3px; }
-  .option-card.selected .option-radio::after { width: 10px; height: 10px; }
-  .option-label { font-size: 1.05rem; }
-  .option-desc { font-size: 0.88rem; margin-top: 4px; }
-  .slider-display { font-size: 4rem; }
-  .slider-display span { font-size: 0.7rem; }
-  input[type="range"]::-webkit-slider-thumb { width: 28px; height: 28px; }
-  .step-nav { padding: 0 80px 64px; }
-  .btn-next { padding: 16px 42px; font-size: 0.9rem; }
-  .btn-back { padding: 16px 32px; font-size: 0.9rem; }
-  .progress-meta { padding: 24px 80px 0; }
-  .progress-step { font-size: 0.58rem; }
-  .progress-time { font-size: 0.58rem; }
-
-  .estimate-card { max-width: 640px; padding: 48px 44px; }
-  .estimate-header { font-size: 0.56rem; }
-  .estimate-caveat { font-size: 0.82rem; }
-  .estimate-label { font-size: 1rem; }
-  .estimate-label small { font-size: 0.78rem; }
-  .estimate-value { font-size: 1.9rem; }
-  .features-header { font-size: 0.54rem; margin-top: 32px; }
-  .feature-list li { font-size: 0.92rem; }
-  .feature-list { gap: 12px 28px; }
-
-  .dead-end { padding: 32px; }
-  .dead-end h3 { font-size: 1.35rem; }
-  .dead-end p { font-size: 0.92rem; }
-  .dead-end a { font-size: 0.88rem; }
+/* Fade-in on scroll */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
 }
-
-@media (min-width: 2000px) {
-  .copy-panel { padding: 100px 88px; }
-  .copy-quote { font-size: 2.6rem; }
-  .copy-note { font-size: 1.15rem; max-width: 560px; }
-  .step-question { font-size: 2.8rem; }
-  .question-area { max-width: 900px; padding: 0 96px; }
-  .option-card { padding: 30px 34px; }
-  .option-label { font-size: 1.12rem; }
-  .option-desc { font-size: 0.95rem; }
-  .step-nav { padding: 0 96px 72px; }
-}
+.wrap > * { animation: fadeUp 0.5s ease both; }
+.pricing-grid > *:nth-child(2) { animation-delay: 0.08s; }
+.features-grid > *:nth-child(2) { animation-delay: 0.06s; }
+.features-grid > *:nth-child(3) { animation-delay: 0.12s; }
+.features-grid > *:nth-child(4) { animation-delay: 0.18s; }
+.features-grid > *:nth-child(5) { animation-delay: 0.24s; }
+.features-grid > *:nth-child(6) { animation-delay: 0.30s; }
+.testimonials-grid > *:nth-child(2) { animation-delay: 0.08s; }
+.testimonials-grid > *:nth-child(3) { animation-delay: 0.16s; }
 </style>
 </head>
 <body>
-<div class="funnel-wrap">
 
-  <!-- ── Left: Contextual sales copy ── -->
-  <div class="copy-panel">
-    <div class="copy-brand">shepherd's guild</div>
+<!-- ─── 1. HERO ─── -->
+<section class="hero dot-pattern">
+  <div class="wrap">
+    <div class="hero-brand">Shepherd's Guild</div>
+    <h1 class="hero-headline">Build your sermon corpus — <em>everything else flows from that.</em></h1>
+    <p class="hero-subhead">
+      We turn your sermon archive into a <strong>living, searchable corpus</strong> — your illustrations indexed, your theological themes mapped, your growth tracked across every sermon you've ever preached.
+    </p>
+    <a href="#contact" class="hero-cta">Get Started</a>
+  </div>
+</section>
 
-    <!-- Each step has a matching copy block -->
-    <div class="copy-block active" data-copy="intro">
-      <div class="copy-quote">"The first step in all of this is getting your sermons processed through our system. Everything else flows from that."</div>
-      <div class="copy-note">
-        We turn your sermon archive into a <strong>living, searchable corpus</strong> — your illustrations indexed, your theological themes mapped, your growth tracked across every sermon you've ever preached.
+<!-- ─── 2. PRICING ─── -->
+<section class="pricing">
+  <div class="wrap">
+    <div class="section-label">Simple Pricing</div>
+    <h2 class="section-heading">Two numbers. <em>That's it.</em></h2>
+    <p class="section-subhead">
+      No tiers, no add-ons, no hidden fees. Our pricing scales with your preaching — not your church size.
+    </p>
+
+    <div class="pricing-grid">
+      <div class="price-card">
+        <div class="price-kind">Corpus Ingestion</div>
+        <div class="price-amount">$100<small> per year of sermons</small></div>
+        <div class="price-unit">One-time fee</div>
+        <div class="price-desc">
+          We ingest, transcribe, and decompose every sermon in your archive — indexed by scripture, theme, illustration, and rhetorical function.
+        </div>
+        <div class="price-note">Most pastors have 3–10 years of sermons</div>
       </div>
-    </div>
 
-    <div class="copy-block" data-copy="volume">
-      <div class="copy-quote">"I started giving the classic Spurgeon 'double application' as soon as I learned what that was. It changed my preaching almost overnight."</div>
-      <div class="copy-attribution">— Early access pastor</div>
-      <div class="copy-note">
-        Your sermons get matched against <strong>classical and contemporary exemplars from the Guild Hall</strong> — patterns you didn't know had names, techniques you're already using without realizing it, and gaps you can close in a single week.
-      </div>
-    </div>
-
-    <div class="copy-block" data-copy="organization">
-      <div class="copy-quote">"I thought my files were a mess. Turns out, that's most pastors. They handled it."</div>
-      <div class="copy-attribution">— Early access pastor</div>
-      <div class="copy-note">
-        Don't worry about the state of your files. We've built our ingestion process to handle everything from <strong>pristine folders to scattered drives</strong>. We just need to know what we're working with.
-      </div>
-    </div>
-
-    <div class="copy-block" data-copy="style">
-      <div class="copy-quote">"I was matched with exemplars from the Guild Hall and then given a plan to get better. Nobody's ever done that for my preaching before."</div>
-      <div class="copy-attribution">— Early access pastor</div>
-      <div class="copy-note">
-        How you prepare shapes how we process. <strong>Manuscripts, outlines, recordings</strong> — each path leads to the same rich corpus. We just take a different road to get there.
-      </div>
-    </div>
-
-    <div class="copy-block" data-copy="manuscript">
-      <div class="copy-quote">"The very first week I used PreFlight, I got a suggestion, made a 30-second change that wound up dramatically improving my sermon."</div>
-      <div class="copy-attribution">— Early access pastor</div>
-      <div class="copy-note">
-        PreFlight is just one of the tools that unlock once your corpus is built. It reads your <strong>next sermon against everything you've preached before</strong> — catching blind spots, surfacing connections, and suggesting refinements.
-      </div>
-    </div>
-
-    <div class="copy-block" data-copy="outline-audio">
-      <div class="copy-quote">"I preach from an outline — I always thought that meant tools like this weren't for me. Turns out the recordings were all they needed."</div>
-      <div class="copy-attribution">— Early access pastor</div>
-      <div class="copy-note">
-        Your recordings are the source of truth. We transcribe and decompose them the same way we handle manuscripts — <strong>same depth, same structure, same results</strong>.
-      </div>
-    </div>
-
-    <div class="copy-block" data-copy="dead-end">
-      <div class="copy-quote">"Every sermon is a seed. You just need the soil to plant it in."</div>
-      <div class="copy-note">
-        Our system needs either <strong>full manuscripts or recordings</strong> to build your corpus. If you're starting to record your sermons, we'd love to talk about getting you set up for the future.
-      </div>
-    </div>
-
-    <div class="copy-block" data-copy="estimate">
-      <div class="copy-quote">"Thanks to the Public Page, my congregation can see all my illustrations, quotes, and transcripts — and share directly to social media using Herald."</div>
-      <div class="copy-attribution">— Early access pastor</div>
-      <div class="copy-note">
-        Your corpus doesn't just sit in a dashboard. It becomes a <strong>living resource for your congregation</strong> — searchable, shareable, and always growing. Pricing is simple: <strong>$100 per year of sermons</strong> for ingestion, plus <strong>$100/year</strong> for ongoing hosting, coaching, and new sermon processing.
+      <div class="price-card">
+        <div class="price-kind">Ongoing</div>
+        <div class="price-amount">$100<small> per year</small></div>
+        <div class="price-unit">Annual subscription</div>
+        <div class="price-desc">
+          Hosting, exemplar-based coaching, PreFlight sermon analysis, custom reports, and continuous processing of every new sermon you preach.
+        </div>
+        <div class="price-note">Billed annually · cancel anytime</div>
       </div>
     </div>
   </div>
+</section>
 
-  <!-- ── Right: Question flow ── -->
-  <div class="question-panel">
-    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
-    <div class="progress-meta">
-      <div class="progress-step" id="progressStep">Step 1 of 5</div>
-      <div class="progress-time" id="progressTime">~ 2 min</div>
-    </div>
+<!-- ─── 3. FEATURES ─── -->
+<section class="features">
+  <div class="wrap">
+    <div class="section-label">What You Get</div>
+    <h2 class="section-heading">Your corpus, <em>fully indexed.</em></h2>
+    <p class="section-subhead">
+      Every feature below is included in your annual subscription. No upsells, no tiered access.
+    </p>
 
-    <div class="question-area" id="questionArea">
-
-      <!-- STEP 0: Intro -->
-      <div class="step active" data-step="0" data-copy-key="intro">
-        <div class="step-label">Let's get started</div>
-        <div class="step-question">Build your sermon corpus — <em>everything else flows from that.</em></div>
-        <div class="option-group">
-          <p style="font-family: var(--sans); font-size: 0.88rem; color: var(--slate); line-height: 1.65; max-width: 480px;">
-            We need to ask you a few questions about your sermons so we can give you an accurate estimate. This takes about two minutes.
-          </p>
-        </div>
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-num">01 · Archive</div>
+        <div class="feature-title">Full Sermon Search</div>
+        <div class="feature-desc">Find any illustration, quote, or theological point across your entire preaching history in seconds.</div>
       </div>
 
-      <!-- STEP 1: Volume -->
-      <div class="step" data-step="1" data-copy-key="volume">
-        <div class="step-label">Sermon volume</div>
-        <div class="step-question">How many sermons are we talking about, <em>approximately?</em></div>
-        <div class="slider-wrap">
-          <div class="slider-display" id="sermonCount">100<span>sermons</span></div>
-          <input type="range" id="sermonSlider" min="10" max="1000" step="10" value="100"/>
-          <div class="slider-labels">
-            <span>10</span>
-            <span>250</span>
-            <span>500</span>
-            <span>750</span>
-            <span>1,000+</span>
-          </div>
-        </div>
+      <div class="feature-card">
+        <div class="feature-num">02 · Coaching</div>
+        <div class="feature-title">Exemplar Matching</div>
+        <div class="feature-desc">Your sermons matched against classical and contemporary exemplars from the Guild Hall — with a plan to close the gaps.</div>
       </div>
 
-      <!-- STEP 2: Organization -->
-      <div class="step" data-step="2" data-copy-key="organization">
-        <div class="step-label">File organization</div>
-        <div class="step-question">How organized are your sermon files?</div>
-        <div class="option-group" data-field="organization">
-          <div class="option-card" data-value="clean">
-            <div class="option-radio"></div>
-            <div>
-              <div class="option-label">Clean and organized</div>
-              <div class="option-desc">All in one folder or a clear directory structure. Easy to find everything.</div>
-            </div>
-          </div>
-          <div class="option-card" data-value="mixed">
-            <div class="option-radio"></div>
-            <div>
-              <div class="option-label">Somewhat organized</div>
-              <div class="option-desc">A lot stored cleanly, but some scattered across email, cloud drives, or other places.</div>
-            </div>
-          </div>
-          <div class="option-card" data-value="scattered">
-            <div class="option-radio"></div>
-            <div>
-              <div class="option-label">It's... complicated</div>
-              <div class="option-desc">Files in many places, mixed formats, some audio-only. Could use some help sorting it out.</div>
-            </div>
-          </div>
-        </div>
+      <div class="feature-card">
+        <div class="feature-num">03 · PreFlight</div>
+        <div class="feature-title">Sermon Analysis</div>
+        <div class="feature-desc">Your next sermon read against everything you've preached before — blind spots, connections, and refinements you'd otherwise miss.</div>
       </div>
 
-      <!-- STEP 3: Preaching style -->
-      <div class="step" data-step="3" data-copy-key="style">
-        <div class="step-label">Preaching style</div>
-        <div class="step-question">Are you a <em>manuscript</em> preacher or an <em>outline</em> preacher?</div>
-        <div class="option-group" data-field="style">
-          <div class="option-card" data-value="manuscript">
-            <div class="option-radio"></div>
-            <div>
-              <div class="option-label">Manuscript preacher</div>
-              <div class="option-desc">I write out my sermons fully (or close to it) before I preach.</div>
-            </div>
-          </div>
-          <div class="option-card" data-value="outline">
-            <div class="option-radio"></div>
-            <div>
-              <div class="option-label">Outline preacher</div>
-              <div class="option-desc">I preach from notes, bullet points, or an outline — the sermon happens live.</div>
-            </div>
-          </div>
-        </div>
+      <div class="feature-card">
+        <div class="feature-num">04 · Illustrations</div>
+        <div class="feature-title">Illustration Index</div>
+        <div class="feature-desc">Every illustration you've ever told, tagged and searchable by theme, scripture, and rhetorical function.</div>
       </div>
 
-      <!-- STEP 3a: Manuscript fidelity -->
-      <div class="step" data-step="3a" data-copy-key="manuscript">
-        <div class="step-label">Manuscript fidelity</div>
-        <div class="step-question">How close do you stay to your manuscript <em>when you actually preach?</em></div>
-        <div class="option-group" data-field="fidelity">
-          <div class="option-card" data-value="close">
-            <div class="option-radio"></div>
-            <div>
-              <div class="option-label">Pretty close</div>
-              <div class="option-desc">What I write is very close to what I say. Minor departures, but the manuscript is the sermon.</div>
-            </div>
-          </div>
-          <div class="option-card" data-value="divergent">
-            <div class="option-radio"></div>
-            <div>
-              <div class="option-label">There's a real difference</div>
-              <div class="option-desc">I use the manuscript as a foundation, but the preached version can be quite different.</div>
-            </div>
-          </div>
-        </div>
+      <div class="feature-card">
+        <div class="feature-num">05 · Herald</div>
+        <div class="feature-title">Social Sharing</div>
+        <div class="feature-desc">Turn quotes, illustrations, and transcripts into branded social media graphics with one click.</div>
       </div>
 
-      <!-- STEP 3b: Outline — audio availability -->
-      <div class="step" data-step="3b" data-copy-key="outline-audio">
-        <div class="step-label">Recordings</div>
-        <div class="step-question">Do you have <em>audio or video</em> recordings of your sermons?</div>
-        <div class="option-group" data-field="hasRecordings">
-          <div class="option-card" data-value="yes-transcripts">
-            <div class="option-radio"></div>
-            <div>
-              <div class="option-label">Yes — and my platform provides transcripts</div>
-              <div class="option-desc">Hosted on a service that auto-generates transcriptions (e.g., YouTube, some podcast hosts).</div>
-            </div>
-          </div>
-          <div class="option-card" data-value="yes-no-transcripts">
-            <div class="option-radio"></div>
-            <div>
-              <div class="option-label">Yes — but no transcripts</div>
-              <div class="option-desc">I have the recordings, but nobody's transcribed them.</div>
-            </div>
-          </div>
-          <div class="option-card" data-value="no">
-            <div class="option-radio"></div>
-            <div>
-              <div class="option-label">No recordings</div>
-              <div class="option-desc">I don't have audio or video of my sermons.</div>
-            </div>
-          </div>
-        </div>
+      <div class="feature-card">
+        <div class="feature-num">06 · Ongoing</div>
+        <div class="feature-title">New Sermon Processing</div>
+        <div class="feature-desc">Every new sermon you preach gets automatically ingested, indexed, and added to your corpus — plus custom reports on request.</div>
       </div>
-
-      <!-- STEP 3a-divergent: Divergent manuscript — audio check -->
-      <div class="step" data-step="3a-div" data-copy-key="outline-audio">
-        <div class="step-label">Recordings</div>
-        <div class="step-question">Since the preached version differs, we'll want to work from <em>recordings.</em> Do you have audio or video?</div>
-        <div class="option-group" data-field="divRecordings">
-          <div class="option-card" data-value="yes-transcripts">
-            <div class="option-radio"></div>
-            <div>
-              <div class="option-label">Yes — and my platform provides transcripts</div>
-              <div class="option-desc">Hosted on a service that auto-generates transcriptions.</div>
-            </div>
-          </div>
-          <div class="option-card" data-value="yes-no-transcripts">
-            <div class="option-radio"></div>
-            <div>
-              <div class="option-label">Yes — but no transcripts</div>
-              <div class="option-desc">I have the recordings, but nobody's transcribed them.</div>
-            </div>
-          </div>
-          <div class="option-card" data-value="no">
-            <div class="option-radio"></div>
-            <div>
-              <div class="option-label">No — just the manuscripts</div>
-              <div class="option-desc">We can still work with your manuscripts — they just won't capture everything you say live.</div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- STEP: Dead end (outline, no recordings) -->
-      <div class="step" data-step="dead-end" data-copy-key="dead-end">
-        <div class="step-label">Let's figure this out</div>
-        <div class="dead-end">
-          <h3>We need recordings or manuscripts to work with</h3>
-          <p>
-            Our system builds your corpus from the actual content of your sermons — either written manuscripts or transcribed recordings. Without one of these, we can't do our work yet.
-          </p>
-          <p>
-            But if you're starting to record your sermons, or thinking about it, we'd love to help you get set up so you're ready.
-          </p>
-          <a href="mailto:chris@theshepherdsguild.com?subject=Getting%20started%20with%20recording">Let's talk about getting started →</a>
-        </div>
-      </div>
-
-      <!-- STEP: Estimate -->
-      <div class="step" data-step="estimate" data-copy-key="estimate">
-        <div class="step-label">Your estimate</div>
-        <div class="estimate-card" id="estimateCard">
-          <div class="estimate-header">Corpus Ingestion & Decomposition</div>
-          <div class="estimate-caveat">Based on what you've told us — we'll confirm everything in a brief call.</div>
-
-          <div class="estimate-row">
-            <div class="estimate-label">
-              Ingestion fee
-              <small>One-time · <span id="estYears">2</span> years of sermons</small>
-            </div>
-            <div class="estimate-value" id="estIngestion">$200</div>
-          </div>
-
-          <div class="estimate-divider"></div>
-
-          <div class="estimate-row">
-            <div class="estimate-label">
-              Annual subscription
-              <small>Billed yearly</small>
-            </div>
-            <div class="estimate-value monthly">$100<small> /yr</small></div>
-          </div>
-
-          <div class="features-header">What's included annually</div>
-          <ul class="feature-list">
-            <li>Full sermon archive search</li>
-            <li>Exemplar-based coaching</li>
-            <li>PreFlight sermon analysis</li>
-            <li>Illustration index</li>
-            <li>Rhetorical pattern analysis</li>
-            <li>Quotable moment extraction</li>
-            <li>Custom reports</li>
-            <li>New sermon processing</li>
-          </ul>
-        </div>
-
-        <div class="estimate-card" id="customQuoteCard" style="display:none;">
-          <div class="estimate-header">Corpus Ingestion & Decomposition</div>
-          <div style="font-family: var(--serif); font-size: 1.25rem; font-weight: 400; color: var(--ink); line-height: 1.4; margin-bottom: 16px;">
-            Your archive deserves a personal conversation.
-          </div>
-          <div class="estimate-caveat" style="margin-bottom: 24px;">
-            Based on what you've told us, your archive is large enough — or complex enough — that we'd rather walk through the details with you personally than hand you a number. No pressure, no commitment. Just a conversation about your sermons and what we can do with them.
-          </div>
-        </div>
-
-        <!-- Email capture (shown on estimate step) -->
-        <div class="estimate-card" id="emailCapture" style="margin-top: 20px;">
-          <div style="font-family: var(--serif); font-size: 1.25rem; font-weight: 400; color: var(--ink); line-height: 1.4; margin-bottom: 8px;">
-            Share your email and we'll be in touch.
-          </div>
-          <div class="estimate-caveat" style="margin-bottom: 20px;">
-            We'll send you a summary of your estimate and schedule a brief call.
-          </div>
-          <div style="display: flex; gap: 10px;">
-            <input type="email" id="prospectEmail" placeholder="you@church.org"
-              style="flex: 1; padding: 12px 16px; border: 1.5px solid var(--rule-hard); border-radius: 2px;
-                     font-family: var(--sans); font-size: 0.85rem; color: var(--ink); background: var(--card-bg);
-                     outline: none; transition: border-color 0.2s;"
-              onfocus="this.style.borderColor='var(--gold)'"
-              onblur="this.style.borderColor='var(--rule-hard)'" />
-            <button id="btnSubmitLead" class="btn-next cta-final" style="white-space: nowrap;">
-              Let's Talk
-            </button>
-          </div>
-          <div id="emailError" style="color: var(--burgundy); font-size: 0.75rem; margin-top: 8px; display: none;"></div>
-        </div>
-
-        <!-- Confirmation (replaces email capture after submit) -->
-        <div class="estimate-card" id="emailConfirm" style="display: none; margin-top: 20px; text-align: center;">
-          <div style="font-family: var(--serif); font-size: 1.4rem; font-weight: 400; color: var(--ink); line-height: 1.4; margin-bottom: 8px;">
-            Thank you.
-          </div>
-          <div class="estimate-caveat">
-            We've received your information and will be in touch shortly.
-          </div>
-        </div>
-      </div>
-
-    </div>
-
-    <div class="step-nav" id="stepNav">
-      <button class="btn-back" id="btnBack" disabled>Back</button>
-      <button class="btn-next" id="btnNext">Get Started</button>
     </div>
   </div>
+</section>
 
-</div>
+<!-- ─── 4. TESTIMONIALS ─── -->
+<section class="testimonials">
+  <div class="wrap">
+    <div class="section-label">What Pastors Are Saying</div>
+    <h2 class="section-heading">Voices from <em>early access.</em></h2>
+
+    <div class="testimonials-grid">
+      <div class="t-card">
+        <div class="t-quote">I started giving the classic Spurgeon 'double application' as soon as I learned what that was. It changed my preaching almost overnight.</div>
+        <div class="t-attribution">— Early access pastor</div>
+      </div>
+
+      <div class="t-card">
+        <div class="t-quote">The very first week I used PreFlight, I got a suggestion, made a 30-second change that wound up dramatically improving my sermon.</div>
+        <div class="t-attribution">— Early access pastor</div>
+      </div>
+
+      <div class="t-card">
+        <div class="t-quote">I was matched with exemplars from the Guild Hall and given a plan to get better. Nobody's ever done that for my preaching before.</div>
+        <div class="t-attribution">— Early access pastor</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── 5. CONTACT ─── -->
+<section class="contact dot-pattern" id="contact">
+  <div class="wrap">
+    <div class="section-label dark">Ready to Start</div>
+    <h2 class="section-heading dark">Ready to build your corpus? <em>Let's talk.</em></h2>
+    <p class="section-subhead dark">
+      Share your details and we'll schedule a brief call to confirm your sermon count and get you started.
+    </p>
+
+    <form class="contact-form" id="contactForm" onsubmit="return submitLead(event)">
+      <div class="form-row">
+        <div>
+          <label class="field-label" for="leadName">Your Name</label>
+          <input type="text" class="field-input" id="leadName" placeholder="Pastor John Smith" required>
+        </div>
+        <div>
+          <label class="field-label" for="leadChurch">Church Name <span style="opacity:0.5;">(optional)</span></label>
+          <input type="text" class="field-input" id="leadChurch" placeholder="Grace Community Church">
+        </div>
+      </div>
+      <div>
+        <label class="field-label" for="leadEmail">Email</label>
+        <input type="email" class="field-input" id="leadEmail" placeholder="you@church.org" required>
+      </div>
+      <button type="submit" class="contact-submit" id="submitBtn">Let's Talk</button>
+      <div class="form-error" id="formError"></div>
+    </form>
+
+    <div class="confirmation" id="confirmation">
+      <div class="confirmation-title">Thank you.</div>
+      <div class="confirmation-msg">We've received your information and will be in touch shortly.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── FOOTER ─── -->
+<footer>
+  <div class="line">
+    Shepherd's Guild &nbsp;·&nbsp; Questions? <a href="mailto:chris@sovgracekc.org">chris@sovgracekc.org</a>
+  </div>
+</footer>
 
 <script>
-(function() {
-  // ── State ──
-  const state = {
-    currentStep: '0',
-    answers: {},
-    history: ['0']
-  };
+// ─── Supabase config ───
+const SUPABASE_URL = 'https://twbunmbzyqcqzgffdrib.supabase.co';
+const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InR3YnVubWJ6eXFjcXpnZmZkcmliIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzE1ODgxODUsImV4cCI6MjA4NzE2NDE4NX0.8Y6tMnX5bhIWxTS7llFZElPY-st7rji0MtlTzxeqiW8';
 
-  // ── Step definitions ──
-  //   next: function(answers) => next step key
-  //   totalPosition: where this sits in the progress bar (for display)
-  const steps = {
-    '0':       { pos: 0, total: 5, next: () => '1' },
-    '1':       { pos: 1, total: 5, next: () => '2' },
-    '2':       { pos: 2, total: 5, next: () => '3' },
-    '3':       { pos: 3, total: 5, next: (a) => a.style === 'manuscript' ? '3a' : '3b' },
-    '3a':      { pos: 4, total: 5, next: (a) => a.fidelity === 'close' ? 'estimate' : '3a-div' },
-    '3a-div':  { pos: 4, total: 5, next: () => 'estimate' },
-    '3b':      { pos: 4, total: 5, next: (a) => a.hasRecordings === 'no' ? 'dead-end' : 'estimate' },
-    'dead-end':{ pos: 5, total: 5, next: () => null },
-    'estimate':{ pos: 5, total: 5, next: () => null }
-  };
+async function submitLead(e) {
+  e.preventDefault();
 
-  const els = {
-    area: document.getElementById('questionArea'),
-    fill: document.getElementById('progressFill'),
-    stepLabel: document.getElementById('progressStep'),
-    timeLabel: document.getElementById('progressTime'),
-    btnBack: document.getElementById('btnBack'),
-    btnNext: document.getElementById('btnNext'),
-    slider: document.getElementById('sermonSlider'),
-    sermonCount: document.getElementById('sermonCount')
-  };
+  const name = document.getElementById('leadName').value.trim();
+  const email = document.getElementById('leadEmail').value.trim();
+  const church = document.getElementById('leadChurch').value.trim();
+  const errEl = document.getElementById('formError');
+  const btn = document.getElementById('submitBtn');
 
-  // ── Option card clicks ──
-  els.area.addEventListener('click', (e) => {
-    const card = e.target.closest('.option-card');
-    if (!card) return;
-    const group = card.closest('.option-group');
-    const field = group.dataset.field;
-    const value = card.dataset.value;
-
-    // Deselect siblings
-    group.querySelectorAll('.option-card').forEach(c => c.classList.remove('selected'));
-    card.classList.add('selected');
-    state.answers[field] = value;
-    updateNav();
-  });
-
-  // ── Slider ──
-  els.slider.addEventListener('input', () => {
-    const v = parseInt(els.slider.value);
-    els.sermonCount.innerHTML = v >= 1000 ? '1,000+<span>sermons</span>' : v + '<span>sermons</span>';
-    state.answers.sermonCount = v;
-    updateNav();
-  });
-  state.answers.sermonCount = 100;
-
-  // ── Navigation ──
-  els.btnNext.addEventListener('click', () => {
-    const def = steps[state.currentStep];
-    if (!def) return;
-    if (!canProceed()) return;
-
-    const nextKey = def.next(state.answers);
-    if (!nextKey) return;
-
-    state.history.push(nextKey);
-    goTo(nextKey);
-  });
-
-  els.btnBack.addEventListener('click', () => {
-    if (state.history.length <= 1) return;
-    state.history.pop();
-    const prev = state.history[state.history.length - 1];
-    goTo(prev);
-  });
-
-  function goTo(key) {
-    state.currentStep = key;
-
-    // Swap visible step
-    document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
-    const target = document.querySelector(`.step[data-step="${key}"]`);
-    if (target) target.classList.add('active');
-
-    // Swap copy block
-    const copyKey = target ? target.dataset.copyKey : 'intro';
-    document.querySelectorAll('.copy-block').forEach(b => b.classList.remove('active'));
-    const copyEl = document.querySelector(`.copy-block[data-copy="${copyKey}"]`);
-    if (copyEl) copyEl.classList.add('active');
-
-    updateNav();
-    updateProgress();
-    updateEstimate();
+  // Validate
+  if (!name) {
+    errEl.textContent = 'Please enter your name.';
+    return false;
   }
-
-  function canProceed() {
-    const step = state.currentStep;
-    if (step === '0') return true;
-    if (step === '1') return true; // slider always has value
-    if (step === '2') return !!state.answers.organization;
-    if (step === '3') return !!state.answers.style;
-    if (step === '3a') return !!state.answers.fidelity;
-    if (step === '3b') return !!state.answers.hasRecordings;
-    if (step === '3a-div') return !!state.answers.divRecordings;
+  if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    errEl.textContent = 'Please enter a valid email address.';
     return false;
   }
 
-  function updateNav() {
-    const step = state.currentStep;
-    const def = steps[step];
-    els.btnBack.disabled = state.history.length <= 1;
+  errEl.textContent = '';
+  btn.disabled = true;
+  btn.textContent = 'Sending…';
 
-    // Hide/show next button
-    if (step === 'dead-end') {
-      els.btnNext.style.display = 'none';
-    } else if (step === 'estimate') {
-      // Email capture is inline — hide bottom nav button
-      els.btnNext.style.display = 'none';
-    } else if (step === '0') {
-      els.btnNext.style.display = '';
-      els.btnNext.textContent = 'Get Started';
-      els.btnNext.className = 'btn-next';
-      els.btnNext.disabled = false;
-    } else {
-      els.btnNext.style.display = '';
-      els.btnNext.textContent = 'Continue';
-      els.btnNext.className = 'btn-next';
-      els.btnNext.disabled = !canProceed();
-    }
+  const payload = {
+    name: name,
+    email: email,
+    church_name: church || null,
+    submitted_at: new Date().toISOString()
+  };
+
+  try {
+    const res = await fetch(SUPABASE_URL + '/rest/v1/onboarding_leads', {
+      method: 'POST',
+      headers: {
+        'apikey': SUPABASE_KEY,
+        'Authorization': 'Bearer ' + SUPABASE_KEY,
+        'Content-Type': 'application/json',
+        'Prefer': 'return=minimal'
+      },
+      body: JSON.stringify(payload)
+    });
+    if (!res.ok) throw new Error(res.status);
+  } catch (err) {
+    console.warn('Lead insert failed:', err);
+    // Fall through to confirmation anyway — we don't want to block the user
   }
 
-  function updateProgress() {
-    const def = steps[state.currentStep];
-    if (!def) return;
-    const pct = Math.round((def.pos / def.total) * 100);
-    els.fill.style.width = pct + '%';
-    els.stepLabel.textContent = `Step ${def.pos} of ${def.total}`;
-
-    const remaining = def.total - def.pos;
-    if (remaining <= 0) {
-      els.timeLabel.textContent = '';
-    } else if (remaining === 1) {
-      els.timeLabel.textContent = '~ 30 sec remaining';
-    } else {
-      els.timeLabel.textContent = `~ ${remaining} min`;
-    }
-  }
-
-  function updateEstimate() {
-    if (state.currentStep !== 'estimate') return;
-
-    const count = state.answers.sermonCount || 100;
-
-    // Simple pricing: $100 per year of sermons (~50 sermons/year)
-    const years = Math.max(1, Math.round(count / 50));
-    const fee = years * 100;
-
-    document.getElementById('estimateCard').style.display = 'block';
-    document.getElementById('customQuoteCard').style.display = 'none';
-    els.btnNext.style.display = '';
-    document.getElementById('estIngestion').textContent = '$' + fee.toLocaleString();
-    document.getElementById('estYears').textContent = years;
-  }
-
-  // ── Email capture submit ──
-  const SUPABASE_URL = 'https://twbunmbzyqcqzgffdrib.supabase.co';
-  const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InR3YnVubWJ6eXFjcXpnZmZkcmliIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzE1ODgxODUsImV4cCI6MjA4NzE2NDE4NX0.8Y6tMnX5bhIWxTS7llFZElPY-st7rji0MtlTzxeqiW8';
-
-  const btnSubmit = document.getElementById('btnSubmitLead');
-  const emailInput = document.getElementById('prospectEmail');
-  const emailError = document.getElementById('emailError');
-
-  // Also allow Enter key in email field
-  emailInput.addEventListener('keydown', (e) => {
-    if (e.key === 'Enter') btnSubmit.click();
-  });
-
-  btnSubmit.addEventListener('click', async () => {
-    const email = emailInput.value.trim();
-
-    // Validate
-    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      emailError.textContent = 'Please enter a valid email address.';
-      emailError.style.display = '';
-      emailInput.focus();
-      return;
-    }
-    emailError.style.display = 'none';
-
-    // Gather all answers
-    const payload = {
-      email: email,
-      sermon_count: state.answers.sermonCount || 100,
-      organization: state.answers.organization || null,
-      style: state.answers.style || null,
-      fidelity: state.answers.fidelity || null,
-      has_recordings: state.answers.hasRecordings || state.answers.divRecordings || null,
-      estimate_ingestion: document.getElementById('estIngestion')?.textContent || null,
-      submitted_at: new Date().toISOString()
-    };
-
-    // Disable button while submitting
-    btnSubmit.disabled = true;
-    btnSubmit.textContent = 'Sending…';
-
-    try {
-      const res = await fetch(`${SUPABASE_URL}/rest/v1/onboarding_leads`, {
-        method: 'POST',
-        headers: {
-          'apikey': SUPABASE_KEY,
-          'Authorization': 'Bearer ' + SUPABASE_KEY,
-          'Content-Type': 'application/json',
-          'Prefer': 'return=minimal'
-        },
-        body: JSON.stringify(payload)
-      });
-
-      if (!res.ok) throw new Error(`${res.status}`);
-    } catch (err) {
-      // Supabase insert failed — fall back to Edge Function or just proceed
-      console.warn('Lead insert failed, trying edge function:', err);
-      try {
-        await fetch(`${SUPABASE_URL}/functions/v1/onboarding-lead`, {
-          method: 'POST',
-          headers: {
-            'Authorization': 'Bearer ' + SUPABASE_KEY,
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(payload)
-        });
-      } catch (e2) {
-        console.warn('Edge function also failed:', e2);
-      }
-    }
-
-    // Show confirmation
-    document.getElementById('emailCapture').style.display = 'none';
-    document.getElementById('customQuoteCard').style.display = 'none';
-    document.getElementById('emailConfirm').style.display = '';
-    els.btnNext.style.display = 'none';
-  });
-
-  // Initialize
-  updateNav();
-  updateProgress();
-})();
+  // Show confirmation
+  document.getElementById('contactForm').style.display = 'none';
+  document.getElementById('confirmation').style.display = 'block';
+  return false;
+}
 </script>
 </body>
 </html>
