@@ -1282,7 +1282,7 @@ mark { background: rgba(196,162,101,0.2); color: var(--ink); border-radius: 2px;
 <body>
 
 <!-- ── PASSWORD GATE ── -->
-<div id="passwordGate" style="position:fixed;inset:0;z-index:9999;background:var(--accent);display:none;align-items:center;justify-content:center;">
+<div id="passwordGate" style="position:fixed;inset:0;z-index:9999;background:var(--accent);display:flex;align-items:center;justify-content:center;">
   <div style="text-align:center;max-width:360px;padding:40px;">
     <div style="font-family:var(--mono);font-size:0.58rem;color:rgba(196,162,101,0.5);letter-spacing:0.2em;text-transform:uppercase;margin-bottom:20px;">Shepherd's Guild</div>
     <div style="font-family:var(--serif);font-size:1.8rem;color:var(--parchment);margin-bottom:8px;">Pastor's Dashboard</div>
@@ -1302,7 +1302,7 @@ mark { background: rgba(196,162,101,0.2); color: var(--ink); border-radius: 2px;
 // SHA-256 hash of the password — change the password by updating this hash
 // To change the password, update this hash. Generate at any JS console:
 //   crypto.subtle.digest('SHA-256', new TextEncoder().encode('YOUR_PASSWORD')).then(b => Array.from(new Uint8Array(b)).map(x => x.toString(16).padStart(2,'0')).join(''))
-const GATE_HASH = '11f4608b6f55123e0c004385dd8cadf9e7ee9dd1db0c2ba4f1c28ccadf634f88';
+const GATE_HASH = '69d754db3e735bdccef5bbda755a734e2a874a1d0a391bac34c4d3b5270a7355';
 
 // Allow bypass if already authenticated this session
 if (sessionStorage.getItem('sg_authed') === '1') {
