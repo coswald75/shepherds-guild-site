@@ -494,7 +494,7 @@ var SUPABASE_URL = 'https://twbunmbzyqcqzgffdrib.supabase.co';
 var SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InR3YnVubWJ6eXFjcXpnZmZkcmliIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzE1ODgxODUsImV4cCI6MjA4NzE2NDE4NX0.8Y6tMnX5bhIWxTS7llFZElPY-st7rji0MtlTzxeqiW8';
 var REST = SUPABASE_URL + '/rest/v1';
 var HEADERS = { 'apikey': SUPABASE_KEY, 'Authorization': 'Bearer ' + SUPABASE_KEY };
-var CHRIS_ID = '9c6f8d69-de55-45db-ac60-0fe6d0cfff59';
+var CHRIS_ID = new URLSearchParams(location.search).get('id') || '9c6f8d69-de55-45db-ac60-0fe6d0cfff59';
 
 /* Biblical attributions to exclude */
 var BIBLICAL_EXACT = new Set([

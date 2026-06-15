@@ -1392,10 +1392,10 @@ async function checkGatePassword() {
     </div>
 
     <div class="nav-section-label">Library</div>
-    <div class="nav-item" onclick="location.href='illtest.html'">
+    <div class="nav-item" onclick="location.href='illtest.html?id=' + PREACHER_ID">
       <span class="nav-icon">◇</span>Illustration Library
     </div>
-    <div class="nav-item" onclick="location.href='citationtest.html'">
+    <div class="nav-item" onclick="location.href='citationtest.html?id=' + PREACHER_ID">
       <span class="nav-icon">❝</span>Citation Library
     </div>
 
@@ -2536,10 +2536,10 @@ async function loadHeraldQuotes() {
         };
       });
 
-    // Pool B: cited quotations with attribution
-    var quotRes = await fetch(REST + '/quotations?unit_id=in.(select id from units where sermon_id in (' + allSermonIds + '))&select=text,attribution,source,function,unit_id', { headers: HEADERS });
+    // Pool B: cited quotations with attribution.
+    // PostgREST can't take a subquery inside in.(), so fetch this preacher's
+    // unit IDs first, then query quotations in chunks (below).
     var citedRaw = [];
-    // Supabase REST might not support subqueries — fetch unit IDs first
     var unitRes = await fetch(REST + '/units?sermon_id=in.(' + allSermonIds + ')&select=id&limit=2000', { headers: HEADERS });
     var unitRows = await unitRes.json();
     if (unitRows.length > 0) {

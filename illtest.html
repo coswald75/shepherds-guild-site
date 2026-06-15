@@ -468,7 +468,7 @@ body {
     <div class="header-brand">Shepherd&rsquo;s Guild</div>
     <h1 class="header-title">Illustration Library</h1>
     <div class="header-rule"></div>
-    <p class="header-subtitle" id="headerSubtitle">Sermon Illustrations from the Preaching of Chris Oswald &mdash; indexed, searchable, and ready for the pulpit.</p>
+    <p class="header-subtitle" id="headerSubtitle">Sermon illustrations &mdash; indexed, searchable, and ready for the pulpit.</p>
   </div>
 </header>
 
@@ -509,6 +509,7 @@ const SUPABASE_URL = 'https://twbunmbzyqcqzgffdrib.supabase.co';
 const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InR3YnVubWJ6eXFjcXpnZmZkcmliIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzE1ODgxODUsImV4cCI6MjA4NzE2NDE4NX0.8Y6tMnX5bhIWxTS7llFZElPY-st7rji0MtlTzxeqiW8';
 const REST = SUPABASE_URL + '/rest/v1';
 const HEADERS = { 'apikey': SUPABASE_KEY, 'Authorization': 'Bearer ' + SUPABASE_KEY };
+const PREACHER_ID = new URLSearchParams(location.search).get('id') || '9c6f8d69-de55-45db-ac60-0fe6d0cfff59';
 
 /* STATE */
 let ILLUSTRATIONS = [];
@@ -516,13 +517,18 @@ let activeThemeFilters = new Set();
 let searchTerm = '';
 
 /* FETCH FROM SUPABASE */
+// SOP: the Illustration Library reads the ACTUAL illustrations captured by
+// decomposition (units where rhetorical_function = 'illustration'), scoped to
+// this preacher. Works for every church on every ingest — no bespoke rewrite
+// step required. (The optional `illustration_rewrites` table is a premium layer
+// only generated on request.)
 async function loadIllustrations() {
   const all = [];
   let offset = 0;
   const pageSize = 1000;
   while (true) {
     const res = await fetch(
-      REST + '/illustration_rewrites?select=unit_id,sermon_id,title,scripture,themes,body,author&order=title&offset=' + offset + '&limit=' + pageSize,
+      REST + '/units?select=id,sermon_id,illustration_type,summary,content,sermons!inner(preacher_id,title,primary_text)&rhetorical_function=eq.illustration&sermons.preacher_id=eq.' + PREACHER_ID + '&order=sermon_id&offset=' + offset + '&limit=' + pageSize,
       { headers: HEADERS }
     );
     if (!res.ok) { console.error('Fetch error', res.status); break; }
@@ -531,16 +537,21 @@ async function loadIllustrations() {
     if (batch.length < pageSize) break;
     offset += pageSize;
   }
-  return all.map(r => ({
-    id: r.unit_id,
-    title: r.title,
-    scripture: r.scripture || '',
-    themes: r.themes || [],
-    body: r.body,
-    author: r.author || 'Chris Oswald',
-    sermon_title: '',
-    sermon_id: r.sermon_id
-  }));
+  return all.map(r => {
+    const s = r.sermons || {};
+    const typeLabel = (r.illustration_type || 'Illustration')
+      .replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+    return {
+      id: r.id,
+      title: (r.summary || typeLabel).replace(/[*_]+/g, ''),
+      scripture: s.primary_text || '',
+      themes: r.illustration_type ? [typeLabel] : [],
+      body: r.content || r.summary || '',
+      author: '',
+      sermon_title: s.title || '',
+      sermon_id: r.sermon_id
+    };
+  });
 }
 
 /* INIT */
@@ -550,16 +561,24 @@ async function loadIllustrations() {
 
   ILLUSTRATIONS = await loadIllustrations();
 
+  /* Resolve the preacher's name for the header (falls back gracefully) */
+  let preacherName = 'this preacher';
+  try {
+    const pr = await fetch(REST + '/preachers?id=eq.' + PREACHER_ID + '&select=name', { headers: HEADERS });
+    const prJson = await pr.json();
+    if (prJson && prJson[0] && prJson[0].name) preacherName = prJson[0].name;
+  } catch (e) { console.error('preacher name fetch failed', e); }
+
   /* Build theme list from live data */
   const themeSet = new Set();
   ILLUSTRATIONS.forEach(ill => ill.themes.forEach(t => themeSet.add(t)));
   const ALL_THEMES = [...themeSet].sort();
 
-  /* Update header count */
+  /* Update header subtitle */
   document.getElementById('headerSubtitle').textContent =
-    ALL_THEMES.length > 0
-      ? ILLUSTRATIONS.length + ' Sermon Illustrations from the Preaching of Chris Oswald \u2014 indexed, searchable, and ready for the pulpit.'
-      : 'Sermon Illustrations from the Preaching of Chris Oswald \u2014 indexed, searchable, and ready for the pulpit.';
+    ILLUSTRATIONS.length > 0
+      ? ILLUSTRATIONS.length + ' sermon illustrations from the preaching of ' + preacherName + ' \u2014 indexed, searchable, and ready for the pulpit.'
+      : 'No illustrations indexed yet for ' + preacherName + '.';
 
   /* Populate theme dropdown */
   const sel = document.getElementById('themeSelect');
@@ -656,7 +675,7 @@ function cardHTML(ill, index) {
     + '<div class="card-body">' + bodyParas + '</div>'
     + '<div class="card-divider"></div>'
     + (ill.author ? '<div class="card-attribution">&mdash;' + escHTML(ill.author) + '</div>' : '')
-    + (ill.sermon_title ? '<div class="card-source">From: <a href="showcasev4.html?id=9c6f8d69-de55-45db-ac60-0fe6d0cfff59">' + escHTML(ill.sermon_title) + '</a></div>' : '')
+    + (ill.sermon_title ? '<div class="card-source">From: <a href="showcasev4.html?id=' + PREACHER_ID + '">' + escHTML(ill.sermon_title) + '</a></div>' : '')
     + '</article>';
 }
 
