@@ -711,13 +711,22 @@ async function submitLead(e) {
       },
       body: JSON.stringify(payload)
     });
-    if (!res.ok) throw new Error(res.status);
+    if (!res.ok) throw new Error('HTTP ' + res.status);
   } catch (err) {
-    console.warn('Lead insert failed:', err);
-    // Fall through to confirmation anyway — we don't want to block the user
+    // Never show a false "Thank you" — tell them it failed, let them retry,
+    // and give a pre-filled email fallback so the lead is never silently lost.
+    console.error('Lead insert failed:', err);
+    const mailto = 'mailto:chris@sovgracekc.org'
+      + '?subject=' + encodeURIComponent("Shepherd's Guild — Request Your Build")
+      + '&body=' + encodeURIComponent('Name: ' + name + '\nChurch: ' + church + '\nEmail: ' + email);
+    errEl.innerHTML = "Something went wrong sending your details. Please try again — or email us directly at "
+      + '<a href="' + mailto + '" style="color:inherit;text-decoration:underline;">chris@sovgracekc.org</a>.';
+    btn.disabled = false;
+    btn.textContent = "Let's Talk";
+    return false;
   }
 
-  // Show confirmation
+  // Success — show confirmation
   document.getElementById('contactForm').style.display = 'none';
   document.getElementById('confirmation').style.display = 'block';
   return false;
