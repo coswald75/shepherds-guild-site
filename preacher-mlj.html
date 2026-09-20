@@ -26,7 +26,7 @@
   .nav-links{display:flex;align-items:center;gap:4px;}
   .nav-links a{font-size:0.7rem;font-weight:500;letter-spacing:0.06em;text-transform:uppercase;color:var(--slate);text-decoration:none;padding:6px 12px;border-radius:4px;transition:all 0.2s;}
   .nav-links a:hover{color:var(--burgundy);background:rgba(196,162,101,0.08);}
-  .nav-cta{font-size:0.68rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink);text-decoration:none;padding:8px 18px;background:var(--gold);border-radius:4px;transition:all 0.2s;}
+  .nav-cta{font-size:0.76rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink);text-decoration:none;padding:11px 22px;background:var(--gold);border-radius:4px;transition:all 0.2s;box-shadow:0 2px 12px rgba(196,162,101,0.28);}
   .nav-cta:hover{background:var(--gold-bright);}
   .hero{background:var(--crimson);color:var(--parchment);padding:100px 30px 80px;position:relative;overflow:hidden;}
   .hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 70% 50% at 30% 50%,rgba(196,162,101,0.07) 0%,transparent 70%),radial-gradient(ellipse 50% 70% at 80% 20%,rgba(74,21,37,0.5) 0%,transparent 60%);pointer-events:none;}
@@ -147,7 +147,7 @@
   <div class="nav-inner">
     <a href="index.html" class="nav-brand"><div class="nav-brand-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#c4a265" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg></div><span class="nav-brand-text">Shepherd's <span>Guild</span></span></a>
     <div class="nav-links"><a href="index.html">The Hall</a></div>
-    <a href="/onboarding" class="nav-cta">Request Your Build</a>
+    <a href="/onboarding" class="nav-cta">Get a Guild Build</a>
   </div>
 </nav>
 
@@ -311,29 +311,7 @@ new Chart(document.getElementById('chartBook'),{type:'doughnut',data:{labels:['S
 const observer=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting){x.target.classList.add('visible');observer.unobserve(x.target);}}),{threshold:0.06});
 document.querySelectorAll('.section').forEach(s=>observer.observe(s));
 document.querySelectorAll('[data-pct]').forEach(el=>{const o=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting){setTimeout(()=>{el.style.width=el.dataset.pct+'%';},120);o.unobserve(el);}}),{threshold:0.1});o.observe(el);});
-function openModal(e){if(e)e.preventDefault();document.getElementById('joinModal').classList.add('open');document.body.style.overflow='hidden';}
-function closeModal(){document.getElementById('joinModal').classList.remove('open');document.body.style.overflow='';}
-document.getElementById('joinModal').addEventListener('click',function(e){if(e.target===this)closeModal();});
-document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal();});
-async function handleSubmit(e){e.preventDefault();const form=e.target,data=new FormData(form);try{const res=await fetch(form.action,{method:'POST',body:data,headers:{'Accept':'application/json'}});if(res.ok){document.getElementById('modalForm').style.display='none';document.getElementById('modalSuccess').style.display='block';}else{alert('Something went wrong.');}}catch{alert('Something went wrong.');}}
 </script>
-<div class="modal-overlay" id="joinModal">
-  <div class="modal" role="dialog" aria-modal="true">
-    <button class="modal-close" onclick="closeModal()">×</button>
-    <div id="modalForm">
-      <div class="modal-eyebrow">Shepherd's Guild</div>
-      <h2 class="modal-title">Join the Hall</h2>
-      <p class="modal-body">Tell us who you are and we'll be in touch about getting your archive into the pipeline — and what we find inside it.</p>
-      <form class="modal-form" action="https://formspree.io/f/mlgpbzak" method="POST" onsubmit="handleSubmit(event)">
-        <div class="form-field"><label for="n">Your Name</label><input type="text" id="n" name="name" placeholder="Pastor John Smith" required></div>
-        <div class="form-field"><label for="e">Email Address</label><input type="email" id="e" name="email" placeholder="john@yourchurch.com" required></div>
-        <input type="hidden" name="_subject" value="New Guild Hall application — Shepherd's Guild">
-        <button type="submit" class="form-submit">Request My Corpus Build →</button>
-        <p class="form-note">No spam. We'll reach out personally within 48 hours.</p>
-      </form>
-    </div>
-    <div class="form-success" id="modalSuccess" style="display:none;"><div style="font-size:2rem;margin-bottom:16px;">✦</div><h3>You're in the queue.</h3><p>We'll be in touch within 48 hours.</p></div>
-  </div>
 </div>
 </body>
 </html>

@@ -27,7 +27,7 @@
   .nav-links{display:flex;align-items:center;gap:4px;}
   .nav-links a{font-size:0.7rem;font-weight:500;letter-spacing:0.06em;text-transform:uppercase;color:var(--slate);text-decoration:none;padding:6px 12px;border-radius:4px;transition:all 0.2s;}
   .nav-links a:hover{color:var(--accent);background:rgba(196,162,101,0.08);}
-  .nav-cta{font-size:0.68rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink);text-decoration:none;padding:8px 18px;background:var(--gold);border-radius:4px;transition:all 0.2s;}
+  .nav-cta{font-size:0.76rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink);text-decoration:none;padding:11px 22px;background:var(--gold);border-radius:4px;transition:all 0.2s;box-shadow:0 2px 12px rgba(196,162,101,0.28);}
   .nav-cta:hover{background:var(--gold-bright);}
 
   .hero{background:var(--accent);color:var(--parchment);padding:100px 30px 80px;position:relative;overflow:hidden;}
@@ -201,7 +201,7 @@
       <span class="nav-brand-text">Shepherd's <span>Guild</span></span>
     </a>
     <div class="nav-links"><a href="index.html">The Hall</a></div>
-    <a href="/onboarding" class="nav-cta">Request Your Build</a>
+    <a href="/onboarding" class="nav-cta">Get a Guild Build</a>
   </div>
 </nav>
 
@@ -379,35 +379,9 @@
     <div class="section-rule"></div>
   </div>
 
-
-
-
 </div>
 
-<!-- MODAL -->
-<div class="modal-overlay" id="waitlist-modal">
-  <div class="modal">
-    <button class="modal-close" onclick="closeModal()">✕</button>
-    <div class="modal-eyebrow">Shepherd's Guild</div>
-    <h2 class="modal-title">Join the Waitlist</h2>
-    <p class="modal-body">Be among the first pastors to access full corpus analysis, illustration search, and voice coaching through the Guild platform.</p>
-    <form class="modal-form" action="https://formspree.io/f/mlgpbzak" method="POST" onsubmit="handleSubmit(event)">
-      <div class="form-field"><label for="name">Full Name</label><input type="text" id="name" name="name" placeholder="Your name" required></div>
-      <div class="form-field"><label for="email">Email Address</label><input type="email" id="email" name="email" placeholder="pastor@church.org" required></div>
-      <div class="form-field"><label for="church">Church / Ministry</label><input type="text" id="church" name="church" placeholder="Church name (optional)"></div>
-      <button type="submit" class="form-submit">Request Access →</button>
-      <p class="form-note">No spam. Just a heads-up when we open access.</p>
-    </form>
-  </div>
-</div>
-
-<script>
-function openModal(e){if(e)e.preventDefault();document.getElementById('waitlist-modal').classList.add('open');}
-function closeModal(){document.getElementById('waitlist-modal').classList.remove('open');}
-document.getElementById('waitlist-modal').addEventListener('click',function(e){if(e.target===this)closeModal();});
-function handleSubmit(e){e.preventDefault();const f=e.target;fetch(f.action,{method:'POST',body:new FormData(f),headers:{'Accept':'application/json'}}).then(r=>{if(r.ok){f.innerHTML='<div class="form-success"><h3>You\'re on the list.</h3><p>We\'ll be in touch when Guild access opens.</p></div>';}});} 
-
-// Scroll animations
+<script>// Scroll animations
 const observer=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible');}),{threshold:0.08});
 document.querySelectorAll('.section').forEach(s=>observer.observe(s));
 

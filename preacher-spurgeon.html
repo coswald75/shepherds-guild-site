@@ -16,15 +16,15 @@
   *{margin:0;padding:0;box-sizing:border-box;}html{scroll-behavior:smooth;}
   body{font-family:'DM Sans',sans-serif;background:var(--parchment);color:var(--ink);line-height:1.7;-webkit-font-smoothing:antialiased;overflow-x:hidden;}
   .nav{position:sticky;top:0;z-index:100;background:rgba(247,243,238,0.94);backdrop-filter:blur(16px);border-bottom:1px solid rgba(196,162,101,0.15);padding:0 30px;}
-  .nav-inner{max-width:1160px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:56px;}
+  .nav-inner{max-width:1160px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:72px;}
   .nav-brand{display:flex;align-items:center;gap:10px;text-decoration:none;}
-  .nav-brand-icon{width:28px;height:28px;border:1px solid var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;}
+  .nav-brand-icon{width:32px;height:32px;border:1px solid var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;}
   .nav-brand-icon svg{width:12px;height:12px;}
-  .nav-brand-text{font-size:0.72rem;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:var(--ink);}
+  .nav-brand-text{font-size:0.78rem;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:var(--ink);}
   .nav-brand-text span{color:var(--gold);}
   .nav-links{display:flex;align-items:center;gap:4px;}
-  .nav-links a{font-size:0.7rem;font-weight:500;letter-spacing:0.06em;text-transform:uppercase;color:var(--slate);text-decoration:none;padding:6px 12px;border-radius:4px;transition:all 0.2s;}
-  .nav-cta{font-size:0.68rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink);text-decoration:none;padding:8px 18px;background:var(--gold);border-radius:4px;transition:all 0.2s;}
+  .nav-links a{font-size:0.76rem;font-weight:500;letter-spacing:0.06em;text-transform:uppercase;color:var(--slate);text-decoration:none;padding:8px 14px;border-radius:4px;transition:all 0.2s;}
+  .nav-cta{font-size:0.76rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink);text-decoration:none;padding:11px 22px;background:var(--gold);border-radius:4px;transition:all 0.2s;box-shadow:0 2px 12px rgba(196,162,101,0.28);}
   .nav-cta:hover{background:var(--gold-bright);}
 
   .hero{background:var(--accent);color:var(--parchment);padding:100px 30px 80px;position:relative;overflow:hidden;}
@@ -182,7 +182,7 @@
   <div class="nav-inner">
     <a href="index.html" class="nav-brand"><div class="nav-brand-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#c4a265" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path></svg></div><span class="nav-brand-text">Shepherd's <span>Guild</span></span></a>
     <div class="nav-links"><a href="index.html">The Hall</a></div>
-    <a href="/onboarding" class="nav-cta">Request Your Build</a>
+    <a href="/onboarding" class="nav-cta">Get a Guild Build</a>
   </div>
 </nav>
 
@@ -343,32 +343,10 @@
     <div class="section-rule"></div>
   </div>
 
-
-
-
 </div>
 
-<div class="modal-overlay" id="waitlist-modal">
-  <div class="modal">
-    <button class="modal-close" onclick="closeModal()">✕</button>
-    <div class="modal-eyebrow">Shepherd's Guild</div>
-    <h2 class="modal-title">Join the Waitlist</h2>
-    <p class="modal-body">Be among the first pastors to access full corpus analysis, illustration search, and voice coaching through the Guild platform.</p>
-    <form class="modal-form" action="https://formspree.io/f/mlgpbzak" method="POST" onsubmit="handleSubmit(event)">
-      <div class="form-field"><label for="name">Full Name</label><input type="text" id="name" name="name" placeholder="Your name" required=""></div>
-      <div class="form-field"><label for="email">Email Address</label><input type="email" id="email" name="email" placeholder="pastor@church.org" required=""></div>
-      <div class="form-field"><label for="church">Church / Ministry</label><input type="text" id="church" name="church" placeholder="Church name (optional)"></div>
-      <button type="submit" class="form-submit">Request Access →</button>
-      <p class="form-note">No spam. Just a heads-up when we open access.</p>
-    </form>
-  </div>
-</div>
 
 <script>
-function openModal(e){if(e)e.preventDefault();document.getElementById('waitlist-modal').classList.add('open');}
-function closeModal(){document.getElementById('waitlist-modal').classList.remove('open');}
-document.getElementById('waitlist-modal').addEventListener('click',function(e){if(e.target===this)closeModal();});
-function handleSubmit(e){e.preventDefault();const f=e.target;fetch(f.action,{method:'POST',body:new FormData(f),headers:{'Accept':'application/json'}}).then(r=>{if(r.ok)f.innerHTML='<div class="form-success"><h3>You\'re on the list.</h3><p>We\'ll be in touch when Guild access opens.</p></div>';});}
 const observer=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible');}),{threshold:0.08});
 document.querySelectorAll('.section').forEach(s=>observer.observe(s));
 const fillObserver=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.querySelectorAll('[data-pct]').forEach(el=>{el.style.width=el.dataset.pct+'%';});}});},{threshold:0.1});
@@ -379,15 +357,5 @@ new Chart(document.getElementById('chartTone'),{type:'doughnut',data:{labels:['P
 new Chart(document.getElementById('chartApp'),{type:'doughnut',data:{labels:['Evangelistic','Devotional','Instructional','Polemical'],datasets:[{data:[36,28,24,12],backgroundColor:[GOLD,ACCENT,BURG,SLATE],borderWidth:0}]},options:{cutout:'65%',plugins:{legend:{position:'bottom',labels:{font:{family:'DM Sans',size:11},padding:12,boxWidth:10}}}}});
 </script>
 
-
-
-<div id="guild-editor-toast">38 editable elements ready. Click any text to edit.</div><div id="guild-editor-toolbar">
-      <div class="editor-badge"><span class="dot"></span> EDIT MODE</div>
-      <div id="guild-editor-status">
-        Editing <span class="filename">preacher-spurgeon.html</span>
-        — <span class="change-count">2 changes</span>
-      </div>
-      <button class="editor-btn-reset" id="editor-reset">Reset</button>
-      <button class="editor-btn-save" id="editor-save" disabled="">Saving...</button>
-      <button class="editor-btn-deploy" id="editor-deploy">Deploy</button>
-    </div></body></html>
+<script type="module" src="https://static.cloudflareinsights.com/beacon.min.js/v31edd6df95cf4e85bb4c19e7a9bdbcba1788362987495" integrity="sha512-iIg7k2xntmwu6/uSb5tpc/hySgZc4eoL31yB29W6tJFo2akwjPWcEqnCEdJvGexCL0KEQwVYv5BlowfhVz26hg==" data-cf-beacon='{"version":"2024.11.0","token":"7f5f7b1f4e32487090b581239a4311a8","r":1,"spa":2}' crossorigin="anonymous"></script>
+</body></html>

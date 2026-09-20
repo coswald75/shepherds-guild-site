@@ -1365,11 +1365,11 @@ mark { background: rgba(196,162,101,0.2); color: var(--ink); border-radius: 2px;
       <span class="nav-icon">&#8862;</span>Hall Query<span class="nav-badge-addon">Soon</span>
     </div>
 
-    <a class="nav-item nav-cta" data-view="view-cta" onclick="switchView('cta', this)" style="margin-top:12px;border-top:1px solid rgba(196,162,101,0.15);padding-top:14px;"><span class="nav-icon">&rarr;</span> Request Your Build</a>
+    <a class="nav-item nav-cta" data-view="view-cta" onclick="switchView('cta', this)" style="margin-top:12px;border-top:1px solid rgba(196,162,101,0.15);padding-top:14px;"><span class="nav-icon">&rarr;</span> Get a Guild Build</a>
   </nav>
 
   <div class="sidebar-footer">
-    <button class="build-cta" onclick="openModal(event)">Request Your Build &rarr;</button>
+    <button class="build-cta" onclick="openModal(event)">Get a Guild Build &rarr;</button>
   </div>
 </div>
 
@@ -1616,7 +1616,7 @@ mark { background: rgba(196,162,101,0.2); color: var(--ink); border-radius: 2px;
         </div>
         <div class="addon-body">
           <div class="addon-desc">VoxPrompt is a system prompt for any AI &mdash; Claude, ChatGPT, or others &mdash; built from your decomposition data. Paste it in, and the AI writes closer to how you think: your theological emphases, your illustration instincts, your sentence rhythms. Use it for drafting email copy, study materials, or a starting point for sermon outlines.</div>
-          <button class="addon-unlock-btn">Join Waitlist &rarr;</button>
+          <button class="addon-unlock-btn" onclick="window.location.href='/onboarding'">Get a Guild Build &rarr;</button>
         </div>
       </div>
     </div>
@@ -1639,7 +1639,7 @@ mark { background: rgba(196,162,101,0.2); color: var(--ink); border-radius: 2px;
         </div>
         <div class="addon-body">
           <div class="addon-desc">Search across the full decomposed corpus of public domain Guild Hall preachers &mdash; Spurgeon, Watson, Ryle, and others. Find how they handled a specific text, what they said about a doctrine, or which illustrations they used on suffering, grace, or the cross. Every result is sourced to a specific sermon.</div>
-          <button class="addon-unlock-btn">Join Waitlist &rarr;</button>
+          <button class="addon-unlock-btn" onclick="window.location.href='/onboarding'">Get a Guild Build &rarr;</button>
         </div>
       </div>
 
@@ -1690,7 +1690,7 @@ mark { background: rgba(196,162,101,0.2); color: var(--ink); border-radius: 2px;
     <!-- ── CTA VIEW ── -->
     <div id="view-cta" class="view">
       <div class="section-eyebrow">Your Archive Is Waiting</div>
-      <div class="section-title">Request Your Build</div>
+      <div class="section-title">Get a Guild Build</div>
       <div style="max-width:560px;">
         <p style="font-family:var(--sans);font-size:0.92rem;color:var(--slate);line-height:1.85;margin-bottom:28px;">Everything you just saw was built from one pastor's sermons &mdash; the same pipeline, the same methodology, the same level of detail. Your build starts with your archive: audio files, transcripts, or manuscripts. We handle the rest.</p>
         <div style="display:flex;flex-direction:column;gap:12px;margin-bottom:36px;">
@@ -1701,9 +1701,9 @@ mark { background: rgba(196,162,101,0.2); color: var(--ink); border-radius: 2px;
           <span style="display:flex;align-items:flex-start;gap:10px;font-size:0.85rem;color:var(--slate);line-height:1.6;"><span style="color:var(--gold);flex-shrink:0;">&rarr;</span> Your full archive &mdash; searchable, indexed, and working for you</span>
         </div>
         <div style="display:flex;flex-direction:column;align-items:flex-start;gap:12px;">
-          <button class="build-cta" style="padding:14px 32px;font-size:0.78rem;" onclick="openModal(event)">Request Your Build</button>
+          <button class="build-cta" style="padding:14px 32px;font-size:0.78rem;" onclick="openModal(event)">Get a Guild Build</button>
           <p style="font-family:var(--mono);font-size:0.6rem;color:var(--warm-gray);letter-spacing:0.08em;">Corpus builds starting at $500</p>
-          <p style="font-family:var(--sans);font-size:0.78rem;color:var(--warm-gray);">Questions? chris@sovgracekc.org &mdash; a pastor, not a sales team.</p>
+          <p style="font-family:var(--sans);font-size:0.78rem;color:var(--warm-gray);">Questions? <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="beddd6ccd7cdfecdd1c8d9ccdfdddbd5dd90d1ccd9">[email&#160;protected]</a> &mdash; a pastor, not a sales team.</p>
         </div>
       </div>
     </div>
@@ -1711,7 +1711,7 @@ mark { background: rgba(196,162,101,0.2); color: var(--ink); border-radius: 2px;
   </div><!-- /content -->
 </div><!-- /main -->
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 
 // ── SUPABASE CONFIG ──
 const SUPABASE_URL = 'https://twbunmbzyqcqzgffdrib.supabase.co';
@@ -2413,7 +2413,7 @@ const titleMap = {
   growth:'Growth Areas', preflight:'PreFlight Check', latentbook:'Latent Book',
   herald:'Herald \u00b7 Quote Graphics', voxprompt:'VoxPrompt \u00b7 Your Voice',
   hallquery:'Hall Query \u00b7 Search the Masters',
-  cta:'Request Your Build'
+  cta:'Get a Guild Build'
 };
 
 /* Mobile sidebar toggle */
@@ -3002,5 +3002,6 @@ function renderPreflightResults(data) {
   </div>
 </div>
 
+<script type="module" src="https://static.cloudflareinsights.com/beacon.min.js/v31edd6df95cf4e85bb4c19e7a9bdbcba1788362987495" integrity="sha512-iIg7k2xntmwu6/uSb5tpc/hySgZc4eoL31yB29W6tJFo2akwjPWcEqnCEdJvGexCL0KEQwVYv5BlowfhVz26hg==" data-cf-beacon='{"version":"2024.11.0","token":"7f5f7b1f4e32487090b581239a4311a8","r":1,"spa":2}' crossorigin="anonymous"></script>
 </body>
 </html>

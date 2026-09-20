@@ -161,13 +161,13 @@ section {
 .hero-cta {
   display: inline-block;
   font-family: var(--sans);
-  font-size: 0.84rem;
+  font-size: 0.94rem;
   font-weight: 500;
   letter-spacing: 0.06em;
   text-transform: uppercase;
   background: var(--gold);
   color: var(--accent);
-  padding: 16px 36px;
+  padding: 18px 40px;
   border-radius: 2px;
   border: none;
   cursor: pointer;
@@ -402,13 +402,13 @@ section {
 .contact-submit {
   display: inline-block;
   font-family: var(--sans);
-  font-size: 0.82rem;
+  font-size: 0.94rem;
   font-weight: 500;
   letter-spacing: 0.06em;
   text-transform: uppercase;
   background: var(--gold);
   color: var(--accent);
-  padding: 16px 36px;
+  padding: 18px 40px;
   border-radius: 2px;
   border: none;
   cursor: pointer;
@@ -500,6 +500,57 @@ footer .line a:hover { color: var(--gold-bright); }
 .features-grid > *:nth-child(6) { animation-delay: 0.30s; }
 .testimonials-grid > *:nth-child(2) { animation-delay: 0.08s; }
 .testimonials-grid > *:nth-child(3) { animation-delay: 0.16s; }
+
+/* ─── Universe strip (under What You Get) ─── */
+.universe-strip {
+  margin-top: 48px;
+  padding: 36px 40px;
+  background: var(--card-bg);
+  border: 1px solid var(--rule);
+  border-radius: 3px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 28px;
+  box-shadow: var(--shadow-soft);
+}
+.universe-strip-text {
+  font-family: var(--sans);
+  font-size: 0.98rem;
+  font-weight: 300;
+  line-height: 1.55;
+  color: var(--slate);
+  max-width: 640px;
+}
+.universe-strip-cta {
+  display: inline-block;
+  flex-shrink: 0;
+  font-family: var(--sans);
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  background: var(--accent);
+  color: var(--parchment);
+  padding: 14px 28px;
+  border-radius: 2px;
+  text-decoration: none;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+.universe-strip-cta:hover {
+  background: var(--accent-mid);
+  transform: translateY(-1px);
+}
+@media (max-width: 720px) {
+  .universe-strip {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 28px 24px;
+  }
+  .universe-strip-cta { white-space: normal; }
+}
+
 </style>
 </head>
 <body>
@@ -512,7 +563,7 @@ footer .line a:hover { color: var(--gold-bright); }
     <p class="hero-subhead">
       We turn your sermon archive into a <strong>living, searchable corpus</strong> — your illustrations indexed, your theological themes mapped, your growth tracked across every sermon you've ever preached.
     </p>
-    <a href="#contact" class="hero-cta">Get Started</a>
+    <a href="#contact" class="hero-cta">Get a Guild Build</a>
   </div>
 </section>
 
@@ -595,6 +646,11 @@ footer .line a:hover { color: var(--gold-bright); }
         <div class="feature-desc">Every new sermon you preach gets automatically ingested, indexed, and added to your corpus — plus custom reports on request.</div>
       </div>
     </div>
+
+    <div class="universe-strip">
+      <p class="universe-strip-text">After we ingest your sermons for a Guild build, you can enter the Shepherd’s Guild universe.</p>
+      <a class="universe-strip-cta" href="/universe">See Steward, Prep King &amp; Coach</a>
+    </div>
   </div>
 </section>
 
@@ -629,7 +685,7 @@ footer .line a:hover { color: var(--gold-bright); }
     <div class="section-label dark">Ready to Start</div>
     <h2 class="section-heading dark">Ready to build your corpus? <em>Let's talk.</em></h2>
     <p class="section-subhead dark">
-      Share your details and we'll schedule a brief call to confirm your sermon count and get you started.
+      Guild Builds are done by hand. After you submit, you’re on our list — we’ll email next steps. Most builds take days to a few weeks depending on the queue.
     </p>
 
     <form class="contact-form" id="contactForm" onsubmit="return submitLead(event)">
@@ -647,13 +703,13 @@ footer .line a:hover { color: var(--gold-bright); }
         <label class="field-label" for="leadEmail">Email</label>
         <input type="email" class="field-input" id="leadEmail" placeholder="you@church.org" required>
       </div>
-      <button type="submit" class="contact-submit" id="submitBtn">Let's Talk</button>
+      <button type="submit" class="contact-submit" id="submitBtn">Get a Guild Build</button>
       <div class="form-error" id="formError"></div>
     </form>
 
     <div class="confirmation" id="confirmation">
       <div class="confirmation-title">Thank you.</div>
-      <div class="confirmation-msg">We've received your information and will be in touch shortly.</div>
+      <div class="confirmation-msg">You’re on our list. Builds are done by hand — most take days to a few weeks depending on the queue. We’ll email next steps.</div>
     </div>
   </div>
 </section>
@@ -717,12 +773,12 @@ async function submitLead(e) {
     // and give a pre-filled email fallback so the lead is never silently lost.
     console.error('Lead insert failed:', err);
     const mailto = 'mailto:chris@sovgracekc.org'
-      + '?subject=' + encodeURIComponent("Shepherd's Guild — Request Your Build")
+      + '?subject=' + encodeURIComponent("Shepherd's Guild — Get a Guild Build")
       + '&body=' + encodeURIComponent('Name: ' + name + '\nChurch: ' + church + '\nEmail: ' + email);
     errEl.innerHTML = "Something went wrong sending your details. Please try again — or email us directly at "
       + '<a href="' + mailto + '" style="color:inherit;text-decoration:underline;">chris@sovgracekc.org</a>.';
     btn.disabled = false;
-    btn.textContent = "Let's Talk";
+    btn.textContent = "Get a Guild Build";
     return false;
   }
 
@@ -732,5 +788,6 @@ async function submitLead(e) {
   return false;
 }
 </script>
+<script type="module" src="https://static.cloudflareinsights.com/beacon.min.js/v31edd6df95cf4e85bb4c19e7a9bdbcba1788362987495" integrity="sha512-iIg7k2xntmwu6/uSb5tpc/hySgZc4eoL31yB29W6tJFo2akwjPWcEqnCEdJvGexCL0KEQwVYv5BlowfhVz26hg==" data-cf-beacon='{"version":"2024.11.0","token":"7f5f7b1f4e32487090b581239a4311a8","r":1,"spa":2}' crossorigin="anonymous"></script>
 </body>
 </html>

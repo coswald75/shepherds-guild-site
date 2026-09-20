@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>REVIEW MOCK — Spurgeon Infographic · Shepherd's Guild</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{--ink:#2a2420;--muted:#6b635a;--white:#FFFEFA;--cream:#FFF8EE;--coral:#E07A5F;--gold:#E8B84A}
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{font-family:'Nunito',system-ui,sans-serif;background:var(--white);color:var(--ink);line-height:1.55;-webkit-font-smoothing:antialiased}
+  .hand{font-family:'Caveat',cursive}
+  .review-banner{position:sticky;top:0;z-index:200;background:#2a2420;color:#FFF8EE;text-align:center;padding:11px 16px;font-size:.78rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase}
+  .review-banner span{color:var(--gold)}
+  .nav{background:var(--white);border-bottom:2px dashed rgba(42,36,32,.18);padding:0 20px}
+  .nav-inner{max-width:920px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:64px;gap:12px}
+  .nav-brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--ink);font-weight:800;font-size:.85rem}
+  .nav-brand .dot{width:28px;height:28px;border-radius:50%;border:2.5px solid var(--ink);background:var(--gold);display:grid;place-items:center;font-size:.7rem}
+  .btn-cta,.nav-cta{display:inline-flex;align-items:center;justify-content:center;background:var(--coral);color:#FFFEFA;font-weight:800;font-size:.8rem;letter-spacing:.06em;text-transform:uppercase;text-decoration:none;padding:12px 20px;border-radius:999px;border:2.5px solid var(--ink);box-shadow:3px 3px 0 var(--ink)}
+  .btn-cta.gold{background:var(--gold);color:var(--ink)}
+  .btn-cta.lg{padding:16px 28px;font-size:.9rem}
+  .hero{max-width:920px;margin:0 auto;padding:36px 20px 20px;display:grid;grid-template-columns:1fr 180px;gap:28px;align-items:center}
+  .hero-eyebrow{font-size:.72rem;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:var(--coral);margin-bottom:10px}
+  .hero h1{font-size:clamp(2.2rem,6vw,3.2rem);font-weight:800;line-height:1.05;margin-bottom:8px}
+  .hero h1 em{font-style:normal;color:var(--coral)}
+  .hero-role{color:var(--muted);font-size:.95rem;margin-bottom:14px}
+  .hero-summary{font-size:1.05rem;max-width:36rem;margin-bottom:18px}
+  .hero-tags{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:18px}
+  .hero-tag{font-size:.72rem;font-weight:700;padding:5px 12px;border-radius:999px;border:2px solid var(--ink);background:var(--cream)}
+  .hero-portrait{width:100%;max-width:180px;margin:0 auto;border-radius:24px;border:3px solid var(--ink);box-shadow:5px 5px 0 var(--ink);background:var(--cream);display:block}
+  .stat-row{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+  .stat-chip{background:var(--cream);border:2.5px solid var(--ink);border-radius:16px;padding:14px 10px;text-align:center;box-shadow:2px 2px 0 var(--ink)}
+  .stat-chip .v{font-family:'Caveat',cursive;font-size:2rem;font-weight:700;line-height:1;color:var(--coral)}
+  .stat-chip .l{font-size:.62rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-top:4px}
+  .page{max-width:920px;margin:0 auto;padding:0 20px 80px}
+  .insight{margin:44px 0 0;background:var(--white);border:2.5px dashed rgba(42,36,32,.35);border-radius:24px;padding:28px 18px 22px;position:relative}
+  .insight::before{content:attr(data-num);position:absolute;top:-14px;left:22px;background:var(--gold);border:2.5px solid var(--ink);border-radius:999px;padding:2px 14px;font-size:.72rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase}
+  .insight-kicker{font-size:.72rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:#5B8FA8;margin-bottom:6px}
+  .insight-title{font-size:clamp(1.4rem,3.5vw,1.85rem);font-weight:800;line-height:1.2;margin-bottom:10px}
+  .insight-blurb{color:var(--muted);font-size:.98rem;max-width:40rem;margin-bottom:16px}
+  .panel-art{width:100%;border-radius:18px;border:2.5px solid var(--ink);background:var(--cream);display:block;margin-bottom:16px}
+  .panel-meta{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px}
+  .share-hint{font-family:'Caveat',cursive;font-size:1.3rem;color:var(--muted)}
+  .cta-strip{margin:40px 0 0;background:var(--cream);border:2.5px solid var(--ink);border-radius:20px;padding:28px 24px;text-align:center;box-shadow:4px 4px 0 var(--ink)}
+  .cta-strip h3{font-size:1.35rem;font-weight:800;margin-bottom:8px}
+  .cta-strip p{color:var(--muted);margin-bottom:16px;font-size:.95rem}
+  .lineage{margin-top:8px;display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+  .chip{border:2px solid var(--ink);border-radius:14px;background:var(--cream);padding:12px 10px;text-align:center;box-shadow:2px 2px 0 var(--ink);font-weight:700}
+  .chip strong{display:block;font-family:'Caveat',cursive;font-size:1.5rem;color:var(--coral);line-height:1}
+  .chip span{font-size:.65rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+  footer.mock-foot{max-width:920px;margin:0 auto;padding:40px 20px 60px;text-align:center;color:var(--muted);font-size:.8rem;border-top:2px dashed rgba(42,36,32,.18)}
+  @media(max-width:720px){
+    .hero{grid-template-columns:1fr;text-align:center}
+    .hero-summary{margin-left:auto;margin-right:auto}
+    .hero-tags{justify-content:center}
+    .stat-row{grid-template-columns:1fr 1fr}
+    .nav-brand span:last-child{display:none}
+    .panel-meta{flex-direction:column;align-items:stretch}
+    .panel-meta .btn-cta{width:100%}
+    .lineage{grid-template-columns:1fr 1fr}
+  }
+</style>
+</head>
+<body>
+<div class="review-banner">REVIEW MOCK — <span>not live</span> · whiteboard / Disneyfied concept · honest Hall numbers</div>
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="https://theshepherdsguild.com/" rel="noopener"><span class="dot">SG</span><span>Shepherd's Guild</span></a>
+    <a class="nav-cta" href="https://theshepherdsguild.com/onboarding" rel="noopener">Get a Guild Build</a>
+  </div>
+</nav>
+<header class="hero">
+  <div>
+    <div class="hero-eyebrow">Guild Hall · Hall Member Profile</div>
+    <h1>Charles <em>Spurgeon</em></h1>
+    <p class="hero-role">Pastor, Metropolitan Tabernacle, London · The Prince of Preachers · 1834–1892</p>
+    <p class="hero-summary">Spurgeon commands the widest rhetorical range of any preacher analyzed: soaring narrative, blunt polemic, tender pastoral appeal, and wry humor — often within a single sermon. His illustration density exceeds every other Hall member.</p>
+    <div class="hero-tags">
+      <span class="hero-tag">Victorian Baptist</span>
+      <span class="hero-tag">Calvinist</span>
+      <span class="hero-tag">Evangelist</span>
+      <span class="hero-tag">Tabernacle</span>
+    </div>
+    <div class="stat-row">
+      <div class="stat-chip"><div class="v">150</div><div class="l">BT Moves</div></div>
+      <div class="stat-chip"><div class="v">3,561</div><div class="l">Total Sermons</div></div>
+      <div class="stat-chip"><div class="v">#1</div><div class="l">Locus: Soteriology</div></div>
+      <div class="stat-chip"><div class="v">6.2×</div><div class="l">Illus / Sermon</div></div>
+    </div>
+  </div>
+  <img class="hero-portrait" src="assets/spurgeon-caricature.png" alt="Charles Spurgeon Guild Hall caricature" width="180" height="180">
+</header>
+<main class="page">
+
+  <article class="insight" data-num="01 · Share this">
+    <div class="insight-kicker">Hall Distinction</div>
+    <h2 class="insight-title">6.2 illustrations per sermon — Hall avg 3.1</h2>
+    <p class="insight-blurb">Anecdote → vivid metaphor → hymn. That three-layer move appears in <strong>68%</strong> of analyzed works — the most distinctive fingerprint in the Hall.</p>
+    <img class="panel-art" src="assets/02-illustration-density.jpg" alt="Illustration Density: 6.2 vs Hall 3.1; three-layer structure in 68%" width="1400" height="787" loading="eager">
+    <div class="panel-meta">
+      <span class="share-hint">The big share for a preaching lab…</span>
+      <a class="btn-cta" href="https://theshepherdsguild.com/onboarding" rel="noopener">Get a Guild Build</a>
+    </div>
+  </article>
+
+  <article class="insight" data-num="02 · Share this">
+    <div class="insight-kicker">Theological Fingerprint</div>
+    <h2 class="insight-title">#1 Soteriology — Christology runs right beside it</h2>
+    <p class="insight-blurb">Soteriology 582 · Christology 548 · Evangelism 386 · Faith 344 · Sanctification 298… He does not preach topics; he preaches Christ, then shows how the topic connects.</p>
+    <img class="panel-art" src="assets/01-theological-fingerprint.jpg" alt="Theological Fingerprint loci chart" width="1400" height="787" loading="lazy">
+    <div class="panel-meta">
+      <span class="share-hint">Most Christ-centered in the Hall.</span>
+      <a class="btn-cta" href="https://theshepherdsguild.com/onboarding" rel="noopener">Get a Guild Build</a>
+    </div>
+  </article>
+
+  <div class="cta-strip">
+    <h3 class="hand" style="font-size:2rem">Want your own Hall fingerprint?</h3>
+    <p>Guild Builds map your preaching the same way — loci, register, illustrations, lineage.</p>
+    <a class="btn-cta lg gold" href="https://theshepherdsguild.com/onboarding" rel="noopener">Get a Guild Build</a>
+  </div>
+
+  <article class="insight" data-num="03 · Share this">
+    <div class="insight-kicker">Homiletical Profile</div>
+    <h2 class="insight-title">No single method — always a Christological center</h2>
+    <p class="insight-blurb">Expository 38 · Evangelistic 30 · Topical 20 · Devotional 12. Eclectic on the outside; evangelistic frame on the inside.</p>
+    <img class="panel-art" src="assets/05-homiletical-method-mix.jpg" alt="Homiletical method mix: Expository 38, Evangelistic 30, Topical 20, Devotional 12" width="1400" height="787" loading="lazy">
+    <div class="panel-meta">
+      <span class="share-hint">Method mix pastors can mirror…</span>
+      <a class="btn-cta" href="https://theshepherdsguild.com/onboarding" rel="noopener">Get a Guild Build</a>
+    </div>
+  </article>
+
+  <article class="insight" data-num="04 · Share this">
+    <div class="insight-kicker">Rhetorical Register</div>
+    <h2 class="insight-title">Most balanced Pathos:Logos in the Hall (1.1:1)</h2>
+    <p class="insight-blurb">Pathos 38 · Logos 34 · Narrative 28. Feeling and doctrine in near lockstep — then story to carry both.</p>
+    <img class="panel-art" src="assets/03-rhetorical-register.jpg" alt="Rhetorical Register: Pathos 38, Logos 34, Narrative 28" width="1400" height="787" loading="lazy">
+    <div class="panel-meta">
+      <span class="share-hint">Calvinist and warm — the data proves it.</span>
+      <a class="btn-cta" href="https://theshepherdsguild.com/onboarding" rel="noopener">Get a Guild Build</a>
+    </div>
+  </article>
+
+  <article class="insight" data-num="05 · Share this">
+    <div class="insight-kicker">Application Type</div>
+    <h2 class="insight-title">Where the sermon lands: evangelistic first</h2>
+    <p class="insight-blurb">Evangelistic 36 · Devotional 28 · Instructional 24 · Polemical 12. Every method eventually confronts the listener with Christ.</p>
+    <img class="panel-art" src="assets/06-application-type.jpg" alt="Application type: Evangelistic 36, Devotional 28, Instructional 24, Polemical 12" width="1400" height="787" loading="lazy">
+    <div class="panel-meta">
+      <span class="share-hint">Invite weight over polemic heat.</span>
+      <a class="btn-cta" href="https://theshepherdsguild.com/onboarding" rel="noopener">Get a Guild Build</a>
+    </div>
+  </article>
+
+  <article class="insight" data-num="06 · Share this">
+    <div class="insight-kicker">Illustration Arsenal</div>
+    <h2 class="insight-title">He tells his own stories — then sings</h2>
+    <p class="insight-blurb">Anecdote 28 · Metaphor 24 · Historical 18 · Hymn 15 · Nature 10 · Self-cite 5. Merchants, soldiers, laborers, sea captains — Victorian London walking into the Tabernacle.</p>
+    <img class="panel-art" src="assets/04-illustration-repertoire.jpg" alt="Illustration Repertoire mix" width="1400" height="787" loading="lazy">
+    <div class="panel-meta">
+      <span class="share-hint">Screenshot for an illustration workshop.</span>
+      <a class="btn-cta" href="https://theshepherdsguild.com/onboarding" rel="noopener">Get a Guild Build</a>
+    </div>
+  </article>
+
+  <article class="insight" data-num="07 · Share this">
+    <div class="insight-kicker">Intellectual Lineage</div>
+    <h2 class="insight-title">He stands in the Puritan stream</h2>
+    <p class="insight-blurb">Watson 28× · Owen 24× · Baxter 20× · Augustine 16×. Library over 12,000 volumes — Puritans lead from the pulpit.</p>
+    <div class="lineage">
+      <div class="chip"><strong>28×</strong><span>Watson</span></div>
+      <div class="chip"><strong>24×</strong><span>Owen</span></div>
+      <div class="chip"><strong>20×</strong><span>Baxter</span></div>
+      <div class="chip"><strong>16×</strong><span>Augustine</span></div>
+    </div>
+    <div class="panel-meta" style="margin-top:18px">
+      <span class="share-hint">Who feeds your sermons?</span>
+      <a class="btn-cta" href="https://theshepherdsguild.com/onboarding" rel="noopener">Get a Guild Build</a>
+    </div>
+  </article>
+
+  <div class="cta-strip" style="margin-top:48px">
+    <h3>Ready for your Guild Build?</h3>
+    <p>Same honest analysis — your corpus, your fingerprint, your coaching path.</p>
+    <a class="btn-cta lg" href="https://theshepherdsguild.com/onboarding" rel="noopener">Get a Guild Build →</a>
+  </div>
+</main>
+<footer class="mock-foot">
+  <p><strong>REVIEW MOCK</strong> — not the live preacher page. Walt art · honest Hall numbers.</p>
+  <p style="margin-top:6px">CTA → <a href="https://theshepherdsguild.com/onboarding">theshepherdsguild.com/onboarding</a></p>
+</footer>
+</body>
+</html>

@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sinclair Ferguson — Citations · Shepherd's Guild</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&family=DM+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink: #1a1714; --parchment: #f7f3ee; --cream: #ede8e0;
+  --warm-gray: #9e9688; --gold: #c4a265; --gold-dim: #a8894f;
+  --gold-bright: #dbb978; --burgundy: #6b2d3e; --forest: #2d4a3e;
+  --slate: #4a4640;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:'DM Sans',system-ui,sans-serif; background:var(--parchment); color:var(--ink); line-height:1.7; -webkit-font-smoothing:antialiased; }
+
+.nav { position:sticky; top:0; z-index:100; background:rgba(247,243,238,0.94); backdrop-filter:blur(16px); border-bottom:1px solid rgba(196,162,101,0.15); padding:0 30px; }
+.nav-inner { max-width:1160px; margin:0 auto; display:flex; align-items:center; justify-content:space-between; height:56px; }
+.nav-brand { font-size:0.72rem; font-weight:600; letter-spacing:0.12em; text-transform:uppercase; color:var(--ink); text-decoration:none; }
+.nav-brand span { color:var(--gold); }
+.nav-links a { font-size:0.7rem; font-weight:500; letter-spacing:0.06em; text-transform:uppercase; color:var(--slate); text-decoration:none; padding:6px 12px; }
+
+.header { background:var(--ink); color:var(--parchment); padding:64px 30px 56px; }
+.header-inner { max-width:1160px; margin:0 auto; }
+.header-eyebrow { font-size:0.63rem; font-weight:500; letter-spacing:0.2em; text-transform:uppercase; color:var(--gold); margin-bottom:12px; }
+.header-title { font-family:'Cormorant Garamond',serif; font-size:clamp(2rem,4vw,3.2rem); font-weight:300; line-height:1.1; margin-bottom:8px; }
+.header-title em { font-style:italic; color:var(--gold-bright); }
+.header-sub { font-size:0.9rem; color:rgba(247,243,238,0.5); }
+.header-stats { display:flex; gap:32px; margin-top:24px; }
+.header-stat-val { font-family:'Cormorant Garamond',serif; font-size:1.8rem; font-weight:600; color:var(--gold-bright); }
+.header-stat-label { font-size:0.6rem; font-weight:500; letter-spacing:0.15em; text-transform:uppercase; color:rgba(247,243,238,0.35); }
+
+.body { max-width:1160px; margin:0 auto; padding:0 30px 120px; }
+
+.section { padding:56px 0 0; }
+.section-label { font-size:0.63rem; font-weight:600; letter-spacing:0.3em; text-transform:uppercase; color:var(--gold); margin-bottom:6px; }
+.section-title { font-family:'Cormorant Garamond',serif; font-size:1.6rem; font-weight:400; margin-bottom:4px; }
+.section-desc { font-size:0.82rem; color:var(--warm-gray); margin-bottom:28px; }
+.section-count { font-family:'JetBrains Mono',monospace; font-size:0.7rem; color:var(--warm-gray); margin-bottom:20px; }
+
+.quote-card { background:white; border:1px solid rgba(196,162,101,0.12); border-radius:12px; padding:24px 28px; margin-bottom:14px; box-shadow:0 2px 12px rgba(26,23,20,0.04); }
+.quote-text { font-size:0.92rem; line-height:1.8; color:var(--ink); margin-bottom:10px; font-style:italic; }
+.quote-text::before { content:open-quote; font-family:'Cormorant Garamond',serif; font-size:1.4rem; color:var(--gold); margin-right:2px; }
+.quote-text::after { content:close-quote; font-family:'Cormorant Garamond',serif; font-size:1.4rem; color:var(--gold); margin-left:2px; }
+.quote-meta { display:flex; align-items:baseline; gap:12px; flex-wrap:wrap; }
+.quote-author { font-size:0.82rem; font-weight:600; color:var(--ink); }
+.quote-source { font-size:0.78rem; color:var(--warm-gray); font-style:italic; }
+.quote-sermon { font-size:0.72rem; color:var(--gold-dim); margin-left:auto; }
+
+.divider { width:100%; height:1px; background:rgba(196,162,101,0.15); margin-top:48px; }
+
+.empty { font-size:0.88rem; color:var(--warm-gray); font-style:italic; padding:20px 0; }
+
+@media(max-width:768px) {
+  .header { padding:40px 20px 36px; }
+  .body { padding:0 20px 80px; }
+  .quote-meta { flex-direction:column; gap:4px; }
+  .quote-sermon { margin-left:0; }
+}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-brand">SHEPHERD'S <span>GUILD</span></a>
+    <div class="nav-links">
+      <a href="index.html">The Hall</a>
+      <a href="preacher-ferguson.html">← Back to Profile</a>
+    </div>
+  </div>
+</nav>
+
+<div class="header">
+  <div class="header-inner">
+    <div class="header-eyebrow">CITATION INDEX</div>
+    <h1 class="header-title">Sinclair Ferguson — <em>Every Citation</em></h1>
+    <p class="header-sub">All quotations and citations extracted from the decomposed corpus, organized by rhetorical function.</p>
+    <div class="header-stats">
+      <div><div class="header-stat-val">67</div><div class="header-stat-label">TOTAL CITATIONS</div></div>
+      <div><div class="header-stat-val">52</div><div class="header-stat-label">UNIQUE SOURCES</div></div>
+      <div><div class="header-stat-val">6</div><div class="header-stat-label">CATEGORIES</div></div>
+    </div>
+  </div>
+</div>
+
+<div class="body">
+  
+    <div class="section">
+      <div class="section-label">Authority</div>
+      <div class="section-title">Authority Citations</div>
+      <div class="section-desc">Cited to establish theological credibility or doctrinal weight</div>
+      <div class="section-count">24 citations</div>
+      
+      <div class="quote-card">
+        <div class="quote-text">God demonstrated his love for us in that Christ died for us</div>
+        <div class="quote-meta">
+          <span class="quote-author">Apostle Paul</span>
+          <span class="quote-source">Romans 5:8 (paraphrase)</span>
+          <span class="quote-sermon">How the Lord Jesus Thinks</span>
+        </div>
+      </div>
+      <div class="quote-card">
+        <div class="quote-text">These words are a transcript of our Lord&#x27;s prayer for us in heaven</div>
+        <div class="quote-meta">
+          <span class="quote-author">Arminius</span>
+          
+          <span class="quote-sermon">The Last &quot;I Will&quot;</span>
+        </div>
+      </div>
+      <div class="quote-card">
+        <div class="quote-text">When you read 2 Corinthians 5:11-21, you hear the Apostle Paul speaking to a Christian congregation with many gifts, but he sounds as though he&#x27;s preaching the gospel to unbelievers at a street corner in the city of Corinth.</div>
+        <div class="quote-meta">
+          <span class="quote-author">B.B. Warfield</span>
+          
+          <span class="quote-sermon">Open or Empty Hearts</span>
+        </div>
+      </div>
+      <div class="quote-card">
+        <div class="quote-text">Gaudio gaudeti. I rejoice, therefore you should rejoice.</div>
+        <div class="quote-meta">
+          <span class="quote-author">Bengel</span>
+          <span class="quote-source">Commentary on Philippians</span>
+          <span class="quote-sermon">Defending the Reformed Faith</span>
+        </div>
+      </div>
+      <div class="quote-card">
+        <div class="quote-text">Gaudio gaudeti</div>
+        <div class="quote-meta">
+          <span class="quote-author">Bengel</span>
+          <span class="quote-source">Philippians commentary</span>
+          <span class="quote-sermon">FPC Then and FPC Now</span>
+        </div>
+      </div>
+      <div class="quote-card">
+        <div class="quote-text">Sir, I prefer the way I do evangelism to the way you don&#x27;t do evangelism.</div>
+        <div class="quote-meta">
+          <span class="quote-author">D.L. Moody</span>
+          
+          <span class="quote-sermon">Jesus: Equal With God?</span>
+        </div>
+      </div>
+      <div class="quote-card">
+        <div class="quote-text">to get rid of my sins</div>
+        <div class="quote-meta">
+          <span class="quote-author">G.K. Chesterton</span>
+          
+          <span class="quote-sermon">Jesus: A Week in the Life of</span>
+        </div>
+      </div>
+      <div class="quote-card">
+        <div class="quote-text">Why do you spend your money and labor for that which can never in the last day satisfy?</div>
+        <div class="quote-meta">
+          <span class="quote-author">Isaiah 55</span>
+          
+          <span class="quote-sermon">Jesus: The Bread of Life</span>
+        </div>
+      </div>
+      <div class="quote-card">
+        <div class="quote-text">this passage is a transcript of Christ&#x27;s intercession for us in heaven</div>
+        <div class="quote-meta">
+          <span class="quote-author">James Arminius</span>
+          
+          <span class="quote-sermon">Reformation Mini Conference</span>
+        </div>
+      </div>
+      <div class="quote-card">
+        <div class="quote-text">forsaken the fountain of living waters</div>
+        <div class="quote-meta">
+          <span class="quote-author">Jeremiah the prophet</span>
+          
+          <span class="quote-sermon">Jesus: The Samaritan Revival - John 4:1-54</span>
+        </div>
+      </div>
+      <div class="quote-card">
+        <div class="quote-text">When you say yes, mean yes. When you say no, mean no.</div>
+        <div class="quote-meta">
+          <span class="quote-author">Jesus</span>
+          <span class="quote-source">Matthew 5:37 (paraphrased)</span>
+          <span class="quote-sermon">Great Distress, Greater Glory</span>
+        </div>
+      </div>
+      <div class="quote-card">
+        <div class="quote-text">When you say yes, mean yes. When you say no, mean no.</div>
+        <div class="quote-meta">
+          <span class="quote-author">Jesus</span>
+          <span class="quote-source">Matthew 5:37 (paraphrased)</span>
+          <span class="quote-sermon">Great Distress, Greater Glory</span>
+        </div>
+      </div>
+      <div class="quote-card">
+        <div class="quote-text">I am the light of the world. He who follows me will never walk in darkness but have the light of eternal life.</div>
+        <div class="quote-meta">
+          <span class="quote-author">Jesus Christ</span>
+          <span class="quote-source">John 8:12</span>
+          <span class="quote-sermon">Jesus: He Must Rise</span>
+        </div>
+      </div>
+      <div class="quote-card">
+        <div class="quote-text">We beheld His glory</div>
+        <div class="quote-meta">
+          <span class="quote-author">John</span>
+          <span class="quote-source">Gospel of John</span>
+          <span class="quote-sermon">Jesus: The Vine and His Branches - John 15:1-7</span>
+        </div>
+      </div>
+      <div class="quote-card">
+        <div class="quote-text">The light came into the world and the darkness has never been able to extinguish it.</div>
+        <div class="quote-meta">
+          <span class="quote-author">John (paraphrase of John 1)</span>
+          <span class="quote-source">John&#x27;s Gospel, Introduction</span>
+          <span class="quote-sermon">Jesus: He Must Rise</span>
+        </div>
+      </div>
+      <div class="quote-card">
+        <div class="quote-text">As Christ emptied Himself and laid aside His glory for a season to undertake the work of mediation, so now He hath resumed His glory as to the manifestation of His divine power and hath the highest addition of glory in His human nature by His exaltation at the right hand of God. Yet He continueth His care of and love towards the church. As all the shame, reproach, misery, with death that He was to undergo on the earth deterred Him not from undertaking this work, so all the glory which He is environed withal in heaven diverts Him not from continuing the discharge of it.</div>
+        <div class="quote-meta">
+          <span class="quote-author">John Owen</span>
+          
+          <span class="quote-sermon">Jesus, Our Minister</span>
+        </div>
+      </div>
+      <div class="quote-card">
+        <div class="quote-text">A Narrative of Surprising Conversions</div>
+        <div class="quote-meta">
+          <span class="quote-author">Jonathan Edwards</span>
+          <span class="quote-source">A Narrative of Surprising Conversions</span>
+          <span class="quote-sermon">A Surprising Conversion</span>
+        </div>
+      </div>
+      <div class="quote-card">
+        <div class="quote-text">He does not afflict us willingly.</div>
+        <div class="quote-meta">
+          <span class="quote-author">Lamentations 3:33</span>
+          <span class="quote-source">Lamentations 3:33 (allusion)</span>
+          <span class="quote-sermon">Great Distress, Greater Glory</span>
+        </div>
+      </div>
+      <div class="quote-card">
+        <div class="quote-text">When our Lord Jesus Christ said, &#x27;Repent,&#x27; He meant that the whole of the Christian life should be repentance.</div>
+        <div class="quote-meta">
+          <span class="quote-author">Martin Luther</span>
+          <span class="quote-source">95 Theses (first thesis)</span>
+          <span class="quote-sermon">True Repentance</span>
+        </div>
+      </div>
+      <div class="quote-card">
+        <div class="quote-text">The joy of the Lord is our strength</div>
+        <div class="quote-meta">
+          <span class="quote-author">Old Testament</span>
+          <span class="quote-source">Nehemiah 8:10</span>
+          <span class="quote-sermon">Jesus: The Vine and His Branches - John 15:1-7</span>
+        </div>
+      </div>
+      <div class="quote-card">
+        <div class="quote-text">the Son of God loved me, gave Himself for me</div>
+        <div class="quote-meta">
+          <span class="quote-author">Paul</span>
+          <span class="quote-source">Galatians 2:20</span>
+          <span class="quote-sermon">The Last &quot;I Will&quot;</span>
+        </div>
+      </div>
+      <div class="quote-card">
+        <div class="quote-text">Though he was in the form of God, he didn&#x27;t count equality with God something that would give him special privileges, but he emptied himself, made himself of no reputation, took on the form of a servant, humbled himself even unto death, death on a cross. Therefore, God has highly exalted him and given him a name that is above every name, that every knee should bow to him and every tongue confess that Jesus Christ is Lord.</div>
+        <div class="quote-meta">
+          <span class="quote-author">Paul the Apostle</span>
+          <span class="quote-source">Philippians 2:5-11</span>
+          <span class="quote-sermon">Jesus: He Stoops to Conquer - John 13:1-20</span>
+        </div>
+      </div>
+      <div class="quote-card">
+        <div class="quote-text">It was not possible for death to hold this man down.</div>
+        <div class="quote-meta">
+          <span class="quote-author">Simon Peter</span>
+          <span class="quote-source">Acts 2 (implied)</span>
+          <span class="quote-sermon">Jesus: He Must Rise</span>
+        </div>
+      </div>
+      <div class="quote-card">
+        <div class="quote-text">there was forgiveness with the Lord that he might be feared</div>
+        <div class="quote-meta">
+          <span class="quote-author">The psalmist</span>
+          <span class="quote-source">Psalms</span>
+          <span class="quote-sermon">True Repentance</span>
+        </div>
+      </div>
+      <div class="divider"></div>
+    </div>
+    <div class="section">
+      <div class="section-label">Illustration</div>
+      <div class="section-title">Illustration Citations</div>
+      <div class="section-desc">Cited to clarify or illuminate a point through example</div>
+      <div class="section-count">28 citations</div>
+      
+      <div class="quote-card">
+        <div class="quote-text">Jesus loves me, this I know, for the Bible tells me so</div>
+        <div class="quote-meta">
+          <span class="quote-author">Anna B. Warner</span>
+          <span class="quote-source">Children&#x27;s hymn</span>
+          <span class="quote-sermon">Jesus: The Light of the World</span>
+        </div>
+      </div>
+      <div class="quote-card">
+        <div class="quote-text">Are you going to speak with us about the life out of Jesus Christ?</div>
+        <div class="quote-meta">
+          <span class="quote-author">Ari von Nieuw-Amerongen</span>
+          
+          <span class="quote-sermon">Jesus: The Vine and His Branches - John 15:1-7</span>
+        </div>
+      </div>
+      <div class="quote-card">
+        <div class="quote-text">yes, I do</div>
+        <div class="quote-meta">
+          <span class="quote-author">Charles Wesley</span>
+          
+          <span class="quote-sermon">Jesus: The Light of the World</span>
+        </div>
+      </div>
+      <div class="quote-card">
+        <div class="quote-text">that I have used my best endeavors to serve God</div>
+        <div class="quote-meta">
+          <span class="quote-author">Charles Wesley</span>
+          
+          <span class="quote-sermon">Jesus: The Light of the World</span>
+        </div>
+      </div>
+      <div class="quote-card">
+        <div class="quote-text">if you&#x27;re not Dutch, you&#x27;re not much</div>
+        <div class="quote-meta">
+          <span class="quote-author">Dutch friends</span>
+          
+          <span class="quote-sermon">How the Lord Jesus Thinks</span>
+        </div>
+      </div>
+      <div class="quote-card">
+        <div class="quote-text">see how these Christians love one another</div>
+        <div class="quote-meta">
+          <span class="quote-author">early observers of Christians</span>
+          
+          <span class="quote-sermon">How the Lord Jesus Thinks</span>
+        </div>
+      </div>
+      <div class="quote-card">
+        <div class="quote-text">No matter what you do, no matter where you go, no matter how disastrarily wrong Life turns out no matter what you do. I am your mother. I will never give up loving you.</div>
+        <div class="quote-meta">
+          <span class="quote-author">Ferguson&#x27;s mother</span>
+          
+          <span class="quote-sermon">True Repentance</span>
+        </div>
+      </div>
+      <div class="quote-card">
+        <div class="quote-text">You mean you don&#x27;t know Errol House?</div>
+        <div class="quote-meta">
+          <span class="quote-author">gentleman at Westminster Conference</span>
+          
+          <span class="quote-sermon">Knowing the Holy Spirit</span>
+        </div>
+      </div>
+      <div class="quote-card">
+        <div class="quote-text">But there are no stairs.</div>
+        <div class="quote-meta">
+          <span class="quote-author">George MacDonald (character: hero)</span>
+          <span class="quote-source">The Golden Key</span>
+          <span class="quote-sermon">Jesus: Equal With God?</span>
+        </div>
+      </div>
+      <div class="quote-card">
+        <div class="quote-text">Down there, that is the way.</div>
+        <div class="quote-meta">
+          <span class="quote-author">George MacDonald (character: old man of the earth)</span>
+          <span class="quote-source">The Golden Key</span>
+          <span class="quote-sermon">Jesus: Equal With God?</span>
+        </div>
+      </div>
+      <div class="quote-card">
+        <div class="quote-text">Yes, you must throw yourself in. There is no other way.</div>
+        <div class="quote-meta">
+          <span class="quote-author">George MacDonald (character: old man of the earth)</span>
+          <span class="quote-source">The Golden Key</span>
+          <span class="quote-sermon">Jesus: Equal With God?</span>
+        </div>
+      </div>
+      <div class="quote-card">
+        <div class="quote-text">it&#x27;s no natural</div>
+        <div class="quote-meta">
+          <span class="quote-author">Glasgow colloquialism</span>
+          
+          <span class="quote-sermon">How the Lord Jesus Thinks</span>
+        </div>
+      </div>
+      <div class="quote-card">
+        <div class="quote-text">Do you, John, know Jesus Christ?</div>
+        <div class="quote-meta">
+          <span class="quote-author">Gottlieb Spangenberg</span>
+          
+          <span class="quote-sermon">Jesus: The Light of the World</span>
+        </div>
+      </div>
+      <div class="quote-card">
+        <div class="quote-text">Do you really know yourself?</div>
+        <div class="quote-meta">
+          <span class="quote-author">Gottlieb Spangenberg</span>
+          
+          <span class="quote-sermon">Jesus: The Light of the World</span>
+        </div>
+      </div>
+      <div class="quote-card">
+        <div class="quote-text">True, true, but do you know he has saved you?</div>
+        <div class="quote-meta">
+          <span class="quote-author">Gottlieb Spangenberg</span>
+          
+          <span class="quote-sermon">Jesus: The Light of the World</span>
+        </div>
+      </div>
+      <div class="quote-card">
+        <div class="quote-text">it is not so important who he is, but who he is</div>
+        <div class="quote-meta">
+          <span class="quote-author">Hercule Poirot</span>
+          <span class="quote-source">Agatha Christie&#x27;s The Clocks</span>
+          <span class="quote-sermon">FPC Then and FPC Now</span>
+        </div>
+      </div>
+      <div class="quote-card">
+        <div class="quote-text">it is not so important who he is, but who he is</div>
+        <div class="quote-meta">
+          <span class="quote-author">Hercule Poirot (Agatha Christie)</span>
+          <span class="quote-source">The Clocks</span>
+          <span class="quote-sermon">Defending the Reformed Faith</span>
+        </div>
+      </div>
+      <div class="quote-card">
+        <div class="quote-text">I hope he has died to save me</div>
+        <div class="quote-meta">
+          <span class="quote-author">John Wesley</span>
+          <span class="quote-source">Wesley&#x27;s journal</span>
+          <span class="quote-sermon">Jesus: The Light of the World</span>
+        </div>
+      </div>
+      <div class="quote-card">
+        <div class="quote-text">I know him to be the Savior of the world</div>
+        <div class="quote-meta">
+          <span class="quote-author">John Wesley</span>
+          <span class="quote-source">Wesley&#x27;s journal</span>
+          <span class="quote-sermon">Jesus: The Light of the World</span>
+        </div>
+      </div>
+      <div class="quote-card">
+        <div class="quote-text">I do</div>
+        <div class="quote-meta">
+          <span class="quote-author">John Wesley</span>
+          <span class="quote-source">Wesley&#x27;s journal</span>
+          <span class="quote-sermon">Jesus: The Light of the World</span>
+        </div>
+      </div>
+      <div class="quote-card">
+        <div class="quote-text">I fear they were vain words</div>
+        <div class="quote-meta">
+          <span class="quote-author">John Wesley</span>
+          <span class="quote-source">Wesley&#x27;s journal</span>
+          <span class="quote-sermon">Jesus: The Light of the World</span>
+        </div>
+      </div>
+      <div class="quote-card">
+        <div class="quote-text">When I die and you open up my heart, if they opened up her heart, they would find inscribed on her heart the single word, &#x27;Calais.&#x27;</div>
+        <div class="quote-meta">
+          <span class="quote-author">Mary, Queen of Scots</span>
+          
+          <span class="quote-sermon">True Repentance</span>
+        </div>
+      </div>
+      <div class="quote-card">
+        <div class="quote-text">on what ground?</div>
+        <div class="quote-meta">
+          <span class="quote-author">Peter Bohler</span>
+          
+          <span class="quote-sermon">Jesus: The Light of the World</span>
+        </div>
+      </div>
+      <div class="quote-card">
+        <div class="quote-text">Do you hope to be saved?</div>
+        <div class="quote-meta">
+          <span class="quote-author">Peter Bohler</span>
+          
+          <span class="quote-sermon">Jesus: The Light of the World</span>
+        </div>
+      </div>
+      <div class="quote-card">
+        <div class="quote-text">Where do ye bide?</div>
+        <div class="quote-meta">
+          <span class="quote-author">Scottish expression</span>
+          
+          <span class="quote-sermon">Jesus: The Vine and His Branches - John 15:1-7</span>
+        </div>
+      </div>
+      <div class="quote-card">
+        <div class="quote-text">What on earth are you doing here?</div>
+        <div class="quote-meta">
+          <span class="quote-author">somebody</span>
+          
+          <span class="quote-sermon">Knowing the Holy Spirit</span>
+        </div>
+      </div>
+      <div class="quote-card">
+        <div class="quote-text">the work which His goodness began, the arm of His strength will complete</div>
+        <div class="quote-meta">
+          <span class="quote-author">Top Lady</span>
+          <span class="quote-source">hymn</span>
+          <span class="quote-sermon">FPC Then and FPC Now</span>
+        </div>
+      </div>
+      <div class="quote-card">
+        <div class="quote-text">the work which His goodness began, the arm of His strength will complete</div>
+        <div class="quote-meta">
+          <span class="quote-author">Top Lady</span>
+          <span class="quote-source">hymn</span>
+          <span class="quote-sermon">FPC Then and FPC Now</span>
+        </div>
+      </div>
+      <div class="divider"></div>
+    </div>
+    <div class="section">
+      <div class="section-label">Devotional</div>
+      <div class="section-title">Devotional Citations</div>
+      <div class="section-desc">Cited to stir worship, affection, or spiritual reflection</div>
+      <div class="section-count">10 citations</div>
+      
+      <div class="quote-card">
+        <div class="quote-text">Let the beauty of Jesus be seen in me. All his wondrous compassion and purity. O thou Savior divine, all my nature refine. Till the beauty of Jesus be seen in me.</div>
+        <div class="quote-meta">
+          <span class="quote-author">Albert Orsborn</span>
+          <span class="quote-source">Hymn</span>
+          <span class="quote-sermon">Defending the Reformed Faith</span>
+        </div>
+      </div>
+      <div class="quote-card">
+        <div class="quote-text">Let the beauty of Jesus be seen in me. All his wondrous compassion and purity. O thou Savior divine, all my nature refine. Till the beauty of Jesus be seen in me.</div>
+        <div class="quote-meta">
+          <span class="quote-author">Albert Orsborn</span>
+          <span class="quote-source">Hymn</span>
+          <span class="quote-sermon">Defending the Reformed Faith</span>
+        </div>
+      </div>
+      <div class="quote-card">
+        <div class="quote-text">the work which His goodness began, the arm of His strength will complete</div>
+        <div class="quote-meta">
+          <span class="quote-author">Augustus Toplady</span>
+          <span class="quote-source">Hymn</span>
+          <span class="quote-sermon">Defending the Reformed Faith</span>
+        </div>
+      </div>
+      <div class="quote-card">
+        <div class="quote-text">Long my imprisoned spirit lay, fast bound in sin and nature&#x27;s night. Thine eye diffused a quickening ray, I woke, the dungeon flamed with light. My chains fell off, my heart was free, I rose, went forth and followed thee.</div>
+        <div class="quote-meta">
+          <span class="quote-author">Charles Wesley</span>
+          
+          <span class="quote-sermon">Jesus: The Light of the World</span>
+        </div>
+      </div>
+      <div class="quote-card">
+        <div class="quote-text">When this cup You give is filled to brimming with bitter suffering hard to understand, We take it thankfully and without trembling out of so good and so beloved a hand.</div>
+        <div class="quote-meta">
+          <span class="quote-author">Dietrich Bonhoeffer</span>
+          
+          <span class="quote-sermon">Great Distress, Greater Glory</span>
+        </div>
+      </div>
+      <div class="quote-card">
+        <div class="quote-text">I heard the voice of Jesus say, Behold, I freely give the living water. Thirsty one, stoop down and drink and live. I came to Jesus and I drank of that life-giving stream. My thirst was quenched, my soul revived, and now I live in him.</div>
+        <div class="quote-meta">
+          <span class="quote-author">Horatius Bonar</span>
+          
+          <span class="quote-sermon">Jesus: The Christ</span>
+        </div>
+      </div>
+      <div class="quote-card">
+        <div class="quote-text">Fading is the worldling&#x27;s pleasure, all his boasted pomp and show...solid joys and lasting treasures none but Zion&#x27;s children know.</div>
+        <div class="quote-meta">
+          <span class="quote-author">Hymn writer</span>
+          
+          <span class="quote-sermon">Open or Empty Hearts</span>
+        </div>
+      </div>
+      <div class="quote-card">
+        <div class="quote-text">Whom Jesus loves, he loves to their end. And not to their end and to their death, but to his end. And his end is that he might love them more.</div>
+        <div class="quote-meta">
+          <span class="quote-author">John Donne</span>
+          
+          <span class="quote-sermon">Jesus: He Stoops to Conquer - John 13:1-20</span>
+        </div>
+      </div>
+      <div class="quote-card">
+        <div class="quote-text">Give me pain to keep me tender. Trip me up to make me humble.</div>
+        <div class="quote-meta">
+          <span class="quote-author">Morning offertory</span>
+          
+          <span class="quote-sermon">True Repentance</span>
+        </div>
+      </div>
+      <div class="quote-card">
+        <div class="quote-text">The Lord is risen. He is risen indeed.</div>
+        <div class="quote-meta">
+          <span class="quote-author">Orthodox Easter liturgy</span>
+          
+          <span class="quote-sermon">Jesus: He Must Rise</span>
+        </div>
+      </div>
+      <div class="divider"></div>
+    </div>
+    <div class="section">
+      <div class="section-label">Provocation</div>
+      <div class="section-title">Provocation Citations</div>
+      <div class="section-desc">Cited to challenge, unsettle, or press the hearer toward action</div>
+      <div class="section-count">3 citations</div>
+      
+      <div class="quote-card">
+        <div class="quote-text">If somebody hits you on the cheek, you turn the other cheek and say, &#x27;Hit that one too if you want to.&#x27;</div>
+        <div class="quote-meta">
+          <span class="quote-author">Jesus</span>
+          <span class="quote-source">Matthew 5:39 (paraphrased)</span>
+          <span class="quote-sermon">Great Distress, Greater Glory</span>
+        </div>
+      </div>
+      <div class="quote-card">
+        <div class="quote-text">If somebody hits you on the cheek, you turn the other cheek and say, &#x27;Hit that one too if you want to.&#x27;</div>
+        <div class="quote-meta">
+          <span class="quote-author">Jesus</span>
+          <span class="quote-source">Matthew 5:39 (paraphrased)</span>
+          <span class="quote-sermon">Great Distress, Greater Glory</span>
+        </div>
+      </div>
+      <div class="quote-card">
+        <div class="quote-text">what think ye of Christ?</div>
+        <div class="quote-meta">
+          <span class="quote-author">Matthew&#x27;s Gospel (implicitly referenced)</span>
+          
+          <span class="quote-sermon">How the Lord Jesus Thinks</span>
+        </div>
+      </div>
+      <div class="divider"></div>
+    </div>
+    <div class="section">
+      <div class="section-label">Opponent</div>
+      <div class="section-title">Opponent Citations</div>
+      <div class="section-desc">Cited as a foil — a position the preacher is arguing against</div>
+      <div class="section-count">1 citation</div>
+      
+      <div class="quote-card">
+        <div class="quote-text">this is the greatest evangelistic instrument God has ever given to the church since the days of the apostles</div>
+        <div class="quote-meta">
+          <span class="quote-author">Dallas megachurch pastor (unnamed)</span>
+          <span class="quote-source">newspaper commentary on The Passion of the Christ</span>
+          <span class="quote-sermon">How the Lord Jesus Thinks</span>
+        </div>
+      </div>
+      <div class="divider"></div>
+    </div>
+    <div class="section">
+      <div class="section-label">Uncategorized</div>
+      <div class="section-title">Uncategorized Citations</div>
+      <div class="section-desc"></div>
+      <div class="section-count">1 citation</div>
+      
+      <div class="quote-card">
+        <div class="quote-text">Joy through strength</div>
+        <div class="quote-meta">
+          <span class="quote-author">Hitler Youth Movement</span>
+          
+          <span class="quote-sermon">Jesus: The Vine and His Branches - John 15:1-7</span>
+        </div>
+      </div>
+      <div class="divider"></div>
+    </div>
+</div>
+
+<script type="module" src="https://static.cloudflareinsights.com/beacon.min.js/v31edd6df95cf4e85bb4c19e7a9bdbcba1788362987495" integrity="sha512-iIg7k2xntmwu6/uSb5tpc/hySgZc4eoL31yB29W6tJFo2akwjPWcEqnCEdJvGexCL0KEQwVYv5BlowfhVz26hg==" data-cf-beacon='{"version":"2024.11.0","token":"7f5f7b1f4e32487090b581239a4311a8","r":1,"spa":2}' crossorigin="anonymous"></script>
+</body>
+</html>

@@ -59,7 +59,7 @@
   .nav-links { display: flex; align-items: center; gap: 4px; }
   .nav-links a { font-size: 0.7rem; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; color: var(--slate); text-decoration: none; padding: 6px 12px; border-radius: 4px; transition: all 0.2s; }
   .nav-links a:hover { color: var(--burgundy); background: rgba(196,162,101,0.08); }
-  .nav-cta { font-size: 0.68rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink); text-decoration: none; padding: 8px 18px; background: var(--gold); border-radius: 4px; transition: all 0.2s; }
+  .nav-cta { font-size: 0.76rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink); text-decoration: none; padding: 11px 22px; background: var(--gold); border-radius: 4px; transition: all 0.2s; box-shadow: 0 2px 12px rgba(196,162,101,0.28); }
   .nav-cta:hover { background: var(--gold-bright); }
 
   /* BODY */
@@ -189,9 +189,9 @@
     <div class="nav-links">
       <a href="#preachers">Preachers</a>
       <a href="#methodology">Methodology</a>
-      <a href="#join">Join the Hall</a>
+      <a href="/onboarding">Get a Guild Build</a>
     </div>
-    <a href="#join" class="nav-cta">Join the Hall</a>
+    <a href="/onboarding" class="nav-cta">Get a Guild Build</a>
   </div>
 </nav>
 
@@ -207,7 +207,7 @@
   </section>
 
   <div class="value-bridge" style="text-align:center; max-width:680px; margin:0 auto; padding:40px 30px 60px;">
-    <p class="bridge-body" style="font-family:'Cormorant Garamond',serif; font-size:1.25rem; font-style:italic; line-height:1.65; color:var(--slate); margin-bottom:20px;">The Guild Hall isn't a museum. It's the front door of an apprenticeship. Every preacher profiled here was analyzed through the same pipeline we use on your sermons — so when you join the Hall, the comparison is real, the coaching is specific, and the growth is yours.</p>
+    <p class="bridge-body" style="font-family:'Cormorant Garamond',serif; font-size:1.25rem; font-style:italic; line-height:1.65; color:var(--slate); margin-bottom:20px;">The Guild Hall isn't a museum. It's the front door of an apprenticeship. Every preacher profiled here was analyzed through the same pipeline we use on your sermons — so when you get a Guild Build, the comparison is real, the coaching is specific, and the growth is yours.</p>
     <a href="/showcase-sales" class="bridge-cta" style="font-size:0.78rem; font-weight:500; letter-spacing:0.06em; color:var(--gold-dim); text-decoration:none; border-bottom:1px solid rgba(196,162,101,0.3); padding-bottom:2px; transition:all 0.2s;">See what a build looks like — a real pastor, 79 sermons, fully decomposed. →</a>
   </div>
 
@@ -281,7 +281,7 @@
     <div class="join-banner">
       <div class="join-content">
         <div class="join-eyebrow">For Pastors</div>
-        <h2 class="join-title">You've studied the masters.<br><strong>Now join the Hall.</strong></h2>
+        <h2 class="join-title">You've studied the masters.<br><strong>Now get a Guild Build.</strong></h2>
         <p class="join-body" style="margin-bottom:20px;">We have a vision for your preaching ministry — past, present, and future.</p>
         <ul style="list-style:none;display:flex;flex-direction:column;gap:12px;padding:0;">
           <li style="display:flex;align-items:flex-start;gap:12px;font-size:0.9rem;color:rgba(247,243,238,0.55);line-height:1.6;"><span style="color:var(--gold);margin-top:2px;flex-shrink:0;">→</span><span><strong style="color:rgba(247,243,238,0.85);">Your archive, indexed.</strong> Every illustration you've ever used, every quote you've cited, every cross-reference — extracted, typed, and searchable.</span></li>
@@ -293,7 +293,7 @@
         </ul>
       </div>
       <div class="join-action">
-        <a href="/onboarding" class="join-btn">Request Your Build <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+        <a href="/onboarding" class="join-btn">Get a Guild Build <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
         <a href="/showcase-sales" style="font-size:0.72rem;color:rgba(247,243,238,0.4);text-decoration:none;letter-spacing:0.04em;transition:color 0.2s;">See what a build looks like first →</a>
       </div>
     </div>
@@ -315,7 +315,7 @@
       <ul class="footer-links">
         <li><a href="#preachers">Browse Preachers</a></li>
         <li><a href="#methodology">Our Methodology</a></li>
-        <li><a href="#join">Join the Hall</a></li>
+        <li><a href="/onboarding">Get a Guild Build</a></li>
       </ul>
     </div>
     <div>
@@ -340,5 +340,6 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
   });
 });
 </script>
+<script type="module" src="https://static.cloudflareinsights.com/beacon.min.js/v31edd6df95cf4e85bb4c19e7a9bdbcba1788362987495" integrity="sha512-iIg7k2xntmwu6/uSb5tpc/hySgZc4eoL31yB29W6tJFo2akwjPWcEqnCEdJvGexCL0KEQwVYv5BlowfhVz26hg==" data-cf-beacon='{"version":"2024.11.0","token":"7f5f7b1f4e32487090b581239a4311a8","r":1,"spa":2}' crossorigin="anonymous"></script>
 </body>
 </html>
