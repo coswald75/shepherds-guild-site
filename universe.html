@@ -4,7 +4,7 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Shepherd’s Guild · Universe</title>
-<meta name="description" content="Enter the Shepherd’s Guild universe — Sermon Steward, Prep King, and Coach."/>
+<meta name="description" content="Enter the Shepherd’s Guild universe — the free Guildhall and Sermon Steward."/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet"/>
@@ -116,7 +116,9 @@ img { max-width: 100%; height: auto; display: block; }
 }
 .products-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(2, 1fr);
+  max-width: 760px;
+  margin: 0 auto;
   gap: 28px;
 }
 .product-card {
@@ -278,6 +280,7 @@ footer {
   color: var(--subtle);
 }
 footer a { color: var(--muted); text-decoration: none; }
+.price-line { text-align: center; color: var(--muted); font-size: 0.95rem; line-height: 1.6; max-width: 640px; margin: 28px auto 0; }
 footer a:hover { color: var(--ink); }
 
 @media (max-width: 860px) {
@@ -298,12 +301,9 @@ footer a:hover { color: var(--ink); }
 
 <section class="hero">
   <div class="wrap">
-    <div class="hero-image-wrap">
-      <img src="/assets/universe-trio.jpg" alt="Sermon Steward, Prep King, and Coach" width="1080" height="1080" loading="eager"/>
-    </div>
     <div class="hero-kicker">Shepherd’s Guild</div>
     <h1 class="hero-title">Enter the Shepherd’s Guild universe</h1>
-    <p class="hero-sub">Three quiet tools that grow out of your sermon corpus — hosted pages, private prep, and coaching that keeps your voice.</p>
+    <p class="hero-sub">Start in the Guildhall for free. When you’re ready, Sermon Steward turns your sermon corpus into hosted pages for your church.</p>
   </div>
 </section>
 
@@ -311,31 +311,25 @@ footer a:hover { color: var(--ink); }
   <div class="wrap">
     <div class="products-grid">
       <article class="product-card">
-        <img class="product-headshot" src="/assets/coach-headshot.png" alt="Coach" width="160" height="160"/>
-        <h2 class="product-name">Coach</h2>
-        <p class="product-desc">Get better without losing your voice: your preaching matched to Guild Hall exemplars, gaps named, a plan to close them.</p>
-        <a class="product-btn soft" href="/onboarding">Ask about coaching</a>
+        <h2 class="product-name">Guildhall</h2>
+        <p class="product-desc">Free. Study how faithful preachers across four centuries handle the text: voice profiles, illustrations, and citations from the Guild Hall.</p>
+        <a class="product-btn soft" href="/">Visit the Guildhall</a>
       </article>
       <article class="product-card">
-        <img class="product-headshot" src="/assets/steward-headshot.png" alt="Steward" width="160" height="160"/>
-        <h2 class="product-name">Steward</h2>
+        <img class="product-headshot" src="/assets/steward-headshot.png" alt="Sermon Steward" width="160" height="160"/>
+        <h2 class="product-name">Sermon Steward</h2>
         <p class="product-desc">Hosted sermon pages for your church: audio, transcript, search, and five packs from each sermon.</p>
         <a class="product-btn" href="https://sermonsteward.com/ProvidenceLenexa/sermons/" target="_blank" rel="noopener">See a live church</a>
       </article>
-      <article class="product-card">
-        <img class="product-headshot" src="/assets/prep-king-headshot.png" alt="Prep King" width="160" height="160"/>
-        <h2 class="product-name">Prep King</h2>
-        <p class="product-desc">Before Sunday: a private text + audio briefing on your next passage — listen at the gym or read at your desk. Prep aid, not a public show.</p>
-        <a class="product-btn" href="https://getprepking.com" target="_blank" rel="noopener">See sample</a>
-      </article>
     </div>
+    <p class="price-line">Guildhall — free. Sermon Steward — $30/month. Past-sermon ingest $100 per year of sermons. First month free, cancel anytime, no contract.</p>
   </div>
 </section>
 
 <section class="interest" id="interest">
   <div class="wrap">
     <div class="interest-inner">
-      <h2 class="interest-title">Interested in Steward, Prep King, or Coach?</h2>
+      <h2 class="interest-title">Interested in Sermon Steward?</h2>
       <p class="interest-sub">Leave your email — interest only. We’ll keep you posted.</p>
 
       <form class="interest-form" id="interestForm" onsubmit="return submitInterest(event)">

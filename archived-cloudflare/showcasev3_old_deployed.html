@@ -700,7 +700,7 @@ mark { background: rgba(196,162,101,0.2); color: var(--ink); border-radius: 2px;
 .hq-result-text { font-family: var(--serif); font-size: 1rem; font-style: italic; color: var(--ink); line-height: 1.6; margin-bottom: 6px; }
 .hq-result-src { font-family: var(--mono); font-size: 0.5rem; color: var(--warm-gray); }
 
-/* PrepKing specific */
+/* Prep report styles */
 .prep-report {
   background: var(--card-bg); border: 1px solid var(--rule-light);
   border-radius: 3px; box-shadow: var(--shadow-soft); overflow: hidden;
@@ -992,9 +992,6 @@ mark { background: rgba(196,162,101,0.2); color: var(--ink); border-radius: 2px;
     <div class="nav-item" onclick="switchView('hallquery', this)">
       <span class="nav-icon">⊞</span>Hall Query<span class="nav-badge-addon">Soon</span>
     </div>
-    <div class="nav-item" onclick="switchView('prepking', this)">
-      <span class="nav-icon">♛</span>PrepKing<span class="nav-badge-addon">Soon</span>
-    </div>
   </nav>
 
   <div class="sidebar-footer">
@@ -1235,28 +1232,6 @@ mark { background: rgba(196,162,101,0.2); color: var(--ink); border-radius: 2px;
       </div>
     </div>
 
-    <!-- ── PREPKING ── -->
-    <div class="view" id="view-prepking">
-      <div class="section-eyebrow">Add-ons · PrepKing</div>
-      <div class="section-title">Your next sermon, <em>resourced.</em></div>
-
-      <div class="addon-hero">
-        <div class="addon-hero-band">
-          <div class="addon-name-row">
-            <div class="addon-icon">♛</div>
-            <div>
-              <div class="addon-name">PrepKing</div>
-              <div class="addon-tagline">White-glove sermon prep · Weekly report · Delivered Tuesday</div>
-            </div>
-          </div>
-          <div class="addon-price-badge">Coming Soon</div>
-        </div>
-        <div class="addon-body">
-          <div class="addon-desc">Tell us your upcoming text on Friday. By Tuesday morning you have a PrepKing report in your inbox: relevant illustrations from the Guild Hall corpus matched to your preaching style, how your exemplar preachers handled the passage, doctrinal background notes, and a set of curated quotations ready to use or adapt. Researched by humans, accelerated by AI.</div>
-          <button class="addon-unlock-btn">Join Waitlist →</button>
-        </div>
-      </div>
-    </div>
 
   </div><!-- /content -->
 </div><!-- /main -->
@@ -1783,7 +1758,7 @@ const titleMap = {
   quotes:'Quotes & Citations', search:'Search Archive', sermons:'Recent Sermons',
   growth:'Growth Areas', latentbook:'Latent Book',
   herald:'Herald \u00b7 Quote Graphics', voxprompt:'VoxPrompt \u00b7 Your Voice',
-  hallquery:'Hall Query \u00b7 Search the Masters', prepking:'PrepKing \u00b7 Sermon Prep'
+  hallquery:'Hall Query \u00b7 Search the Masters'
 };
 
 function switchView(id, navEl) {
